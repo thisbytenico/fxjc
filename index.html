@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0" /> -->
+        <title>数字收集器管理平台</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="msapplication-tap-highlight" content="no">
+        <style>
+            .spinner {
+               width: 60px;
+               height: 60px;
+               position: relative;
+               margin: auto auto;
+           }
+   
+           .double-bounce1, .double-bounce2 {
+               width: 100%;
+               height: 100%;
+               border-radius: 50%;
+               background-color: #5ba0fd;
+               opacity: 0.6;
+               position: absolute;
+               top: 0;
+               left: 0;
+               -webkit-animation: bounce 2.0s infinite ease-in-out;
+               animation: bounce 2.0s infinite ease-in-out;
+           }
+   
+           .double-bounce2 {
+               -webkit-animation-delay: -1.0s;
+               animation-delay: -1.0s;
+           }
+   
+           @-webkit-keyframes bounce {
+               0%, 100% {
+                   -webkit-transform: scale(0.0)
+               }
+   
+               50% {
+                   -webkit-transform: scale(1.0)
+               }
+           }
+   
+           @keyframes bounce {
+               0%, 100% {
+                   transform: scale(0.0);
+                   -webkit-transform: scale(0.0);
+               }
+   
+               50% {
+                   transform: scale(1.0);
+                   -webkit-transform: scale(1.0);
+               }
+           }
+   
+           .div_global_loading {
+               margin: auto;
+               text-align:center;
+           }
+   
+           .div_global_loading p {
+               text-align: center;
+               color: rgba(255,255,255,0.8);
+           }
+   
+           .div_loading_container{
+               position: absolute;
+               top:0;
+               left: 0;
+               right: 0;
+               bottom: 0;
+               background-color: #000;
+               display: flex;
+               z-index: 1000;
+           }
+   
+           .asia_1_1 {
+               width: 900px;
+               height: 320px;
+               color: white;
+               text-align: center;
+               /* border:5px solid white; */
+           }
+   
+           .asia_fonts {
+               font-size: 94px;
+               font-family: "Verdana";
+               color: rgb(255, 255, 255);
+               margin: auto;
+           }
+   
+           .asia_fonts_title {
+               font-size: 19px;
+               font-family: "Verdana";
+               margin: 10px;
+           }
+   
+           .fonts_borders {
+               line-height: 1.1;
+               top: 86px;
+               width: 100%;
+               /* border: 5px solid #2c3036; */
+               position: relative;
+               left: -5px;
+               display: flex;
+               /* background-color: #2c3036; */
+               padding-bottom: 50px;
+               color:#000;
+           }
+   
+           .div_loading_c .logo,.div_loading_c .asia_loading{
+               animation:myfirst 4s infinite;
+               margin: 0 180px;
+           }
+   
+           @keyframes myfirst
+           {
+               0%   {opacity: 1}
+   
+               50% {opacity: 0}
+   
+               100% {opacity: 1}
+           }
+   
+           .div_loading_c{
+               position: absolute;
+               z-index: 999;
+               top:0;
+               bottom: 0;
+               left:0;
+               right: 0;
+               background: #2c3036;
+               display: flex;
+               align-items: center;
+               justify-content: center;
+           }
+           .left_logo_text{
+               display: flex;
+               justify-content: center;
+               flex-direction: column;
+               font-size: 28px;
+               margin-left: 28px;
+               color:rgba(255,255,255,0.8);
+               font-family: "Verdana";
+               padding-top:30px;
+            }
+           .left_logo_text p{
+               height: 45px;
+               letter-spacing:4px;
+           }
+           .left_logo_text p b{
+               color:#fff;
+           }
+           .logo {
+              display: flex; 
+           }
+           .logo img{
+               height: 330px;
+           }
+   
+           @media screen and (max-width: 630px) {
+               .asia_loading{
+                   display: none;
+               }
+               .logo img{
+                   height: 100px;
+               }
+           }
+           .div_loading_c{
+               display: flex;
+               flex-direction: column;
+               /* background-color: #21222c; */
+           }
+       </style>
+    </head>
+    <body>
+        <div id="app"></div>
+
+        <div class="div_loading_c">
+            <div class="asia_1_1 asia_loading" style="display:block;" >
+                <div class="fonts_borders">
+                    <p class="asia_fonts">
+                        数字收集器管理平台
+                    </p>
+                </div>
+            </div>
+        </div>
+    
+        <!-- <script src="https://s.yezgea02.com/1609305532675/echarts.js"></script> -->
+        <script type="module" src="/src/main.js"></script>
+        <script  src="/lib/particles.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/echarts-gl@2.0.9/dist/echarts-gl.min.js"></script>
+    </body>
+</html>

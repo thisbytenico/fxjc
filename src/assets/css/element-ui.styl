@@ -1,0 +1,447 @@
+:root
+    body
+      --el-color-primary: rgb(22 119 255);
+      .el-button--primary
+        // --el-button-hover-color:var(--el-color-primary)
+        --el-button-background-color:var(--el-color-primary)
+// 覆盖一些element-ui样式
+.el-breadcrumb__inner, .el-breadcrumb__inner a
+    font-weight: 400 !important
+
+.el-upload
+    input[type='file']
+        display: none !important
+
+.el-upload__input
+    display: none
+
+.cell
+    .el-tag
+        margin-right: 0px
+
+.small-padding
+    .cell
+        padding-left: 5px
+        padding-right: 5px
+
+.fixed-width
+    .el-button--mini
+        padding: 7px 10px
+        width: 60px
+
+.status-col
+    .cell
+        padding: 0 10px
+        text-align: center
+
+        .el-tag
+            margin-right: 0px
+
+.el-dialog__wrapper
+    display: flex
+
+// 暂时性解决dialog 问题 https://github.com/ElemeFE/element/issues/2461
+.el-dialog
+    transform: none
+    left: 0
+    position: relative
+    max-height: 88%
+    overflow: auto
+    display: flex
+    flex-direction: column
+
+    header.el-dialog__header
+        padding-top: 10px
+        display: flex
+        align-items: center
+        justify-content: space-between
+        background-color: var(--el-color-primary)
+        padding:  0 0 0 20px
+        .el-dialog__title
+            color:#fff
+        .el-dialog__close
+            color:#fff
+            font-size: 20px
+        .el-dialog__headerbtn
+            position: static
+
+    .el-dialog__body
+        padding-top: 16px
+        padding-bottom: 8px
+        padding-left: 20px
+        padding-right: 20px
+        flex: 1
+        overflow: auto
+
+    .el-dialog__footer
+        padding-bottom: 10px
+
+// 文章页textarea修改样式
+.article-textarea
+    textarea
+        padding-right: 40px
+        resize: none
+        border: none
+        border-radius: 0px
+        border-bottom: 1px solid #bfcbd9
+
+// element ui upload
+.upload-container
+    .el-upload
+        width: 100%
+
+        .el-upload-dragger
+            width: 100%
+            height: 200px
+
+.el-dropdown-menu
+    a
+        display: block
+
+.el-tree
+    // padding-top: 15px;
+    // padding-left: 10px;
+    // 不可全选样式
+    .el-tree-node
+        .is-leaf + .el-checkbox .el-checkbox__inner
+            display: inline-block
+
+        .el-checkbox .el-checkbox__inner
+            display: none
+
+    .el-tree-node__label
+        font-size: 12px
+
+.el-notification
+    z-index: 2500 !important
+
+body
+    // .el-table .cell
+    // text-overflow: clip
+
+.page-box
+    .el-button--small
+        padding: 5px 15px
+
+    .el-overlay
+        display: flex
+
+        .el-dialog
+            padding: 0
+            // margin: auto !important
+
+.showArrowUp
+    .el-icon-:before
+        content: '\e6e1'
+
+    .is-focus
+        .el-icon-
+            transform: rotateZ(0)
+
+.el-form-item__label
+    font-weight: normal
+
+.el-form--label-top
+    .el-form-item__label
+        padding-bottom: 0
+        font-weight: normal
+
+.sidebar-container>.menu-wrapper>.el-submenu>.el-submenu__title>span
+    margin-left: 0px
+
+.el-submenu>.el-submenu__title>span
+    margin-left: 16px
+    // font-size: 13px;
+    color: rgba(0, 0, 0, 0.65)
+
+.el-submenu .el-menu-item
+    height: 44px
+    line-height: 44px
+
+    span
+        margin-left: 16px
+        // font-size: 13px;
+        color: rgba(0, 0, 0, 0.65)
+
+.el-submenu.is-active>.el-submenu__title
+    >span
+        color: $theme-color
+
+    >i
+        color: $theme-color
+
+.el-submenu [class^='el-icon-']
+    font-size: 16px
+
+body .common-list-table
+    border: 0
+
+    th
+        color: #17233C
+        border-top: 1px solid #dedede
+
+    .gutter
+        border-top: 0
+
+    th.is-leaf
+        background-color: #f8f8f9
+
+    th.is-leaf, td.el-table__cell
+        border-right: 1px solid #e5e5e5 !important
+        border-bottom: 1px solid #e5e5e5
+        padding: 7px 0
+        &:first-child
+            border-left: 1px solid #dedede
+
+.hasBottomBorder
+    border-bottom: 1px solid #dedede
+
+.el-table--striped .el-table__body tr.el-table__row--striped td
+    background: #F5F7F9
+
+.el-dropdown
+    cursor: pointer
+    font-size: 13px
+
+.el-dropdown-link
+    min-height: 30px
+    min-width: 60px
+    display: inline-block
+    line-height: 30px
+
+.el-dropdown-menu__item
+    display: flex
+    align-items: center
+    justify-content: center
+
+    >div
+        display: flex
+        align-items: center
+
+    i
+        font-size: 16px
+        margin-right: 6px
+        font-weight: bold
+
+    .el-icon-video-pause
+        color: red
+
+    .el-icon-video-play
+        color: green
+
+    .el-icon-time
+        color: #3a8ee6
+
+    &:hover
+        .el-icon-time, .el-icon-video-pause, .el-icon-video-play
+            color: #fff
+
+    img
+        height: 16px
+        margin-right: 6px
+
+    .svg-icon
+        margin-right: 6px
+
+    .check
+        display: none
+
+.el-dropdown-menu__item:not(.is-disabled):hover, .el-dropdown-menu__item:focus
+    // background-color: #03B572
+    // color: #fff
+    .no-check
+        display: none
+
+    .check
+        display: inline-block
+
+.el-button--primary.is-plain
+    display: flex
+    align-items: center
+
+    i
+        font-size: 15px
+
+    span
+        color: #515A6E
+        font-size: 13px
+
+.el-button--primary.is-plain:hover, .el-button--primary.is-plain:focus
+    span
+        color: #fff
+
+// .el-form--inline .el-form-item{
+// margin-bottom: 0;
+// margin-right: 14px;
+// }
+body
+    .el-message .el-message-icon--success
+                    color:var(--el-color-primary)
+    .el-message--success .el-message__content
+                             color:var(--el-color-primary)
+    .el-form--label-top .el-form-item__label
+        padding: 0 0 4px 0
+
+    .el-table--medium th, .el-table--medium td
+        padding: 8px 0
+
+    .el-pagination
+        font-size: 14px
+        margin-top: 0
+        color:#999
+    .el-pagination span:not([class*=suffix]), .el-pagination button
+        margin-left: 0
+
+    .el-form-item--small .el-form-item__error
+        margin-bottom: 4px
+
+        span
+            color: #03B472
+
+    .el-menu-item.is-active
+        background-color: rgb(242, 244, 246)
+        border-right:1px solid rgb(22, 119, 255);
+        span
+            color: #03B472
+
+    .el-message-box__message p, .el-notification__content p
+        word-break: break-all
+
+    .el-message-box__header
+        // background-color: #eee
+
+        .el-message-box__title
+            font-size: 14px
+
+    .el-button--mini
+        padding: 7px 15px 6px
+
+@media screen and (max-width: 1366px)
+    .el-submenu>.el-submenu__title>span
+        font-size: 13px
+
+    body
+        .el-switch__label *
+            font-size: 12px
+
+        .common-list-table
+            // font-size: 12px
+
+            // th
+            //     font-size: 12px
+
+            th, td
+                padding: 4px 0
+
+        // .el-form-item__label
+        //     font-size: 12px
+
+        // .el-checkbox__label
+        //     font-size: 12px
+
+        .el-dialog__title
+            font-size: 15px
+
+        .el-form--label-top
+            .el-form-item--small.el-form-item
+                margin-bottom: 8px
+
+    .el-submenu>.el-submenu__title>span
+        font-size: 13px
+
+    .el-submenu .el-menu-item span
+        font-size: 13px
+
+.el-dialog
+    .el-form
+        .row
+            display: flex
+            justify-content: space-between
+
+    .el-select
+        width: 100%
+
+body .el-message
+    min-width: 0
+
+.el-loading-mask .el-icon-loading
+    font-size: 0.32rem
+
+.el-message__icon
+    font-size: 16px
+
+.el-dialog__footer
+    font-size: 14px
+
+.el-date-editor .el-range-input
+    margin-left: 2px
+
+// .div-query
+// .el-form--inline
+// display: flex
+// .el-form-item
+// display: flex
+.div-query .el-form--inline .el-form-item__content
+    .el-input
+        // max-width: 150px;
+
+    .el-date-editor--daterange
+        max-width: 300px
+
+body .el-submenu__title
+    height: 48px
+    line-height: 48px
+
+    i
+        font-size: 14px
+
+    &:hover
+        background-color: transparent
+
+        >span, i
+            color: #03B472
+
+.tab-page
+    display: flex
+    flex-direction: column
+
+    .el-menu-demo
+        padding-left: 28px
+
+        .el-menu-item
+            padding: 0
+            margin-right: 20px
+
+    .el-menu-item.is-active
+        background-color: transparent
+
+    .div-body
+        flex: 1
+        overflow: auto
+
+        > div
+            height: 100%
+
+.app-main div.Craw
+    .el-dialog__body .el-form-item--mini.el-form-item
+        margin-bottom: 14px
+
+.el-form-item--mini .el-form-item__error
+    margin-top: 2px
+
+@media screen and (max-width: 1280px)
+    .app-main div.Craw
+        .page-box .head .div-query .el-input__inner
+            width: 120px
+
+        .page-box .head .div-query .el-form--inline .el-form-item
+            margin-right: 8px
+
+        .page-box .head .div-query .el-form--inline .el-form-item:last-child
+            margin-right: 0
+
+        .crawlerIndex .head
+            padding: 0 22px 10px
+
+        .el-menu-demo
+            padding-left: 20px

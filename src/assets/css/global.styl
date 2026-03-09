@@ -1,0 +1,326 @@
+
+@import '/element-ui.styl'
+
+::-webkit-scrollbar
+  width: 6px
+  height: 6px
+
+::-webkit-scrollbar-track-piece
+  -webkit-border-radius: 6px
+  background-color: rgba(0, 0, 0, 0.2)
+
+::-webkit-scrollbar-thumb:vertical
+  height: 5px
+  -webkit-border-radius: 6px
+  background-color: rgba(125, 125, 125, 0.7)
+
+::-webkit-scrollbar-thumb:horizontal
+  width: 5px
+  -webkit-border-radius: 6px
+  background-color: rgba(125, 125, 125, 0.7)
+
+.scfade-right-leave-active
+  transition: opacity 0.5s
+  opacity: 0
+  z-index: 11
+
+.scfade-right-leave
+  opacity: 1
+
+.flex
+  display: flex
+
+.flex_col
+  display: flex
+  flex-direction: column
+
+.flex_align_center
+  display: flex
+  align-items: center
+
+.flex_center
+  display: flex
+  align-items: center
+  justify-content: center
+
+.flex_space_between
+  display: flex
+  justify-content: space-between
+
+ul
+  margin: 6px 0
+  padding-left: 0
+  list-style: none
+
+.draggable
+  .handle
+    opacity: 0
+
+  .handle-ml, .handle-mr
+    top: 0
+    height: 100%
+    display: block !important
+
+div.vdr
+  border: 0
+
+.app-main>div
+  height: 100%
+  overflow: auto
+  background-color: #fff
+
+body
+  .el-input-group__append
+    padding: 0
+
+  .div-sel-btn
+    padding: 0 20px
+
+  div.dialog-table
+    min-height: 470px
+
+    .el-dialog__body
+      display: flex
+
+    .div-footer
+      padding-bottom: 10px
+
+    .div-table
+      padding: 0
+
+.el-container
+  .content
+    flex-direction: column
+
+      
+// a
+// color: $theme-color
+
+// a:hover
+// color: $theme-color
+.div-footer
+  padding: 10px 30px 0
+  display: flex
+  justify-content: flex-end
+.fine-bi
+  border: 0
+
+.head .div-btns
+  padding: 0 10px 10px 10px
+  display: flex
+  justify-content: space-between
+  // display: flex
+  // justify-content: flex-end
+
+.div-page
+  display: flex
+  flex-direction: column
+
+.red
+  color: red
+
+.gray
+  color: gray
+
+.blue
+  color: #2587FF
+
+// .theme-color
+// color: $theme-color
+
+// .bg-theme-color
+// background-color: $theme-color
+.head
+  .el-form
+    font-size: 14px
+
+  .tags
+    // display: flex;
+    font-size: 14px
+
+.head-menu
+  .el-menu--horizontal>.el-menu-item
+    font-size: 13px
+    height: 50px
+    line-height: 50px
+
+.el-form--label-top .el-form-item
+  display: flex
+  flex-direction: column
+
+.div-breadcrumb-box
+  display: flex
+  align-items: center
+  padding-left: 30px
+  border-bottom: 1px solid #dedede
+  height: 50px
+  color: #808695
+
+  .div-back
+    // line-height: 50px;
+    font-size: 12px
+    border-right: 1px solid currentColor
+    padding-right: 16px
+    cursor: pointer
+
+  .app-breadcrumb.el-breadcrumb
+    display: inline-block
+    font-size: 12px
+    margin-left: 14px
+
+    // color: #fff;
+    // line-height: 50px;
+    a
+      // color: #fff;
+
+    span
+      color: #808695
+
+    .no-redirect
+      cursor: text
+      color: #000
+
+.overflow-ellipsis
+  overflow: hidden
+  text-overflow: ellipsis
+  white-space: nowrap
+
+.el-tab-pane>div>div
+  margin-bottom: 3px
+
+.el-checkbox-group
+  margin-top: 6px
+
+.page-box
+    display: flex
+    flex-direction: column
+    overflow: auto
+    height: 100%
+    height: calc(100% - 40px)
+    padding: 0 10px
+ 
+  .head
+    height: auto
+    justify-content: space-between
+    .el-button
+      // color: #606266
+
+      span
+        font-size: 14px
+        // color: #606266
+
+      // .el-button--primary
+      //   color: #FFF
+
+      // span
+      //   color: #FFF
+
+    .div-query
+      display: block
+      // align-items: center
+      padding: 16px 10px 4px 12px
+      // border-bottom: 1px solid #eee
+      font-size: 14px
+      .el-select
+         width:190px  
+      // .el-form{
+      // display: flex;
+      // }
+      .el-form--inline .el-form-item
+        margin-bottom: 8px
+        margin-right: 14px
+
+        // &:last-child
+        //   margin-left: 6px
+
+      .el-date-editor .el-range-input
+        width: 100%
+
+      .el-date-editor .el-range-separator
+        width: 12%
+
+      .el-form-item__label
+        font-size: 13px
+
+  h4
+    font-size: 16px
+    padding-top: 6px
+
+  .div-body
+    padding: 0 24px 16px
+    flex: 1
+    overflow: auto
+
+  .footer
+    padding: 10px 24px 6px
+    background-color: #fff
+    border-top: 1px solid #dedede
+
+    .el-button--medium
+      padding: 8px 32px
+
+  .div-table
+    padding: 0 10px
+    flex: 1
+    overflow: auto
+
+    a
+      cursor: pointer
+
+  .el-dialog__footer
+    border-top: 1px solid #eee
+    padding: 10px 20px
+
+  .div-table-box
+    flex: 1
+    overflow: auto
+
+    .img
+      width: 44px
+      cursor: pointer
+
+  .el-table__body-wrapper
+    // height: 100%;
+    // overflow: auto;
+
+.footer
+  font-size: 14px
+
+@media screen and (max-width: 1366px)
+ .overview 
+      div.body
+          height: auto
+          padding-bottom: 20px
+
+  body .page-box
+    h4
+      font-size: 15px
+      padding-top: 0
+
+    .head
+      .div-query
+        // padding: 12px 0 4px 20px
+        // padding: 12px 0 4px 10px
+        .el-date-editor--daterange.el-input, .el-date-editor--daterange.el-input__inner, .el-date-editor--timerange.el-input, .el-date-editor--timerange.el-input__inner
+          width: 210px
+
+        .el-input__inner
+          width: 150px
+
+        .el-radio__label, .el-form-item__label
+          font-size: 12px
+
+      // .div-btns
+      //   padding: 0 20px 10px 0
+
+    .div-table
+      // padding: 0 20px
+      padding: 0 10px
+
+.nftType, .blindBox, .nftlist, .homeBannerManage
+  .head .div-btns
+    padding-right: 36px
+
+  @media screen and (max-width: 1466px)
+      div.head .div-btns
+        padding-right: 26px
