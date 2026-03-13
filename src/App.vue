@@ -228,15 +228,17 @@ export default {
     overflow: hidden;
 }
 .main {
-    /* height: calc(100vh - 50px); */
     overflow: auto;
-    /* padding: 10px 0; */
     box-sizing: border-box;
     flex: 1;
     display: flex;
     flex-direction: column;
     background-color: #0a1428;
-
+    min-height: 0;
+}
+.main > * {
+    flex: 1;
+    min-height: 0;
 }
 .main .div-breadcrumbs{
     padding: 4px 20px 14px 20px;

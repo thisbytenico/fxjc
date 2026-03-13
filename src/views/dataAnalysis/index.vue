@@ -1,324 +1,326 @@
 <template>
-    <div class="data-analysis-container">
-        <!-- 顶部导航栏 -->
-        <!-- <div class="top-nav">
-            <div class="logo">
-                <div class="logo-icon"></div>
-                <div class="logo-text">国家追溯平台大数据智慧监管平台 (热更新测试)</div>
-                <div class="logo-subtitle">数据分析</div>
-            </div>
-            <div class="nav-tabs">
-                <div class="nav-item" :class="{ active: activeTab === 'data-monitor' }" @click="handleTabClick('data-monitor')">
-                    <span class="nav-icon"></span>
-                    数据监控
-                </div>
-                <div class="nav-item" :class="{ active: activeTab === 'regulatory' }" @click="handleTabClick('regulatory')">
-                    <span class="nav-icon"></span>
-                    监管业务
-                </div>
-                <div class="nav-item" :class="{ active: activeTab === 'traceability' }" @click="handleTabClick('traceability')">
-                    <span class="nav-icon"></span>
-                    追溯业务
-                </div>
-                <div class="nav-item" :class="{ active: activeTab === 'subject' }" @click="handleTabClick('subject')">
-                    <span class="nav-icon"></span>
-                    追溯主体
-                </div>
-            </div>
-            <div class="nav-right">
-                <div class="nav-item">信息查询</div>
-                <div class="nav-item">监管系统</div>
-                <div class="user-info">朱生</div>
-            </div>
-        </div> -->
-        
-        <!-- 主要内容区域 -->
-        <div class="main-content">
-            <!-- 左侧区域 -->
-            <div class="left-section">
-                <!-- 覆盖业务情况 -->
-                <div class="card">
-                    <div class="card-header">
-                        <div class="header-decoration left"></div>
-                        <h3>覆盖业务情况</h3>
-                        <div class="header-decoration right"></div>
+    <div class="da-wrap">
+        <div class="da-main">
+            <!-- ====== 左栏 ====== -->
+            <div class="da-left">
+                <!-- 追溯业务情况 -->
+                <div class="da-card">
+                    <div class="da-card-hd">
+                        <div class="hd-title-row">
+                            <span class="hd-arrow"></span>
+                            <span class="hd-title">追溯业务情况</span>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <div class="data-item">
-                            <div class="data-icon blue">
-                                <div class="icon-marketing"></div>
+                    <div class="da-card-bd">
+                        <div class="biz-item">
+                            <div class="biz-icon blue">
+                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
                             </div>
-                            <div class="data-info">
-                                <div class="data-value">984,320</div>
-                                <div class="data-label">追溯业务次数</div>
-                                <div class="data-change">去年同期: 2,280,300次 同比: -56.8%</div>
-                            </div>
-                        </div>
-                        <div class="data-item">
-                            <div class="data-icon green">
-                                <div class="icon-finance"></div>
-                            </div>
-                            <div class="data-info">
-                                <div class="data-value">258,410</div>
-                                <div class="data-label">打印追溯码</div>
-                                <div class="data-change">去年同期: 1,167,940次 同比: -77.9%</div>
+                            <div class="biz-info">
+                                <div class="biz-val">984,320<span class="unit">次</span></div>
+                                <div class="biz-lbl">生产批次次数</div>
+                                <div class="biz-cmp">去年同期: 2,280次 同比: <span class="up">▲3%</span></div>
                             </div>
                         </div>
-                        <div class="data-item">
-                            <div class="data-icon purple">
-                                <div class="icon-order"></div>
+                        <div class="biz-item">
+                            <div class="biz-icon green">
+                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
                             </div>
-                            <div class="data-info">
-                                <div class="data-value">984,320</div>
-                                <div class="data-label">打印合格证</div>
-                                <div class="data-change">去年同期: 1,251,320次 同比: -21.3%</div>
+                            <div class="biz-info">
+                                <div class="biz-val">258,410<span class="unit">次</span></div>
+                                <div class="biz-lbl">交易批次次数</div>
+                                <div class="biz-cmp">去年同期: 1,167次 同比: <span class="up">▲13%</span></div>
                             </div>
                         </div>
-                        <div class="data-item">
-                            <div class="data-icon yellow">
-                                <div class="icon-ticket"></div>
+                        <div class="biz-item">
+                            <div class="biz-icon purple">
+                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>
                             </div>
-                            <div class="data-info">
-                                <div class="data-value">38,172</div>
-                                <div class="data-label">打印合格证</div>
-                                <div class="data-change">去年同期: 1,991次 同比: 11.6%</div>
+                            <div class="biz-info">
+                                <div class="biz-val">984,320<span class="unit">张</span></div>
+                                <div class="biz-lbl">打印标签批次</div>
+                                <div class="biz-cmp">去年同期: 2,152张 同比: <span class="down">下降8%</span></div>
+                            </div>
+                        </div>
+                        <div class="biz-item">
+                            <div class="biz-icon yellow">
+                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg>
+                            </div>
+                            <div class="biz-info">
+                                <div class="biz-val">38,172<span class="unit">张</span></div>
+                                <div class="biz-lbl">打印个码标签</div>
+                                <div class="biz-cmp">去年同期: 1,991次 同比: <span class="up">▲11%</span></div>
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- 追溯产品情况 -->
-                <div class="card">
-                    <div class="card-header">
-                        <div class="header-decoration left"></div>
-                        <h3>追溯产品情况</h3>
-                        <div class="header-decoration right"></div>
+                <div class="da-card">
+                    <div class="da-card-hd">
+                        <div class="hd-title-row">
+                            <span class="hd-arrow"></span>
+                            <span class="hd-title">追溯产品情况</span>
+                        </div>
+                        <span class="hd-more">明细&gt;</span>
                     </div>
-                    <div class="card-body">
-                        <div class="product-summary">
-                            <div class="product-item">
-                                <div class="product-value">38,172</div>
-                                <div class="product-label">追溯产品个数</div>
+                    <div class="da-card-bd">
+                        <div class="prod-summary">
+                            <div class="prod-main">
+                                <div class="prod-main-val">38,172<span class="unit">个</span></div>
+                                <div class="prod-main-lbl">追溯产品个数</div>
                             </div>
-                            <div class="product-item">
-                                <div class="product-value">2,957</div>
-                                <div class="product-label">种植业</div>
-                            </div>
-                            <div class="product-item">
-                                <div class="product-value">3,905</div>
-                                <div class="product-label">畜牧业</div>
-                            </div>
-                            <div class="product-item">
-                                <div class="product-value">1,700</div>
-                                <div class="product-label">渔业</div>
+                            <div class="prod-subs">
+                                <div class="prod-sub">
+                                    <div class="prod-sub-val">2,367<span class="unit">个</span></div>
+                                    <div class="prod-sub-lbl">种植业</div>
+                                </div>
+                                <div class="prod-sub">
+                                    <div class="prod-sub-val">3,906<span class="unit">个</span></div>
+                                    <div class="prod-sub-lbl">畜牧业</div>
+                                </div>
+                                <div class="prod-sub">
+                                    <div class="prod-sub-val">2,985<span class="unit">个</span></div>
+                                    <div class="prod-sub-lbl">渔业</div>
+                                </div>
+                                <div class="prod-sub">
+                                    <div class="prod-sub-val">1,173<span class="unit">个</span></div>
+                                    <div class="prod-sub-lbl">其他</div>
+                                </div>
                             </div>
                         </div>
-                        <div class="chart-title">追溯产品生产批次排名</div>
-                        <div id="productChart" class="chart-container"></div>
+                        <div class="chart-sub-title">追溯产品生产批次排名</div>
+                        <div id="productChart" class="chart-box"></div>
                     </div>
                 </div>
-                
+
                 <!-- 追溯种养面积 -->
-                <div class="card">
-                    <div class="card-header">
-                        <div class="header-decoration left"></div>
-                        <h3>追溯种养面积</h3>
-                        <div class="header-decoration right"></div>
+                <div class="da-card">
+                    <div class="da-card-hd">
+                        <div class="hd-title-row">
+                            <span class="hd-arrow"></span>
+                            <span class="hd-title">追溯种养面积</span>
+                        </div>
                     </div>
-                    <div class="card-body">
+                    <div class="da-card-bd">
                         <div class="area-item">
                             <div class="area-icon blue">
-                                <div class="icon-plant"></div>
+                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 8C8 10 5.9 16.17 3.82 21H5.71c.28-.94.87-1.96 1.65-2.88C9.11 17.25 13.88 16 20 16v-2C17 14 13.5 12.5 10 12.5L17 8z"/></svg>
                             </div>
                             <div class="area-info">
-                                <div class="area-value">92,043</div>
-                                <div class="area-label">种植业种植面积(亩)</div>
+                                <div class="area-val">92,043<span class="unit">亩</span></div>
+                                <div class="area-lbl">种植业种植面积(亩)</div>
                             </div>
                         </div>
                         <div class="area-item">
                             <div class="area-icon orange">
-                                <div class="icon-livestock"></div>
+                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
                             </div>
                             <div class="area-info">
-                                <div class="area-value">41,701</div>
-                                <div class="area-label">畜牧业养殖面积(亩)</div>
+                                <div class="area-val">41,701<span class="unit">亩</span></div>
+                                <div class="area-lbl">畜牧业养殖面积(亩)</div>
                             </div>
                         </div>
                         <div class="area-item">
                             <div class="area-icon green">
-                                <div class="icon-fishery"></div>
+                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93V18h-2v1.93C7.06 19.44 4.56 16.94 4.07 14H6v-2H4.07C4.56 9.06 7.06 6.56 10 6.07V8h2V6.07c2.94.49 5.44 2.99 5.93 5.93H16v2h1.93c-.49 2.94-2.99 5.44-5.93 5.93z"/></svg>
                             </div>
                             <div class="area-info">
-                                <div class="area-value">10,584</div>
-                                <div class="area-label">渔业养殖面积(亩)</div>
+                                <div class="area-val">10,584<span class="unit">亩</span></div>
+                                <div class="area-lbl">渔业养殖面积(亩)</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            
-            <!-- 中央区域 -->
-            <div class="center-section">
-                <!-- 主体数量卡片 -->
-                <div class="entity-cards">
+
+            <!-- ====== 中栏 ====== -->
+            <div class="da-center">
+                <!-- 顶部四卡片 -->
+                <div class="entity-row">
                     <div class="entity-card gold">
-                        <div class="entity-icon">
-                            <div class="icon-enterprise"></div>
+                        <div class="ec-icon-wrap gold">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"/></svg>
                         </div>
-                        <div class="entity-value">350,094</div>
-                        <div class="entity-label">生产经营主体</div>
+                        <div class="ec-info">
+                            <div class="ec-val">350,094<span class="ec-unit">家</span></div>
+                            <div class="ec-lbl">生产经营主体总数</div>
+                        </div>
                     </div>
                     <div class="entity-card orange">
-                        <div class="entity-icon">
-                            <div class="icon-regulatory"></div>
+                        <div class="ec-icon-wrap orange">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 4l5 2.18V11c0 3.5-2.33 6.79-5 7.93-2.67-1.14-5-4.43-5-7.93V7.18L12 5z"/></svg>
                         </div>
-                        <div class="entity-value">16,888</div>
-                        <div class="entity-label">监管机构总数</div>
+                        <div class="ec-info">
+                            <div class="ec-val">16,888<span class="ec-unit">家</span></div>
+                            <div class="ec-lbl">监管机构总数</div>
+                        </div>
                     </div>
                     <div class="entity-card green">
-                        <div class="entity-icon">
-                            <div class="icon-detection"></div>
+                        <div class="ec-icon-wrap green">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.8 18.4L14 10.67V6.5l1.35-1.69c.26-.33.03-.81-.39-.81H9.04c-.42 0-.65.48-.39.81L10 6.5v4.17L4.2 18.4c-.49.66-.02 1.6.8 1.6h14c.82 0 1.29-.94.8-1.6z"/></svg>
                         </div>
-                        <div class="entity-value">26,091</div>
-                        <div class="entity-label">检测机构总数</div>
+                        <div class="ec-info">
+                            <div class="ec-val">26,091<span class="ec-unit">家</span></div>
+                            <div class="ec-lbl">检测机构总数</div>
+                        </div>
                     </div>
                     <div class="entity-card blue">
-                        <div class="entity-icon">
-                            <div class="icon-law"></div>
+                        <div class="ec-icon-wrap blue">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2.05v2.02c3.95.49 7 3.85 7 7.93 0 3.21-1.81 6-4.72 7.28L13 17v5h5l-1.22-1.22C19.91 19.07 22 15.76 22 12c0-5.18-3.95-9.45-9-9.95zM11 2.05C5.95 2.55 2 6.82 2 12c0 3.76 2.09 7.07 5.22 8.78L6 22h5v-5l-2.28 2.28C7.81 18 6 15.21 6 12c0-4.08 3.05-7.44 7-7.93V2.05z"/></svg>
                         </div>
-                        <div class="entity-value">2,242</div>
-                        <div class="entity-label">执法机构总数</div>
+                        <div class="ec-info">
+                            <div class="ec-val">2,242<span class="ec-unit">家</span></div>
+                            <div class="ec-lbl">执法机构总数</div>
+                        </div>
                     </div>
                 </div>
-                
-                <!-- 行业分布 -->
-                <div class="industry-cards">
-                    <div class="industry-card">
-                        <div class="industry-label">种植业</div>
-                        <div class="industry-value">253,450</div>
+
+                <!-- 行业分布行 -->
+                <div class="industry-row">
+                    <div class="industry-tag">
+                        <span class="ind-lbl">种植业</span>
+                        <span class="ind-val">263,450<span class="ind-unit">家</span></span>
                     </div>
-                    <div class="industry-card">
-                        <div class="industry-label">畜牧业</div>
-                        <div class="industry-value">114,780</div>
+                    <div class="industry-tag">
+                        <span class="ind-lbl">畜牧业</span>
+                        <span class="ind-val">114,780<span class="ind-unit">家</span></span>
                     </div>
-                    <div class="industry-card">
-                        <div class="industry-label">渔业</div>
-                        <div class="industry-value">49,650</div>
+                    <div class="industry-tag">
+                        <span class="ind-lbl">渔业</span>
+                        <span class="ind-val">49,650<span class="ind-unit">家</span></span>
                     </div>
-                    <div class="industry-card">
-                        <div class="industry-label">其他</div>
-                        <div class="industry-value">281,190</div>
+                    <div class="industry-tag">
+                        <span class="ind-lbl">其他</span>
+                        <span class="ind-val">281,190<span class="ind-unit">家</span></span>
                     </div>
                 </div>
-                
-                <!-- 中国地图 -->
-                <div class="map-container">
-                    <div class="map-location">当前位置：全国</div>
-                    <div id="chinaMap" class="map"></div>
-                    <div class="map-decoration"></div>
-                    <div class="map-info">
-                        <div class="map-title">注册生产经营主体地域排行</div>
-                        <div id="rankingChart" class="ranking-chart"></div>
-                        <div class="map-stats">
-                            <div class="stat-title">上季度新增注册生产经营主体4,756家 与同期相比增长3%</div>
+
+                <!-- 地图区域 -->
+                <div class="map-wrap">
+                    <div class="map-loc">当前位置：全国</div>
+                    <div id="chinaMap" class="map-echarts"></div>
+                    <!-- 右侧排行面板 -->
+                    <div class="map-panel">
+                        <div class="mp-title">注册生产经营主体地域排行</div>
+                        <div id="rankingChart" class="mp-ranking-chart"></div>
+                        <div class="mp-note">
+                            <span class="mp-note-dot"></span>
+                            上季度新增注册生产经营主体7,526家 与同期相比增长3%
                         </div>
-                        <div id="trendChart" class="trend-chart"></div>
+                        <div id="trendChart" class="mp-trend-chart"></div>
                     </div>
                 </div>
             </div>
-            
-            <!-- 右侧区域 -->
-            <div class="right-section">
-                <!-- 消费者查询情况 -->
-                <div class="card">
-                    <div class="card-header">
-                        <div class="header-decoration left"></div>
-                        <h3>消费者查询情况</h3>
-                        <div class="more">明细></div>
+
+            <!-- ====== 右栏 ====== -->
+            <div class="da-right">
+                <!-- 满意者查询情况 -->
+                <div class="da-card">
+                    <div class="da-card-hd">
+                        <div class="hd-title-row">
+                            <span class="hd-arrow"></span>
+                            <span class="hd-title">满意者查询情况</span>
+                        </div>
+                        <span class="hd-more">明细&gt;</span>
                     </div>
-                    <div class="card-body">
-                        <div class="data-item">
-                            <div class="data-icon cyan">
-                                <div class="icon-search"></div>
+                    <div class="da-card-bd">
+                        <div class="biz-item">
+                            <div class="biz-icon cyan">
+                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
                             </div>
-                            <div class="data-info">
-                                <div class="data-value">38,172</div>
-                                <div class="data-label">消费者查询次数</div>
-                                <div class="data-change">环比增长 12.6%</div>
+                            <div class="biz-info">
+                                <div class="biz-val">38,172<span class="unit">次</span></div>
+                                <div class="biz-lbl">消费者查询次数</div>
+                                <div class="biz-cmp">环比增长 <span class="up">12.6%</span></div>
                             </div>
                         </div>
-                        <div class="chart-title">追溯产品消费者查询次数排名</div>
-                        <div id="queryChart" class="chart-container"></div>
+                        <div class="chart-sub-title">追溯产品消费者查询次数排名</div>
+                        <div id="queryChart" class="chart-box"></div>
                     </div>
                 </div>
-                
-                <!-- 监管任务情况 -->
-                <div class="card">
-                    <div class="card-header">
-                        <div class="header-decoration left"></div>
-                        <h3>监管任务情况</h3>
-                        <div class="header-decoration right"></div>
+
+                <!-- 监测任务情况 -->
+                <div class="da-card">
+                    <div class="da-card-hd">
+                        <div class="hd-title-row">
+                            <span class="hd-arrow"></span>
+                            <span class="hd-title">监测任务情况</span>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <div class="data-item">
-                            <div class="data-icon blue">
-                                <div class="icon-shield"></div>
+                    <div class="da-card-bd">
+                        <div class="monitor-top">
+                            <div class="monitor-stat">
+                                <div class="biz-icon blue">
+                                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+                                </div>
+                                <div class="biz-info">
+                                    <div class="biz-val">56,932<span class="unit">次</span></div>
+                                    <div class="biz-lbl">监测门诊总数</div>
+                                    <div class="biz-cmp">已完成6,932家</div>
+                                </div>
                             </div>
-                            <div class="data-info">
-                                <div class="data-value">56,932</div>
-                                <div class="data-label">监管任务总数</div>
-                                <div class="data-change">已完成6,932家</div>
-                            </div>
-                        </div>
-                        <div class="task-stats">
-                            <div class="task-item blue">
-                                <div class="task-label">飞行检查</div>
-                                <div class="task-value">98,054</div>
-                            </div>
-                            <div class="task-item orange">
-                                <div class="task-label">专项检查</div>
-                                <div class="task-value">120,150</div>
-                            </div>
-                            <div class="task-item yellow">
-                                <div class="task-label">日常检查</div>
-                                <div class="task-value">85,710</div>
-                            </div>
-                            <div class="task-item cyan">
-                                <div class="task-label">体系检查</div>
-                                <div class="task-value">102,548</div>
+                            <div class="gauge-right">
+                                <div id="taskChart" class="gauge-mini"></div>
+                                <div class="gauge-lbl">完成率</div>
                             </div>
                         </div>
-                        <div id="taskChart" class="gauge-container"></div>
+                        <div class="task-grid">
+                            <div class="tg-item blue">
+                                <div class="tg-lbl">飞行检查</div>
+                                <div class="tg-val">98,054</div>
+                            </div>
+                            <div class="tg-item orange">
+                                <div class="tg-lbl">专项检查</div>
+                                <div class="tg-val">120,150</div>
+                            </div>
+                            <div class="tg-item yellow">
+                                <div class="tg-lbl">日常检查</div>
+                                <div class="tg-val">85,710</div>
+                            </div>
+                            <div class="tg-item cyan">
+                                <div class="tg-lbl">体系检查</div>
+                                <div class="tg-val">102,548</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                
+
                 <!-- 基地巡查情况 -->
-                <div class="card">
-                    <div class="card-header">
-                        <div class="header-decoration left"></div>
-                        <h3>基地巡查情况</h3>
-                        <div class="header-decoration right"></div>
+                <div class="da-card">
+                    <div class="da-card-hd">
+                        <div class="hd-title-row">
+                            <span class="hd-arrow"></span>
+                            <span class="hd-title">基地巡查情况</span>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <div class="data-item">
-                            <div class="data-icon cyan">
-                                <div class="icon-location"></div>
+                    <div class="da-card-bd">
+                        <div class="insp-wrap">
+                            <div class="insp-stats">
+                                <div class="biz-item">
+                                    <div class="biz-icon cyan">
+                                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                                    </div>
+                                    <div class="biz-info">
+                                        <div class="biz-val">20,192<span class="unit">个</span></div>
+                                        <div class="biz-lbl">基地个数</div>
+                                    </div>
+                                </div>
+                                <div class="biz-item">
+                                    <div class="biz-icon green">
+                                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                                    </div>
+                                    <div class="biz-info">
+                                        <div class="biz-val">9,028<span class="unit">次</span></div>
+                                        <div class="biz-lbl">基地巡查次数</div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="data-info">
-                                <div class="data-value">20,192</div>
-                                <div class="data-label">基地巡查次数</div>
+                            <div class="gauge-right">
+                                <div id="inspectionChart" class="gauge-mini"></div>
+                                <div class="gauge-lbl">基地检查率</div>
                             </div>
                         </div>
-                        <div class="area-item">
-                            <div class="area-icon green">
-                                <div class="icon-check"></div>
-                            </div>
-                    <div class="area-info">
-                        <div class="area-value">9,028</div>
-                        <div class="area-label">基地检查次数</div>
-                    </div>
-                </div>
-                        <div id="inspectionChart" class="gauge-container"></div>
                     </div>
                 </div>
             </div>
@@ -327,18 +329,22 @@
 </template>
 
 <script>
-import { ref, onMounted, nextTick } from 'vue';
+import { onMounted, nextTick } from 'vue';
 import * as echarts from 'echarts';
 
 export default {
     name: 'DataAnalysis',
     setup() {
-        const activeTab = ref('data-monitor');
-        
-        const handleTabClick = (tab) => {
-            activeTab.value = tab;
+        const chartInstances = [];
+
+        const registerResize = (chart) => {
+            chartInstances.push(chart);
         };
-        
+
+        const handleResize = () => {
+            chartInstances.forEach(c => c && c.resize());
+        };
+
         onMounted(() => {
             nextTick(() => {
                 initChinaMap();
@@ -348,1271 +354,1137 @@ export default {
                 initInspectionChart();
                 initTrendChart();
                 initRankingChart();
+                window.addEventListener('resize', handleResize);
             });
         });
-        
+
+        /* ---- 中国地图 ---- */
         const initChinaMap = () => {
-            const chartDom = document.getElementById('chinaMap');
-            const myChart = echarts.init(chartDom);
-            
+            const dom = document.getElementById('chinaMap');
+            if (!dom) return;
+            const chart = echarts.init(dom);
+            registerResize(chart);
+
             fetch('https://geo.datav.aliyun.com/areas_v3/bound/100000.json')
-                .then(response => response.json())
-                .then(geoJson => {
-                    echarts.registerMap('china', geoJson);
-                    
-                    const option = {
+                .then(r => r.json())
+                .then(geo => {
+                    echarts.registerMap('china', geo);
+                    chart.setOption({
                         tooltip: {
                             trigger: 'item',
                             formatter: '{b}: {c}',
-                            backgroundColor: 'rgba(0, 20, 40, 0.9)',
+                            backgroundColor: 'rgba(0,20,40,0.9)',
                             borderColor: '#00d4ff',
-                            textStyle: {
-                                color: '#ffffff'
-                            }
+                            textStyle: { color: '#fff' }
                         },
                         visualMap: {
                             type: 'continuous',
                             min: 0,
                             max: 500,
-                            left: 'left',
-                            top: 'bottom',
-                            text: ['高', '低'],
-                            textStyle: {
-                                color: '#00d4ff'
-                            },
-                            calculable: true,
+                            show: false,
                             inRange: {
-                                color: ['#001a33', '#003366', '#006699', '#0099cc', '#00ccff', '#33ffff']
+                                color: ['#0d2b5e', '#0e4a8e', '#1565c0', '#1976d2', '#42a5f5', '#64b5f6']
                             }
                         },
-                        series: [
-                            {
-                                name: '生产经营主体',
-                                type: 'map',
-                                map: 'china',
-                                roam: true,
-                                emphasis: {
-                                    label: {
-                                        show: true,
-                                        color: '#ffffff'
-                                    },
-                                    itemStyle: {
-                                        areaColor: '#00d4ff'
-                                    }
-                                },
-                                data: [
-                                    { name: '北京', value: 150 },
-                                    { name: '天津', value: 120 },
-                                    { name: '河北', value: 200 },
-                                    { name: '山西', value: 100 },
-                                    { name: '内蒙古', value: 80 },
-                                    { name: '辽宁', value: 180 },
-                                    { name: '吉林', value: 150 },
-                                    { name: '黑龙江', value: 120 },
-                                    { name: '上海', value: 250 },
-                                    { name: '江苏', value: 300 },
-                                    { name: '浙江', value: 350 },
-                                    { name: '安徽', value: 220 },
-                                    { name: '福建', value: 200 },
-                                    { name: '江西', value: 180 },
-                                    { name: '山东', value: 187 },
-                                    { name: '河南', value: 200 },
-                                    { name: '湖北', value: 220 },
-                                    { name: '湖南', value: 200 },
-                                    { name: '广东', value: 284 },
-                                    { name: '广西', value: 150 },
-                                    { name: '海南', value: 80 },
-                                    { name: '重庆', value: 150 },
-                                    { name: '四川', value: 241 },
-                                    { name: '贵州', value: 100 },
-                                    { name: '云南', value: 120 },
-                                    { name: '西藏', value: 30 },
-                                    { name: '陕西', value: 150 },
-                                    { name: '甘肃', value: 80 },
-                                    { name: '青海', value: 50 },
-                                    { name: '宁夏', value: 60 },
-                                    { name: '新疆', value: 80 }
-                                ]
-                            }
-                        ]
-                    };
-                    
-                    myChart.setOption(option);
-                    
-                    window.addEventListener('resize', () => {
-                        myChart.resize();
+                        series: [{
+                            name: '生产经营主体',
+                            type: 'map',
+                            map: 'china',
+                            roam: false,
+                            label: {
+                                show: true,
+                                color: 'rgba(255,255,255,0.6)',
+                                fontSize: 9
+                            },
+                            itemStyle: {
+                                areaColor: '#0d2b5e',
+                                borderColor: 'rgba(0,180,255,0.4)',
+                                borderWidth: 0.8
+                            },
+                            emphasis: {
+                                label: { show: true, color: '#fff' },
+                                itemStyle: { areaColor: '#00b4ff' }
+                            },
+                            data: [
+                                { name: '北京', value: 150 }, { name: '天津', value: 120 },
+                                { name: '河北', value: 200 }, { name: '山西', value: 100 },
+                                { name: '内蒙古', value: 80 }, { name: '辽宁', value: 180 },
+                                { name: '吉林', value: 150 }, { name: '黑龙江', value: 120 },
+                                { name: '上海', value: 250 }, { name: '江苏', value: 300 },
+                                { name: '浙江', value: 350 }, { name: '安徽', value: 220 },
+                                { name: '福建', value: 200 }, { name: '江西', value: 180 },
+                                { name: '山东', value: 187 }, { name: '河南', value: 200 },
+                                { name: '湖北', value: 220 }, { name: '湖南', value: 200 },
+                                { name: '广东', value: 284 }, { name: '广西', value: 150 },
+                                { name: '海南', value: 80 }, { name: '重庆', value: 150 },
+                                { name: '四川', value: 241 }, { name: '贵州', value: 100 },
+                                { name: '云南', value: 120 }, { name: '西藏', value: 30 },
+                                { name: '陕西', value: 150 }, { name: '甘肃', value: 80 },
+                                { name: '青海', value: 50 }, { name: '宁夏', value: 60 },
+                                { name: '新疆', value: 80 }
+                            ]
+                        }]
                     });
                 })
-                .catch(error => {
-                    console.error('Failed to load China map data:', error);
-                });
+                .catch(() => {});
         };
-        
+
+        /* ---- 产品批次排名柱图 ---- */
         const initProductChart = () => {
-            const chartDom = document.getElementById('productChart');
-            const myChart = echarts.init(chartDom);
-            
-            const option = {
+            const dom = document.getElementById('productChart');
+            if (!dom) return;
+            const chart = echarts.init(dom);
+            registerResize(chart);
+            chart.setOption({
                 tooltip: {
                     trigger: 'axis',
-                    axisPointer: {
-                        type: 'shadow'
-                    },
-                    backgroundColor: 'rgba(0, 20, 40, 0.9)',
+                    axisPointer: { type: 'shadow' },
+                    backgroundColor: 'rgba(0,20,40,0.9)',
                     borderColor: '#00d4ff',
-                    textStyle: {
-                        color: '#ffffff'
-                    }
+                    textStyle: { color: '#fff' }
                 },
-                grid: {
-                    left: '10%',
-                    right: '5%',
-                    bottom: '15%',
-                    top: '10%',
-                    containLabel: true
-                },
+                grid: { left: 0, right: 8, bottom: 0, top: 20, containLabel: true },
                 xAxis: {
                     type: 'category',
                     data: ['猪肉', '大米', '蔬菜', '粮油', '辣椒'],
-                    axisLine: {
-                        lineStyle: {
-                            color: '#00d4ff'
-                        }
-                    },
-                    axisLabel: {
-                        color: '#00d4ff',
-                        fontSize: 10
-                    },
-                    axisTick: {
-                        show: false
-                    }
+                    axisLine: { lineStyle: { color: 'rgba(0,212,255,0.3)' } },
+                    axisLabel: { color: '#7eb8d0', fontSize: 10 },
+                    axisTick: { show: false }
                 },
                 yAxis: {
                     type: 'value',
-                    axisLine: {
-                        show: false
-                    },
-                    axisLabel: {
-                        color: '#00d4ff',
-                        fontSize: 10
-                    },
-                    splitLine: {
-                        lineStyle: {
-                            color: 'rgba(0, 212, 255, 0.1)'
-                        }
-                    }
+                    axisLine: { show: false },
+                    axisLabel: { color: '#7eb8d0', fontSize: 10 },
+                    splitLine: { lineStyle: { color: 'rgba(0,212,255,0.08)' } }
                 },
-                series: [
-                    {
-                        name: '批次数量',
-                        type: 'bar',
-                        data: [2000, 1800, 1500, 1200, 800],
-                        barWidth: '30%',
-                        itemStyle: {
-                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                                { offset: 0, color: '#00ffff' },
-                                { offset: 1, color: '#006699' }
-                            ]),
-                            borderRadius: [4, 4, 0, 0]
-                        }
+                series: [{
+                    type: 'bar',
+                    data: [
+                        { value: 1855, label: { show: true, position: 'top', color: '#7eb8d0', fontSize: 9, formatter: '{c}' } },
+                        { value: 1876, label: { show: true, position: 'top', color: '#7eb8d0', fontSize: 9, formatter: '{c}' } },
+                        { value: 1448, label: { show: true, position: 'top', color: '#7eb8d0', fontSize: 9, formatter: '{c}' } },
+                        { value: 1029, label: { show: true, position: 'top', color: '#7eb8d0', fontSize: 9, formatter: '{c}' } },
+                        { value: 503, label: { show: true, position: 'top', color: '#7eb8d0', fontSize: 9, formatter: '{c}' } }
+                    ],
+                    barWidth: '50%',
+                    itemStyle: {
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                            { offset: 0, color: '#00d4ff' },
+                            { offset: 1, color: '#003d6b' }
+                        ]),
+                        borderRadius: [3, 3, 0, 0]
                     }
-                ]
-            };
-            
-            myChart.setOption(option);
-            
-            window.addEventListener('resize', () => {
-                myChart.resize();
+                }]
             });
         };
-        
+
+        /* ---- 消费者查询次数柱图 ---- */
         const initQueryChart = () => {
-            const chartDom = document.getElementById('queryChart');
-            const myChart = echarts.init(chartDom);
-            
-            const option = {
+            const dom = document.getElementById('queryChart');
+            if (!dom) return;
+            const chart = echarts.init(dom);
+            registerResize(chart);
+            chart.setOption({
                 tooltip: {
                     trigger: 'axis',
-                    axisPointer: {
-                        type: 'shadow'
-                    },
-                    backgroundColor: 'rgba(0, 20, 40, 0.9)',
+                    axisPointer: { type: 'shadow' },
+                    backgroundColor: 'rgba(0,20,40,0.9)',
                     borderColor: '#00d4ff',
-                    textStyle: {
-                        color: '#ffffff'
-                    }
+                    textStyle: { color: '#fff' }
                 },
-                grid: {
-                    left: '10%',
-                    right: '5%',
-                    bottom: '15%',
-                    top: '10%',
-                    containLabel: true
-                },
+                grid: { left: 0, right: 8, bottom: 0, top: 20, containLabel: true },
                 xAxis: {
                     type: 'category',
                     data: ['葡萄', '大米', '黄瓜', '辣椒', '蘑菇'],
-                    axisLine: {
-                        lineStyle: {
-                            color: '#00d4ff'
-                        }
-                    },
-                    axisLabel: {
-                        color: '#00d4ff',
-                        fontSize: 10
-                    },
-                    axisTick: {
-                        show: false
-                    }
+                    axisLine: { lineStyle: { color: 'rgba(0,212,255,0.3)' } },
+                    axisLabel: { color: '#7eb8d0', fontSize: 10 },
+                    axisTick: { show: false }
                 },
                 yAxis: {
                     type: 'value',
-                    axisLine: {
-                        show: false
-                    },
-                    axisLabel: {
-                        color: '#00d4ff',
-                        fontSize: 10
-                    },
-                    splitLine: {
-                        lineStyle: {
-                            color: 'rgba(0, 212, 255, 0.1)'
-                        }
-                    }
+                    axisLine: { show: false },
+                    axisLabel: { color: '#7eb8d0', fontSize: 10 },
+                    splitLine: { lineStyle: { color: 'rgba(0,212,255,0.08)' } }
                 },
-                series: [
-                    {
-                        name: '查询次数',
-                        type: 'bar',
-                        data: [2000, 1800, 1500, 1200, 800],
-                        barWidth: '30%',
-                        itemStyle: {
-                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                                { offset: 0, color: '#00ffff' },
-                                { offset: 1, color: '#006699' }
-                            ]),
-                            borderRadius: [4, 4, 0, 0]
-                        }
+                series: [{
+                    type: 'bar',
+                    data: [
+                        { value: 2241, label: { show: true, position: 'top', color: '#7eb8d0', fontSize: 9, formatter: '{c}' } },
+                        { value: 1987, label: { show: true, position: 'top', color: '#7eb8d0', fontSize: 9, formatter: '{c}' } },
+                        { value: 1448, label: { show: true, position: 'top', color: '#7eb8d0', fontSize: 9, formatter: '{c}' } },
+                        { value: 1059, label: { show: true, position: 'top', color: '#7eb8d0', fontSize: 9, formatter: '{c}' } },
+                        { value: 503, label: { show: true, position: 'top', color: '#7eb8d0', fontSize: 9, formatter: '{c}' } }
+                    ],
+                    barWidth: '50%',
+                    itemStyle: {
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                            { offset: 0, color: '#00d4ff' },
+                            { offset: 1, color: '#003d6b' }
+                        ]),
+                        borderRadius: [3, 3, 0, 0]
                     }
-                ]
-            };
-            
-            myChart.setOption(option);
-            
-            window.addEventListener('resize', () => {
-                myChart.resize();
+                }]
             });
         };
-        
+
+        /* ---- 监测任务环形仪表盘 ---- */
         const initTaskChart = () => {
-            const chartDom = document.getElementById('taskChart');
-            const myChart = echarts.init(chartDom);
-            
-            const option = {
-                tooltip: {
-                    formatter: '{a} <br/>{b} : {c}%',
-                    backgroundColor: 'rgba(0, 20, 40, 0.9)',
-                    borderColor: '#00d4ff',
-                    textStyle: {
-                        color: '#ffffff'
-                    }
-                },
-                series: [
-                    {
-                        name: '任务完成率',
-                        type: 'gauge',
-                        startAngle: 180,
-                        endAngle: 0,
-                        min: 0,
-                        max: 100,
-                        splitNumber: 10,
-                        axisLine: {
-                            lineStyle: {
-                                width: 10,
-                                color: [
-                                    [0.3, '#ff6600'],
-                                    [0.7, '#ffcc00'],
-                                    [1, '#00ff66']
-                                ]
-                            }
-                        },
-                        pointer: {
-                            show: false
-                        },
-                        axisTick: {
-                            show: false
-                        },
-                        splitLine: {
-                            show: false
-                        },
-                        axisLabel: {
-                            show: false
-                        },
-                        title: {
-                            show: false
-                        },
-                        detail: {
-                            fontSize: 24,
-                            offsetCenter: [0, '0%'],
-                            valueAnimation: true,
-                            formatter: function (value) {
-                                return Math.round(value) + '%';
-                            },
-                            color: '#ff6600',
-                            fontWeight: 'bold'
-                        },
-                        data: [
-                            {
-                                value: 68,
-                                name: '任务完成率'
-                            }
-                        ]
-                    }
-                ]
-            };
-            
-            myChart.setOption(option);
-            
-            window.addEventListener('resize', () => {
-                myChart.resize();
+            const dom = document.getElementById('taskChart');
+            if (!dom) return;
+            const chart = echarts.init(dom);
+            registerResize(chart);
+            chart.setOption({
+                series: [{
+                    type: 'gauge',
+                    center: ['50%', '50%'],
+                    startAngle: 90,
+                    endAngle: -270,
+                    radius: '90%',
+                    pointer: { show: false },
+                    progress: {
+                        show: true,
+                        roundCap: true,
+                        width: 8,
+                        itemStyle: {
+                            color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
+                                { offset: 0, color: '#ff8c00' },
+                                { offset: 1, color: '#ffcc44' }
+                            ])
+                        }
+                    },
+                    axisLine: {
+                        roundCap: true,
+                        lineStyle: { width: 8, color: [[1, 'rgba(255,150,0,0.12)']] }
+                    },
+                    axisTick: { show: false },
+                    splitLine: { show: false },
+                    axisLabel: { show: false },
+                    title: { show: false },
+                    detail: {
+                        valueAnimation: true,
+                        fontSize: 15,
+                        fontWeight: 'bold',
+                        color: '#ffb74d',
+                        formatter: '{value}%',
+                        offsetCenter: [0, 0]
+                    },
+                    data: [{ value: 68 }]
+                }]
             });
         };
-        
+
+        /* ---- 基地检查环形仪表盘 ---- */
         const initInspectionChart = () => {
-            const chartDom = document.getElementById('inspectionChart');
-            const myChart = echarts.init(chartDom);
-            
-            const option = {
-                tooltip: {
-                    formatter: '{a} <br/>{b} : {c}%',
-                    backgroundColor: 'rgba(0, 20, 40, 0.9)',
-                    borderColor: '#00d4ff',
-                    textStyle: {
-                        color: '#ffffff'
-                    }
-                },
-                series: [
-                    {
-                        name: '基地检查率',
-                        type: 'gauge',
-                        startAngle: 180,
-                        endAngle: 0,
-                        min: 0,
-                        max: 100,
-                        splitNumber: 10,
-                        axisLine: {
-                            lineStyle: {
-                                width: 10,
-                                color: [
-                                    [0.3, '#ff6600'],
-                                    [0.7, '#ffcc00'],
-                                    [1, '#00ff66']
-                                ]
-                            }
-                        },
-                        pointer: {
-                            show: false
-                        },
-                        axisTick: {
-                            show: false
-                        },
-                        splitLine: {
-                            show: false
-                        },
-                        axisLabel: {
-                            show: false
-                        },
-                        title: {
-                            show: false
-                        },
-                        detail: {
-                            fontSize: 24,
-                            offsetCenter: [0, '0%'],
-                            valueAnimation: true,
-                            formatter: function (value) {
-                                return Math.round(value) + '%';
-                            },
-                            color: '#00ff66',
-                            fontWeight: 'bold'
-                        },
-                        data: [
-                            {
-                                value: 68,
-                                name: '基地检查率'
-                            }
-                        ]
-                    }
-                ]
-            };
-            
-            myChart.setOption(option);
-            
-            window.addEventListener('resize', () => {
-                myChart.resize();
+            const dom = document.getElementById('inspectionChart');
+            if (!dom) return;
+            const chart = echarts.init(dom);
+            registerResize(chart);
+            chart.setOption({
+                series: [{
+                    type: 'gauge',
+                    center: ['50%', '50%'],
+                    startAngle: 90,
+                    endAngle: -270,
+                    radius: '90%',
+                    pointer: { show: false },
+                    progress: {
+                        show: true,
+                        roundCap: true,
+                        width: 8,
+                        itemStyle: {
+                            color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
+                                { offset: 0, color: '#00c896' },
+                                { offset: 1, color: '#00e5cc' }
+                            ])
+                        }
+                    },
+                    axisLine: {
+                        roundCap: true,
+                        lineStyle: { width: 8, color: [[1, 'rgba(0,200,150,0.12)']] }
+                    },
+                    axisTick: { show: false },
+                    splitLine: { show: false },
+                    axisLabel: { show: false },
+                    title: { show: false },
+                    detail: {
+                        valueAnimation: true,
+                        fontSize: 15,
+                        fontWeight: 'bold',
+                        color: '#00e5b0',
+                        formatter: '{value}%',
+                        offsetCenter: [0, 0]
+                    },
+                    data: [{ value: 68 }]
+                }]
             });
         };
-        
+
+        /* ---- 趋势三线面积图 ---- */
         const initTrendChart = () => {
-            const chartDom = document.getElementById('trendChart');
-            const myChart = echarts.init(chartDom);
-            
-            const option = {
+            const dom = document.getElementById('trendChart');
+            if (!dom) return;
+            const chart = echarts.init(dom);
+            registerResize(chart);
+            chart.setOption({
                 tooltip: {
                     trigger: 'axis',
-                    backgroundColor: 'rgba(0, 20, 40, 0.9)',
+                    backgroundColor: 'rgba(0,20,40,0.9)',
                     borderColor: '#00d4ff',
-                    textStyle: {
-                        color: '#ffffff'
-                    }
+                    textStyle: { color: '#fff' }
                 },
-                grid: {
-                    left: '10%',
-                    right: '5%',
-                    bottom: '15%',
-                    top: '10%',
-                    containLabel: true
-                },
+                legend: { show: false },
+                grid: { left: 0, right: 8, bottom: 0, top: 8, containLabel: true },
                 xAxis: {
                     type: 'category',
                     boundaryGap: false,
                     data: ['7月', '8月', '9月'],
-                    axisLine: {
-                        lineStyle: {
-                            color: '#00d4ff'
-                        }
-                    },
-                    axisLabel: {
-                        color: '#00d4ff',
-                        fontSize: 10
-                    },
-                    axisTick: {
-                        show: false
-                    }
+                    axisLine: { lineStyle: { color: 'rgba(0,212,255,0.3)' } },
+                    axisLabel: { color: '#7eb8d0', fontSize: 10 },
+                    axisTick: { show: false }
                 },
                 yAxis: {
                     type: 'value',
-                    axisLine: {
-                        show: false
-                    },
-                    axisLabel: {
-                        color: '#00d4ff',
-                        fontSize: 10
-                    },
-                    splitLine: {
-                        lineStyle: {
-                            color: 'rgba(0, 212, 255, 0.1)'
-                        }
-                    }
+                    axisLine: { show: false },
+                    axisLabel: { color: '#7eb8d0', fontSize: 10 },
+                    splitLine: { lineStyle: { color: 'rgba(0,212,255,0.08)' } }
                 },
                 series: [
                     {
-                        name: '设施数量',
                         type: 'line',
-                        stack: 'Total',
-                        data: [150, 200, 250],
+                        data: [80, 130, 200],
                         smooth: true,
+                        symbol: 'none',
+                        lineStyle: { color: '#00d4ff', width: 1.5 },
                         areaStyle: {
                             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                                { offset: 0, color: 'rgba(0, 212, 255, 0.4)' },
-                                { offset: 1, color: 'rgba(0, 102, 153, 0.05)' }
+                                { offset: 0, color: 'rgba(0,212,255,0.35)' },
+                                { offset: 1, color: 'rgba(0,212,255,0.02)' }
                             ])
-                        },
-                        lineStyle: {
-                            color: '#00d4ff',
-                            width: 2
-                        },
-                        itemStyle: {
-                            color: '#00d4ff'
+                        }
+                    },
+                    {
+                        type: 'line',
+                        data: [120, 170, 240],
+                        smooth: true,
+                        symbol: 'none',
+                        lineStyle: { color: '#9c4dcc', width: 1.5 },
+                        areaStyle: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                                { offset: 0, color: 'rgba(156,77,204,0.35)' },
+                                { offset: 1, color: 'rgba(156,77,204,0.02)' }
+                            ])
+                        }
+                    },
+                    {
+                        type: 'line',
+                        data: [60, 100, 160],
+                        smooth: true,
+                        symbol: 'none',
+                        lineStyle: { color: '#00c896', width: 1.5 },
+                        areaStyle: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                                { offset: 0, color: 'rgba(0,200,150,0.35)' },
+                                { offset: 1, color: 'rgba(0,200,150,0.02)' }
+                            ])
                         }
                     }
                 ]
-            };
-            
-            myChart.setOption(option);
-            
-            window.addEventListener('resize', () => {
-                myChart.resize();
             });
         };
-        
+
+        /* ---- 地域排行水平柱图 ---- */
         const initRankingChart = () => {
-            const chartDom = document.getElementById('rankingChart');
-            const myChart = echarts.init(chartDom);
-            
-            const option = {
+            const dom = document.getElementById('rankingChart');
+            if (!dom) return;
+            const chart = echarts.init(dom);
+            registerResize(chart);
+            chart.setOption({
                 tooltip: {
                     trigger: 'axis',
-                    axisPointer: {
-                        type: 'shadow'
-                    },
-                    backgroundColor: 'rgba(0, 20, 40, 0.9)',
+                    axisPointer: { type: 'shadow' },
+                    backgroundColor: 'rgba(0,20,40,0.9)',
                     borderColor: '#00d4ff',
-                    textStyle: {
-                        color: '#ffffff'
-                    }
+                    textStyle: { color: '#fff' }
                 },
-                grid: {
-                    left: '20%',
-                    right: '15%',
-                    bottom: '5%',
-                    top: '5%',
-                    containLabel: true
-                },
+                grid: { left: 0, right: 50, bottom: 0, top: 4, containLabel: true },
                 xAxis: {
                     type: 'value',
-                    axisLine: {
-                        show: false
-                    },
-                    axisLabel: {
-                        show: false
-                    },
-                    splitLine: {
-                        show: false
-                    }
+                    axisLine: { show: false },
+                    axisLabel: { color: '#7eb8d0', fontSize: 9 },
+                    splitLine: { lineStyle: { color: 'rgba(0,212,255,0.08)' } }
                 },
                 yAxis: {
                     type: 'category',
-                    data: ['黑龙江省', '浙江省', '云南省', '河南省', '河北省'],
-                    inverse: true,
-                    axisLine: {
-                        show: false
-                    },
-                    axisLabel: {
-                        color: '#00d4ff',
-                        fontSize: 10
-                    },
-                    axisTick: {
-                        show: false
-                    }
+                    data: ['山东省', '河南省', '江苏省', '云南省', '浙江省'],
+                    inverse: false,
+                    axisLine: { show: false },
+                    axisLabel: { color: '#7eb8d0', fontSize: 10 },
+                    axisTick: { show: false }
                 },
-                series: [
-                    {
-                        name: '主体数量',
-                        type: 'bar',
-                        data: [2241, 3500, 1648, 1553, 1500],
-                        barWidth: '40%',
-                        itemStyle: {
-                            color: new echarts.graphic.LinearGradient(1, 0, 0, 0, [
-                                { offset: 0, color: '#ffcc00' },
-                                { offset: 1, color: '#ff9900' }
-                            ]),
-                            borderRadius: [0, 4, 4, 0]
-                        }
+                series: [{
+                    type: 'bar',
+                    data: [503, 1059, 1448, 1987, 2241],
+                    barWidth: '50%',
+                    label: {
+                        show: true,
+                        position: 'right',
+                        color: '#7eb8d0',
+                        fontSize: 10,
+                        formatter: '{c}'
+                    },
+                    itemStyle: {
+                        color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+                            { offset: 0, color: '#e65c00' },
+                            { offset: 1, color: '#f9d423' }
+                        ]),
+                        borderRadius: [0, 3, 3, 0]
                     }
-                ]
-            };
-            
-            myChart.setOption(option);
-            
-            window.addEventListener('resize', () => {
-                myChart.resize();
+                }]
             });
         };
-        
-        return {
-            activeTab,
-            handleTabClick
-        };
+
+        return {};
     }
 };
 </script>
 
 <style lang="less">
-.data-analysis-container {
+/* ============================================================
+   全局容器 & 布局
+   ============================================================ */
+.da-wrap {
     width: 100%;
     height: 100%;
-    background: linear-gradient(180deg, #0a1428 0%, #051020 100%);
-    color: #00d4ff;
+    background: linear-gradient(180deg, #071628 0%, #040e1c 100%);
+    color: #c0dce8;
     font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+    overflow: hidden auto;
+    box-sizing: border-box;
+}
+
+.da-main {
+    display: flex;
+    gap: 12px;
+    padding: 12px 14px;
+    height: 100%;
+    box-sizing: border-box;
+    min-width: 1366px;
+}
+
+/* ============================================================
+   通用卡片
+   ============================================================ */
+.da-left,
+.da-right {
+    width: 22%;
+    min-width: 260px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.da-center {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+}
+
+.da-card {
+    background: linear-gradient(180deg, rgba(5, 28, 58, 0.92) 0%, rgba(2, 14, 30, 0.96) 100%);
+    border: 1px solid rgba(0, 180, 220, 0.22);
+    border-radius: 4px;
+    padding: 8px 12px;
     position: relative;
     overflow: hidden;
-    overflow: auto  ;
-    .top-nav {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 8px 30px;
-        background: linear-gradient(180deg, rgba(0, 50, 100, 0.3) 0%, rgba(0, 30, 60, 0.5) 100%);
-        border-bottom: 2px solid #00d4ff;
-        position: relative;
-        
-        &::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%2300d4ff" stop-opacity="0.1"/><stop offset="1" stop-color="%2300d4ff" stop-opacity="0"/></linearGradient></defs><path d="M0 0 L30 0 L30 2 L2 2 L2 100 L0 100 Z" fill="url(%23g)"/><path d="M70 0 L100 0 L100 100 L98 100 L98 2 L70 2 Z" fill="url(%23g)"/></svg>') left top no-repeat,
-                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><linearGradient id="g" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="%2300d4ff" stop-opacity="0.1"/><stop offset="1" stop-color="%2300d4ff" stop-opacity="0"/></linearGradient></defs><path d="M0 0 L30 0 L30 2 L2 2 L2 100 L0 100 Z" fill="url(%23g)"/><path d="M70 0 L100 0 L100 100 L98 100 L98 2 L70 2 Z" fill="url(%23g)"/></svg>') right top no-repeat;
-            background-size: 200px 100%, 200px 100%;
-            pointer-events: none;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            position: relative;
-            z-index: 1;
-            
-            .logo-icon {
-                width: 60px;
-                height: 40px;
-                background: linear-gradient(135deg, #00d4ff 0%, #0066cc 100%);
-                clip-path: polygon(0 0, 70% 0, 100% 50%, 70% 100%, 0 100%, 30% 50%);
-                margin-right: 15px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-            
-            .logo-text {
-                font-size: 20px;
-                font-weight: bold;
-                color: #ffffff;
-                text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
-                margin-right: 10px;
-            }
-            
-            .logo-subtitle {
-                font-size: 16px;
-                color: #00d4ff;
-                background: rgba(0, 212, 255, 0.1);
-                padding: 3px 12px;
-                border: 1px solid #00d4ff;
-                border-radius: 2px;
-            }
-        }
-        
-        .nav-tabs {
-            display: flex;
-            gap: 5px;
-            position: relative;
-            z-index: 1;
-            
-            .nav-item {
-                padding: 8px 25px;
-                cursor: pointer;
-                transition: all 0.3s ease;
-                color: #00d4ff;
-                font-size: 14px;
-                border: 1px solid transparent;
-                position: relative;
-                
-                &:hover {
-                    color: #ffffff;
-                    background: rgba(0, 212, 255, 0.1);
-                }
-                
-                &.active {
-                    color: #ffffff;
-                    background: linear-gradient(180deg, rgba(0, 212, 255, 0.2) 0%, rgba(0, 100, 150, 0.1) 100%);
-                    border: 1px solid #00d4ff;
-                    border-bottom: 3px solid #00d4ff;
-                }
-            }
-        }
-        
-        .nav-right {
-            display: flex;
-            gap: 20px;
-            position: relative;
-            z-index: 1;
-            
-            .nav-item {
-                padding: 8px 16px;
-                cursor: pointer;
-                transition: all 0.3s ease;
-                color: #00d4ff;
-                font-size: 14px;
-                
-                &:hover {
-                    color: #ffffff;
-                }
-            }
-            
-            .user-info {
-                padding: 8px 16px;
-                cursor: pointer;
-                color: #ffffff;
-                font-size: 14px;
-                background: rgba(0, 212, 255, 0.1);
-                border: 1px solid #00d4ff;
-                border-radius: 2px;
-            }
-        }
+    flex-shrink: 0;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0;
+        width: 10px; height: 10px;
+        border-top: 2px solid #00b4d8;
+        border-left: 2px solid #00b4d8;
+        pointer-events: none;
     }
-    
-    .main-content {
-        display: flex;
-        padding: 15px 20px;
-        // height: calc(100% - 60px);
-        gap: 20px;
-        position: relative;
-        z-index: 1;
-        
-        .left-section,
-        .right-section {
-            width: 23%;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        
-        .center-section {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        
-        .card {
-            background: linear-gradient(180deg, rgba(0, 30, 60, 0.8) 0%, rgba(0, 15, 30, 0.9) 100%);
-            border: 1px solid rgba(0, 212, 255, 0.3);
-            border-radius: 4px;
-            padding: 12px 15px;
-            position: relative;
-            overflow: hidden;
-            
-            &::before,
-            &::after {
-                content: '';
-                position: absolute;
-                width: 10px;
-                height: 10px;
-                border: 2px solid #00d4ff;
-            }
-            
-            &::before {
-                top: -1px;
-                left: -1px;
-                border-right: none;
-                border-bottom: none;
-            }
-            
-            &::after {
-                bottom: -1px;
-                right: -1px;
-                border-left: none;
-                border-top: none;
-            }
-            
-            .card-header {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-bottom: 15px;
-                position: relative;
-                
-                .header-decoration {
-                    width: 30px;
-                    height: 2px;
-                    background: linear-gradient(90deg, transparent 0%, #00d4ff 100%);
-                    
-                    &.right {
-                        background: linear-gradient(90deg, #00d4ff 0%, transparent 100%);
-                    }
-                }
-                
-                h3 {
-                    font-size: 16px;
-                    font-weight: 600;
-                    margin: 0;
-                    color: #00d4ff;
-                    text-shadow: 0 0 5px rgba(0, 212, 255, 0.3);
-                }
-                
-                .more {
-                    font-size: 12px;
-                    color: #00d4ff;
-                    cursor: pointer;
-                    transition: all 0.3s ease;
-                    
-                    &:hover {
-                        color: #ffffff;
-                    }
-                }
-            }
-            
-            .card-body {
-                .data-item {
-                    display: flex;
-                    align-items: center;
-                    margin-bottom: 15px;
-                    
-                    .data-icon {
-                        width: 45px;
-                        height: 45px;
-                        border-radius: 50%;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        margin-right: 15px;
-                        position: relative;
-                        
-                        &.blue {
-                            background: radial-gradient(circle, rgba(0, 100, 200, 0.3) 0%, rgba(0, 50, 100, 0.1) 100%);
-                            border: 2px solid rgba(0, 150, 255, 0.5);
-                        }
-                        
-                        &.green {
-                            background: radial-gradient(circle, rgba(0, 200, 100, 0.3) 0%, rgba(0, 100, 50, 0.1) 100%);
-                            border: 2px solid rgba(0, 255, 150, 0.5);
-                        }
-                        
-                        &.purple {
-                            background: radial-gradient(circle, rgba(150, 100, 200, 0.3) 0%, rgba(75, 50, 100, 0.1) 100%);
-                            border: 2px solid rgba(200, 150, 255, 0.5);
-                        }
-                        
-                        &.yellow {
-                            background: radial-gradient(circle, rgba(200, 150, 0, 0.3) 0%, rgba(100, 75, 0, 0.1) 100%);
-                            border: 2px solid rgba(255, 200, 0, 0.5);
-                        }
-                        
-                        &.cyan {
-                            background: radial-gradient(circle, rgba(0, 200, 200, 0.3) 0%, rgba(0, 100, 100, 0.1) 100%);
-                            border: 2px solid rgba(0, 255, 255, 0.5);
-                        }
-                        
-                        &.orange {
-                            background: radial-gradient(circle, rgba(255, 100, 0, 0.3) 0%, rgba(125, 50, 0, 0.1) 100%);
-                            border: 2px solid rgba(255, 150, 0, 0.5);
-                        }
-                    }
-                    
-                    .data-info {
-                        flex: 1;
-                        
-                        .data-value {
-                            font-size: 20px;
-                            font-weight: 700;
-                            color: #ffffff;
-                            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-                        }
-                        
-                        .data-label {
-                            font-size: 12px;
-                            color: #00d4ff;
-                            margin-top: 2px;
-                        }
-                        
-                        .data-change {
-                            font-size: 11px;
-                            color: #00d4ff;
-                            margin-top: 4px;
-                            opacity: 0.8;
-                        }
-                    }
-                }
-                
-                .product-summary {
-                    display: flex;
-                    justify-content: space-between;
-                    margin-bottom: 15px;
-                    padding-bottom: 10px;
-                    border-bottom: 1px solid rgba(0, 212, 255, 0.2);
-                    
-                    .product-item {
-                        text-align: center;
-                        
-                        .product-value {
-                            font-size: 15px;
-                            font-weight: 700;
-                            color: #ffffff;
-                        }
-                        
-                        .product-label {
-                            font-size: 11px;
-                            color: #00d4ff;
-                            margin-top: 3px;
-                        }
-                    }
-                }
-                
-                .chart-title {
-                    font-size: 12px;
-                    color: #00d4ff;
-                    margin-bottom: 10px;
-                    text-align: center;
-                }
-                
-                .area-item {
-                    display: flex;
-                    align-items: center;
-                    margin-bottom: 15px;
-                    
-                    .area-icon {
-                        width: 35px;
-                        height: 35px;
-                        border-radius: 50%;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        margin-right: 12px;
-                        position: relative;
-                        
-                        &.blue {
-                            background: radial-gradient(circle, rgba(0, 100, 200, 0.3) 0%, rgba(0, 50, 100, 0.1) 100%);
-                            border: 2px solid rgba(0, 150, 255, 0.5);
-                        }
-                        
-                        &.orange {
-                            background: radial-gradient(circle, rgba(255, 100, 0, 0.3) 0%, rgba(125, 50, 0, 0.1) 100%);
-                            border: 2px solid rgba(255, 150, 0, 0.5);
-                        }
-                        
-                        &.green {
-                            background: radial-gradient(circle, rgba(0, 200, 100, 0.3) 0%, rgba(0, 100, 50, 0.1) 100%);
-                            border: 2px solid rgba(0, 255, 150, 0.5);
-                        }
-                        
-                        &.cyan {
-                            background: radial-gradient(circle, rgba(0, 200, 200, 0.3) 0%, rgba(0, 100, 100, 0.1) 100%);
-                            border: 2px solid rgba(0, 255, 255, 0.5);
-                        }
-                    }
-                    
-                    .area-info {
-                        .area-value {
-                            font-size: 16px;
-                            font-weight: 700;
-                            color: #ffffff;
-                        }
-                        
-                        .area-label {
-                            font-size: 11px;
-                            color: #00d4ff;
-                            margin-top: 2px;
-                        }
-                    }
-                }
-                
-                .task-stats {
-                    display: grid;
-                    grid-template-columns: 1fr 1fr;
-                    gap: 10px;
-                    margin-bottom: 15px;
-                    
-                    .task-item {
-                        background: rgba(0, 212, 255, 0.05);
-                        padding: 8px 10px;
-                        border-radius: 2px;
-                        text-align: center;
-                        border: 1px solid transparent;
-                        
-                        &.blue {
-                            border-color: rgba(0, 150, 255, 0.3);
-                        }
-                        
-                        &.orange {
-                            border-color: rgba(255, 150, 0, 0.3);
-                        }
-                        
-                        &.yellow {
-                            border-color: rgba(255, 200, 0, 0.3);
-                        }
-                        
-                        &.cyan {
-                            border-color: rgba(0, 255, 255, 0.3);
-                        }
-                        
-                        .task-label {
-                            font-size: 11px;
-                            color: #00d4ff;
-                        }
-                        
-                        .task-value {
-                            font-size: 14px;
-                            font-weight: 600;
-                            color: #ffffff;
-                            margin-top: 3px;
-                        }
-                    }
-                }
-            }
-            
-            .chart-container {
-                width: 100%;
-                height: 180px;
-                margin-top: 10px;
-            }
-            
-            .gauge-container {
-                width: 100%;
-                height: 120px;
-                margin-top: 10px;
-            }
-        }
-        
-        .entity-cards {
-            display: flex;
-            gap: 15px;
-            background: transparent;
-            
-            .entity-card {
-                flex: 1;
-                text-align: center;
-                background: linear-gradient(180deg, rgba(0, 30, 60, 0.8) 0%, rgba(0, 15, 30, 0.9) 100%);
-                border: 2px solid;
-                border-radius: 4px;
-                padding: 15px 10px;
-                position: relative;
-                overflow: hidden;
-                
-                &::before {
-                    content: '';
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    right: 0;
-                    bottom: 0;
-                    border: 1px solid rgba(255, 255, 255, 0.1);
-                    pointer-events: none;
-                }
-                
-                &.gold {
-                    border-color: #ffcc00;
-                    box-shadow: 0 0 15px rgba(255, 200, 0, 0.3), inset 0 0 20px rgba(255, 200, 0, 0.1);
-                    background: linear-gradient(180deg, rgba(100, 75, 0, 0.5) 0%, rgba(50, 37, 0, 0.7) 100%);
-                }
-                
-                &.orange {
-                    border-color: #ff9900;
-                    box-shadow: 0 0 15px rgba(255, 150, 0, 0.3), inset 0 0 20px rgba(255, 150, 0, 0.1);
-                    background: linear-gradient(180deg, rgba(100, 50, 0, 0.5) 0%, rgba(50, 25, 0, 0.7) 100%);
-                }
-                
-                &.green {
-                    border-color: #00ff66;
-                    box-shadow: 0 0 15px rgba(0, 255, 100, 0.3), inset 0 0 20px rgba(0, 255, 100, 0.1);
-                    background: linear-gradient(180deg, rgba(0, 100, 50, 0.5) 0%, rgba(0, 50, 25, 0.7) 100%);
-                }
-                
-                &.blue {
-                    border-color: #00ccff;
-                    box-shadow: 0 0 15px rgba(0, 200, 255, 0.3), inset 0 0 20px rgba(0, 200, 255, 0.1);
-                    background: linear-gradient(180deg, rgba(0, 75, 100, 0.5) 0%, rgba(0, 37, 50, 0.7) 100%);
-                }
-                
-                .entity-icon {
-                    width: 45px;
-                    height: 45px;
-                    border-radius: 50%;
-                    background: rgba(255, 255, 255, 0.1);
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    margin: 0 auto 10px;
-                    border: 2px solid rgba(255, 255, 255, 0.3);
-                }
-                
-                .entity-value {
-                    font-size: 20px;
-                    font-weight: 700;
-                    color: #ffffff;
-                    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-                }
-                
-                .entity-label {
-                    font-size: 12px;
-                    color: #ffffff;
-                    margin-top: 5px;
-                    opacity: 0.9;
-                }
-            }
-        }
-        
-        .industry-cards {
-            display: flex;
-            gap: 15px;
-            background: transparent;
-            
-            .industry-card {
-                flex: 1;
-                text-align: center;
-                background: linear-gradient(180deg, rgba(0, 30, 60, 0.8) 0%, rgba(0, 15, 30, 0.9) 100%);
-                border: 1px solid rgba(0, 212, 255, 0.3);
-                border-radius: 2px;
-                padding: 10px;
-                position: relative;
-                
-                &::before,
-                &::after {
-                    content: '';
-                    position: absolute;
-                    width: 8px;
-                    height: 8px;
-                    border: 1px solid #00d4ff;
-                }
-                
-                &::before {
-                    top: -1px;
-                    left: -1px;
-                    border-right: none;
-                    border-bottom: none;
-                }
-                
-                &::after {
-                    bottom: -1px;
-                    right: -1px;
-                    border-left: none;
-                    border-top: none;
-                }
-                
-                .industry-label {
-                    font-size: 12px;
-                    color: #00d4ff;
-                }
-                
-                .industry-value {
-                    font-size: 16px;
-                    font-weight: 600;
-                    color: #ffffff;
-                    margin-top: 5px;
-                }
-            }
-        }
-        
-        .map-container {
-            flex: 1;
-            background: linear-gradient(180deg, rgba(0, 30, 60, 0.8) 0%, rgba(0, 15, 30, 0.9) 100%);
-            border: 1px solid rgba(0, 212, 255, 0.3);
-            border-radius: 4px;
-            padding: 15px;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            
-            &::before,
-            &::after {
-                content: '';
-                position: absolute;
-                width: 15px;
-                height: 15px;
-                border: 2px solid #00d4ff;
-            }
-            
-            &::before {
-                top: -1px;
-                left: -1px;
-                border-right: none;
-                border-bottom: none;
-            }
-            
-            &::after {
-                bottom: -1px;
-                right: -1px;
-                border-left: none;
-                border-top: none;
-            }
-            
-            .map-location {
-                position: absolute;
-                top: 15px;
-                left: 20px;
-                font-size: 12px;
-                color: #00d4ff;
-                z-index: 10;
-            }
-            
-            .map {
-                flex: 1;
-                height: calc(100% - 20px);
-                margin-top: 20px;
-                position: relative;
-                z-index: 1;
-            }
-            
-            .map-decoration {
-                position: absolute;
-                bottom: 0;
-                left: 50%;
-                transform: translateX(-50%);
-                width: 60%;
-                height: 80px;
-                background: radial-gradient(ellipse at center, rgba(0, 212, 255, 0.15) 0%, transparent 70%);
-                pointer-events: none;
-                z-index: 0;
-            }
-            
-            .map-info {
-                position: absolute;
-                top: 15px;
-                right: 15px;
-                width: 280px;
-                background: rgba(0, 20, 40, 0.9);
-                border: 1px solid rgba(0, 212, 255, 0.3);
-                border-radius: 4px;
-                padding: 12px;
-                z-index: 10;
-                
-                .map-title {
-                    font-size: 13px;
-                    font-weight: 600;
-                    color: #00d4ff;
-                    margin-bottom: 12px;
-                }
-                
-                .ranking-chart {
-                    width: 100%;
-                    height: 150px;
-                    margin-bottom: 12px;
-                }
-                
-                .map-stats {
-                    .stat-title {
-                        font-size: 11px;
-                        color: #00d4ff;
-                        margin-bottom: 10px;
-                        padding: 8px;
-                        background: rgba(0, 212, 255, 0.1);
-                        border-left: 3px solid #00d4ff;
-                    }
-                }
-                
-                .trend-chart {
-                    width: 100%;
-                    height: 130px;
-                }
-            }
-        }
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 0; right: 0;
+        width: 10px; height: 10px;
+        border-bottom: 2px solid #00b4d8;
+        border-right: 2px solid #00b4d8;
+        pointer-events: none;
     }
-    
-    @media screen and (min-width: 1366px) {
-        .main-content {
-            .left-section,
-            .right-section {
-                width: 23%;
-            }
-            
-            .center-section {
-                flex: 1;
-            }
-        }
+}
+
+/* ---- 卡片标题行 ---- */
+.da-card-hd {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(0, 180, 220, 0.12);
+}
+
+.hd-title-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.hd-arrow {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 7px solid #00b4d8;
+}
+
+.hd-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e0f4ff;
+    letter-spacing: 0.5px;
+}
+
+.hd-more {
+    font-size: 11px;
+    color: #00b4d8;
+    cursor: pointer;
+    transition: color 0.2s;
+    &:hover { color: #fff; }
+}
+
+/* ============================================================
+   左栏：追溯业务情况
+   ============================================================ */
+.biz-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 8px;
+    &:last-child { margin-bottom: 0; }
+}
+
+.biz-icon {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+        width: 20px;
+        height: 20px;
     }
-    
-    @media screen and (min-width: 1440px) {
-        .main-content {
-            padding: 20px 25px;
-            gap: 25px;
-            
-            .card {
-                padding: 15px 20px;
-            }
-        }
+
+    &.blue {
+        background: radial-gradient(circle, rgba(0,100,200,0.25) 0%, rgba(0,50,100,0.08) 100%);
+        border: 1.5px solid rgba(0,150,255,0.5);
+        svg { color: #42a5f5; }
     }
-    
-    @media screen and (min-width: 1920px) {
-        .main-content {
-            padding: 25px 30px;
-            gap: 30px;
-            
-            .card {
-                padding: 20px 25px;
-            }
-        }
+    &.green {
+        background: radial-gradient(circle, rgba(0,180,80,0.25) 0%, rgba(0,80,40,0.08) 100%);
+        border: 1.5px solid rgba(0,220,100,0.5);
+        svg { color: #66bb6a; }
+    }
+    &.purple {
+        background: radial-gradient(circle, rgba(140,80,200,0.25) 0%, rgba(70,40,100,0.08) 100%);
+        border: 1.5px solid rgba(180,120,255,0.5);
+        svg { color: #ba68c8; }
+    }
+    &.yellow {
+        background: radial-gradient(circle, rgba(200,150,0,0.25) 0%, rgba(100,75,0,0.08) 100%);
+        border: 1.5px solid rgba(255,200,0,0.5);
+        svg { color: #ffd54f; }
+    }
+    &.cyan {
+        background: radial-gradient(circle, rgba(0,180,180,0.25) 0%, rgba(0,80,80,0.08) 100%);
+        border: 1.5px solid rgba(0,230,230,0.5);
+        svg { color: #4dd0e1; }
+    }
+    &.orange {
+        background: radial-gradient(circle, rgba(220,100,0,0.25) 0%, rgba(110,50,0,0.08) 100%);
+        border: 1.5px solid rgba(255,140,0,0.5);
+        svg { color: #ffa726; }
+    }
+}
+
+.biz-info {
+    flex: 1;
+    min-width: 0;
+    .biz-val {
+        font-size: 18px;
+        font-weight: 700;
+        color: #ffffff;
+        line-height: 1.2;
+    }
+    .biz-lbl {
+        font-size: 11px;
+        color: #7eb8d0;
+        margin-top: 2px;
+    }
+    .biz-cmp {
+        font-size: 10px;
+        color: #5a8fa8;
+        margin-top: 3px;
+    }
+}
+
+.unit {
+    font-size: 11px;
+    font-weight: 400;
+    color: #7eb8d0;
+    margin-left: 2px;
+}
+
+.up { color: #4caf50; }
+.down { color: #ef5350; }
+
+/* ---- 追溯产品情况 ---- */
+.prod-summary {
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(0,180,220,0.1);
+}
+
+.prod-main {
+    flex-shrink: 0;
+    .prod-main-val {
+        font-size: 20px;
+        font-weight: 700;
+        color: #fff;
+        line-height: 1.2;
+    }
+    .prod-main-lbl {
+        font-size: 10px;
+        color: #7eb8d0;
+        margin-top: 3px;
+    }
+}
+
+.prod-subs {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px 8px;
+}
+
+.prod-sub {
+    .prod-sub-val {
+        font-size: 12px;
+        font-weight: 600;
+        color: #e0f4ff;
+    }
+    .prod-sub-lbl {
+        font-size: 10px;
+        color: #5a8fa8;
+    }
+}
+
+.chart-sub-title {
+    font-size: 11px;
+    color: #5a8fa8;
+    text-align: center;
+    margin-bottom: 6px;
+}
+
+.chart-box {
+    width: 100%;
+    height: 120px;
+}
+
+/* ---- 追溯种养面积 ---- */
+.area-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    &:last-child { margin-bottom: 0; }
+}
+
+.area-icon {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    svg { width: 18px; height: 18px; }
+
+    &.blue {
+        background: radial-gradient(circle, rgba(0,100,200,0.25) 0%, transparent 100%);
+        border: 1.5px solid rgba(0,150,255,0.5);
+        svg { color: #42a5f5; }
+    }
+    &.orange {
+        background: radial-gradient(circle, rgba(220,100,0,0.25) 0%, transparent 100%);
+        border: 1.5px solid rgba(255,140,0,0.5);
+        svg { color: #ffa726; }
+    }
+    &.green {
+        background: radial-gradient(circle, rgba(0,180,80,0.25) 0%, transparent 100%);
+        border: 1.5px solid rgba(0,220,100,0.5);
+        svg { color: #66bb6a; }
+    }
+}
+
+.area-info {
+    .area-val {
+        font-size: 16px;
+        font-weight: 700;
+        color: #fff;
+    }
+    .area-lbl {
+        font-size: 10px;
+        color: #7eb8d0;
+        margin-top: 2px;
+    }
+}
+
+/* ============================================================
+   中栏：顶部4卡片
+   ============================================================ */
+.entity-row {
+    display: flex;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.entity-card {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 4px;
+    border: 1px solid;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0;
+        width: 8px; height: 8px;
+        border-top: 2px solid;
+        border-left: 2px solid;
+    }
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 0; right: 0;
+        width: 8px; height: 8px;
+        border-bottom: 2px solid;
+        border-right: 2px solid;
+    }
+
+    &.gold {
+        border-color: rgba(255,200,0,0.35);
+        background: linear-gradient(135deg, rgba(80,55,0,0.55) 0%, rgba(40,28,0,0.75) 100%);
+        box-shadow: 0 0 12px rgba(255,200,0,0.15) inset;
+        &::before, &::after { border-color: #ffc400; }
+    }
+    &.orange {
+        border-color: rgba(255,140,0,0.35);
+        background: linear-gradient(135deg, rgba(80,40,0,0.55) 0%, rgba(40,20,0,0.75) 100%);
+        box-shadow: 0 0 12px rgba(255,140,0,0.15) inset;
+        &::before, &::after { border-color: #ff8c00; }
+    }
+    &.green {
+        border-color: rgba(0,200,100,0.35);
+        background: linear-gradient(135deg, rgba(0,60,30,0.55) 0%, rgba(0,30,15,0.75) 100%);
+        box-shadow: 0 0 12px rgba(0,200,100,0.15) inset;
+        &::before, &::after { border-color: #00c864; }
+    }
+    &.blue {
+        border-color: rgba(0,180,255,0.35);
+        background: linear-gradient(135deg, rgba(0,50,80,0.55) 0%, rgba(0,25,40,0.75) 100%);
+        box-shadow: 0 0 12px rgba(0,180,255,0.15) inset;
+        &::before, &::after { border-color: #00b4ff; }
+    }
+}
+
+.ec-icon-wrap {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg { width: 22px; height: 22px; }
+
+    &.gold {
+        background: rgba(255,200,0,0.18);
+        svg { color: #ffd740; }
+    }
+    &.orange {
+        background: rgba(255,140,0,0.18);
+        svg { color: #ffab40; }
+    }
+    &.green {
+        background: rgba(0,200,100,0.18);
+        svg { color: #69f0ae; }
+    }
+    &.blue {
+        background: rgba(0,180,255,0.18);
+        svg { color: #40c4ff; }
+    }
+}
+
+.ec-info {
+    min-width: 0;
+    .ec-val {
+        font-size: 18px;
+        font-weight: 700;
+        color: #fff;
+        line-height: 1.2;
+        white-space: nowrap;
+    }
+    .ec-unit {
+        font-size: 11px;
+        font-weight: 400;
+        color: rgba(255,255,255,0.6);
+        margin-left: 2px;
+    }
+    .ec-lbl {
+        font-size: 11px;
+        color: rgba(255,255,255,0.55);
+        margin-top: 3px;
+        white-space: nowrap;
+    }
+}
+
+/* ============================================================
+   中栏：行业分布行
+   ============================================================ */
+.industry-row {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.industry-tag {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 7px 6px;
+    background: rgba(0,180,220,0.06);
+    border: 1px solid rgba(0,180,220,0.2);
+    border-radius: 3px;
+    position: relative;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0;
+        width: 7px; height: 7px;
+        border-top: 1px solid #00b4d8;
+        border-left: 1px solid #00b4d8;
+    }
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 0; right: 0;
+        width: 7px; height: 7px;
+        border-bottom: 1px solid #00b4d8;
+        border-right: 1px solid #00b4d8;
+    }
+}
+
+.ind-lbl {
+    font-size: 11px;
+    color: #7eb8d0;
+    margin-bottom: 3px;
+}
+
+.ind-val {
+    font-size: 14px;
+    font-weight: 600;
+    color: #e0f4ff;
+    white-space: nowrap;
+}
+
+.ind-unit {
+    font-size: 10px;
+    font-weight: 400;
+    color: #5a8fa8;
+    margin-left: 1px;
+}
+
+/* ============================================================
+   中栏：地图区域
+   ============================================================ */
+.map-wrap {
+    flex: 1;
+    position: relative;
+    background: linear-gradient(180deg, rgba(5,28,58,0.92) 0%, rgba(2,14,30,0.96) 100%);
+    border: 1px solid rgba(0,180,220,0.22);
+    border-radius: 4px;
+    overflow: hidden;
+    min-height: 0;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0;
+        width: 12px; height: 12px;
+        border-top: 2px solid #00b4d8;
+        border-left: 2px solid #00b4d8;
+        z-index: 2;
+    }
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 0; right: 0;
+        width: 12px; height: 12px;
+        border-bottom: 2px solid #00b4d8;
+        border-right: 2px solid #00b4d8;
+        z-index: 2;
+    }
+}
+
+.map-loc {
+    position: absolute;
+    top: 10px; left: 14px;
+    font-size: 11px;
+    color: #7eb8d0;
+    z-index: 5;
+}
+
+.map-echarts {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* ---- 排行面板 ---- */
+.map-panel {
+    position: absolute;
+    top: 10px; right: 10px;
+    width: 260px;
+    background: rgba(2,14,30,0.92);
+    border: 1px solid rgba(0,180,220,0.25);
+    border-radius: 4px;
+    padding: 10px 12px;
+    z-index: 10;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0;
+        width: 8px; height: 8px;
+        border-top: 1.5px solid #00b4d8;
+        border-left: 1.5px solid #00b4d8;
+    }
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 0; right: 0;
+        width: 8px; height: 8px;
+        border-bottom: 1.5px solid #00b4d8;
+        border-right: 1.5px solid #00b4d8;
+    }
+}
+
+.mp-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #7eb8d0;
+    margin-bottom: 8px;
+}
+
+.mp-ranking-chart {
+    width: 100%;
+    height: 120px;
+    margin-bottom: 8px;
+}
+
+.mp-note {
+    font-size: 10px;
+    color: #4caf50;
+    background: rgba(76,175,80,0.08);
+    border-left: 2px solid #4caf50;
+    padding: 5px 8px;
+    margin-bottom: 8px;
+    line-height: 1.4;
+    display: flex;
+    align-items: flex-start;
+    gap: 4px;
+}
+
+.mp-note-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #4caf50;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.mp-trend-chart {
+    width: 100%;
+    height: 100px;
+}
+
+/* ============================================================
+   右栏：监测任务情况
+   ============================================================ */
+.monitor-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.monitor-stat {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    flex: 1;
+    min-width: 0;
+}
+
+.gauge-right {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80px;
+}
+
+.gauge-mini {
+    width: 74px;
+    height: 74px;
+}
+
+.gauge-lbl {
+    font-size: 10px;
+    color: #7eb8d0;
+    margin-top: 2px;
+    text-align: center;
+}
+
+/* ---- 任务4格 ---- */
+.task-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.tg-item {
+    padding: 7px 8px;
+    border-radius: 3px;
+    text-align: center;
+    border: 1px solid;
+
+    .tg-lbl {
+        font-size: 10px;
+        color: #7eb8d0;
+    }
+    .tg-val {
+        font-size: 14px;
+        font-weight: 600;
+        color: #e0f4ff;
+        margin-top: 2px;
+    }
+
+    &.blue {
+        border-color: rgba(0,150,255,0.3);
+        background: rgba(0,150,255,0.06);
+    }
+    &.orange {
+        border-color: rgba(255,150,0,0.3);
+        background: rgba(255,150,0,0.06);
+        .tg-val { color: #ffa726; }
+    }
+    &.yellow {
+        border-color: rgba(255,200,0,0.3);
+        background: rgba(255,200,0,0.06);
+        .tg-val { color: #ffd740; }
+    }
+    &.cyan {
+        border-color: rgba(0,220,220,0.3);
+        background: rgba(0,220,220,0.06);
+        .tg-val { color: #4dd0e1; }
+    }
+}
+
+/* ---- 基地巡查情况 ---- */
+.insp-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.insp-stats {
+    flex: 1;
+    min-width: 0;
+}
+
+/* ============================================================
+   响应式
+   ============================================================ */
+@media screen and (min-width: 1440px) {
+    .da-main {
+        gap: 14px;
+        padding: 14px 18px;
+    }
+    .chart-box {
+        height: 160px;
+    }
+}
+
+@media screen and (min-width: 1680px) {
+    .da-main {
+        gap: 16px;
+        padding: 16px 22px;
+    }
+    .chart-box {
+        height: 180px;
+    }
+    .biz-icon {
+        width: 44px;
+        height: 44px;
+    }
+}
+
+@media screen and (min-width: 1920px) {
+    .da-main {
+        gap: 18px;
+        padding: 18px 26px;
+    }
+    .biz-info .biz-val {
+        font-size: 20px;
+    }
+    .ec-info .ec-val {
+        font-size: 20px;
+    }
+    .chart-box {
+        height: 200px;
+    }
+    .mp-ranking-chart {
+        height: 140px;
+    }
+    .mp-trend-chart {
+        height: 120px;
     }
 }
 </style>
