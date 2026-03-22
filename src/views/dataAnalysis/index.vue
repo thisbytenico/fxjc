@@ -21,7 +21,9 @@
                                     <div class="biz-val">984,320<span class="unit">次</span></div>
                                     <div class="biz-lbl">生产批次次数</div>
                                 </div>
-                                <div class="biz-cmp">去年同期: 2,280次 同比: <span class="up">▲3%</span></div>
+                                <div class="biz-cmp"><el-icon><Calendar /></el-icon>
+                                    去年同期 <span class="cmp-val">2,280次</span> 
+                                    同比增长 <span>3%</span><span class="up">▲</span></div>
                             </div>
                         </div>
                         <div class="biz-item">
@@ -29,9 +31,13 @@
                                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
                             </div>
                             <div class="biz-info">
-                                <div class="biz-val">258,410<span class="unit">次</span></div>
-                                <div class="biz-lbl">交易批次次数</div>
-                                <div class="biz-cmp">去年同期: 1,167次 同比: <span class="up">▲13%</span></div>
+                                <div class="left">
+                                    <div class="biz-val">258,410<span class="unit">次</span></div>
+                                    <div class="biz-lbl">交易批次次数</div>
+                                </div>
+                                <div class="biz-cmp"><el-icon><Calendar /></el-icon>
+                                    去年同期 <span class="cmp-val">1,167次</span> 
+                                    同比增长 <span>13%</span><span class="up">▲</span></div>
                             </div>
                         </div>
                         <div class="biz-item">
@@ -39,9 +45,13 @@
                                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>
                             </div>
                             <div class="biz-info">
-                                <div class="biz-val">984,320<span class="unit">张</span></div>
-                                <div class="biz-lbl">打印标签批次</div>
-                                <div class="biz-cmp">去年同期: 2,152张 同比: <span class="down">下降8%</span></div>
+                                <div class="left">
+                                    <div class="biz-val">984,320<span class="unit">张</span></div>
+                                    <div class="biz-lbl">打印标签批次</div>
+                                </div>
+                                <div class="biz-cmp"><el-icon><Calendar /></el-icon>
+                                    去年同期 <span class="cmp-val">2,152张</span> 
+                                    同比增长 <span>-8%</span><span class="down">▼</span></div>
                             </div>
                         </div>
                         <div class="biz-item">
@@ -49,9 +59,13 @@
                                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg>
                             </div>
                             <div class="biz-info">
-                                <div class="biz-val">38,172<span class="unit">张</span></div>
-                                <div class="biz-lbl">打印个码标签</div>
-                                <div class="biz-cmp">去年同期: 1,991次 同比: <span class="up">▲11%</span></div>
+                                <div class="left">
+                                    <div class="biz-val">38,172<span class="unit">张</span></div>
+                                    <div class="biz-lbl">打印个码标签</div>
+                                </div>
+                                <div class="biz-cmp"><el-icon><Calendar /></el-icon>
+                                    去年同期 <span class="cmp-val">1,991次</span> 
+                                    同比增长 <span>11%</span><span class="up">▲</span></div>    
                             </div>
                         </div>
                     </div>
@@ -178,51 +192,55 @@
                     </div>
                 </div>
 
-                <!-- 行业分布行 -->
-                <div class="industry-row">
-                    <div class="industry-tag">
-                        <span class="ind-lbl">种植业</span>
-                        <span class="ind-val">263,450<span class="ind-unit">家</span></span>
-                    </div>
-                    <div class="industry-tag">
-                        <span class="ind-lbl">畜牧业</span>
-                        <span class="ind-val">114,780<span class="ind-unit">家</span></span>
-                    </div>
-                    <div class="industry-tag">
-                        <span class="ind-lbl">渔业</span>
-                        <span class="ind-val">49,650<span class="ind-unit">家</span></span>
-                    </div>
-                    <div class="industry-tag">
-                        <span class="ind-lbl">其他</span>
-                        <span class="ind-val">281,190<span class="ind-unit">家</span></span>
-                    </div>
-                </div>
+               
 
                 <!-- 地图区域 -->
-                <div class="map-wrap">
-                    <div class="map-loc">当前位置：全国</div>
-                    <div id="chinaMap" class="map-echarts"></div>
-                    <!-- 右侧排行面板 -->
-                    <div class="map-panel">
-                        <div class="mp-title">注册生产经营主体地域排行</div>
-                        <div id="rankingChart" class="mp-ranking-chart"></div>
-                        <div class="mp-note">
-                            <span class="mp-note-dot"></span>
-                            上季度新增注册生产经营主体7,526家 与同期相比增长3%
+                <div class="map-wrap-box">
+                     <!-- 行业分布行 -->
+                    <div class="industry-row">
+                        <div class="industry-tag">
+                            <span class="ind-lbl">种植业</span>
+                            <span class="ind-val">263,450<span class="ind-unit">家</span></span>
                         </div>
-                        <div id="trendChart" class="mp-trend-chart"></div>
+                        <div class="industry-tag">
+                            <span class="ind-lbl">畜牧业</span>
+                            <span class="ind-val">114,780<span class="ind-unit">家</span></span>
+                        </div>
+                        <div class="industry-tag">
+                            <span class="ind-lbl">渔业</span>
+                            <span class="ind-val">49,650<span class="ind-unit">家</span></span>
+                        </div>
+                        <div class="industry-tag">
+                            <span class="ind-lbl">其他</span>
+                            <span class="ind-val">281,190<span class="ind-unit">家</span></span>
+                        </div>
+                    </div>
+                    <div class="map-wrap">
+                        <div class="map-loc">当前位置：全国</div>
+                        <div id="chinaMap" class="map-echarts"></div>
+                        <!-- 右侧排行面板 -->
+                        <div class="map-panel">
+                            <div class="mp-title">注册生产经营主体地域排行</div>
+                            <div id="rankingChart" class="mp-ranking-chart"></div>
+                            <div class="mp-note">
+                                <span class="mp-note-dot"></span>
+                                上季度新增注册生产经营主体7,526家 与同期相比增长3%
+                            </div>
+                            <div id="trendChart" class="mp-trend-chart"></div>
+                        </div>
                     </div>
                 </div>
+                
             </div>
 
             <!-- ====== 右栏 ====== -->
             <div class="da-right">
-                <!-- 满意者查询情况 -->
+                <!-- 消费者查询情况 -->
                 <div class="da-card">
                     <div class="da-card-hd">
                         <div class="hd-title-row">
                             <span class="hd-arrow"></span>
-                            <span class="hd-title">满意者查询情况</span>
+                            <span class="hd-title">消费者查询情况</span>
                         </div>
                         <span class="hd-more">明细&gt;</span>
                     </div>
@@ -234,7 +252,6 @@
                             <div class="biz-info">
                                 <div class="biz-val">38,172<span class="unit">次</span></div>
                                 <div class="biz-lbl">消费者查询次数</div>
-                                <div class="biz-cmp">环比增长 <span class="up">12.6%</span></div>
                             </div>
                         </div>
                         <div class="chart-sub-title">追溯产品消费者查询次数排名</div>
@@ -1153,13 +1170,13 @@ export default {
 .hd-title {
     font-size: 13px;
     font-weight: 600;
-    color: #e0f4ff;
+    color: #b4cbe8;
     letter-spacing: 0.5px;
 }
 
 .hd-more {
     font-size: 11px;
-    color: #00b4d8;
+    color: #b4cbe8;
     cursor: pointer;
     transition: color 0.2s;
     &:hover { color: #fff; }
@@ -1174,6 +1191,18 @@ export default {
     gap: 10px;
     margin-bottom: 8px;
     &:last-child { margin-bottom: 0; }
+}
+.da-right{
+  .biz-item{
+    align-items: center;
+    .biz-info{
+        flex-direction: column;
+        align-items:flex-start;
+        .biz-val{
+            color:#6edeae;
+        }
+    }
+  }  
 }
 
 .biz-icon {
@@ -1227,29 +1256,51 @@ export default {
     min-width: 0;
     display: flex;
     align-items: center;
+    .left{
+        min-width: 82px;
+    }
     .biz-val {
         font-size: 16px;
         font-weight: 700;
-        color: #ffffff;
+        color:rgb(32 232 244)
+;
         line-height: 1.2;
     }
     .biz-lbl {
         font-size: 11px;
-        color: #7eb8d0;
+        color: #e4eef1;
         margin-top: 2px;
     }
     .biz-cmp {
         font-size: 10px;
-        color: #5a8fa8;
+        color: #abb9cb;
         margin-top: 3px;
         margin-left: 8px;
+        display: flex;
+        align-items: center;
+        .el-icon {
+            margin-right: 4px;
+            font-size: 12px;
+        }
+        span{
+            color:#4cdadf;
+            display: inline-flex;
+            margin: 0 3px;
+        }
+        .cmp-val{
+            margin: 0 6px 0 2px;
+        }
+        .up,.down{
+            margin: 0;
+        }
+        .up { color: #4caf50; }
+        .down { color: #ef5350; }
     }
 }
 
 .unit {
     font-size: 15px;
     font-weight: 400;
-    color: #7eb8d0;
     margin-left: 4px;
 }
 
@@ -1302,8 +1353,7 @@ export default {
 
 .chart-sub-title {
     font-size: 11px;
-    color: #5a8fa8;
-    text-align: center;
+    color: #e4eef1;
     margin-bottom: 6px;
 }
 
@@ -1403,24 +1453,48 @@ export default {
         background: linear-gradient(135deg, rgba(80,55,0,0.55) 0%, rgba(40,28,0,0.75) 100%);
         box-shadow: 0 0 12px rgba(255,200,0,0.15) inset;
         &::before, &::after { border-color: #ffc400; }
+        .ec-val{
+            color:#d1c061;
+        }
+        .ec-unit{
+         color: #d1c061;
+        }
     }
     &.orange {
         border-color: rgba(255,140,0,0.35);
         background: linear-gradient(135deg, rgba(80,40,0,0.55) 0%, rgba(40,20,0,0.75) 100%);
         box-shadow: 0 0 12px rgba(255,140,0,0.15) inset;
         &::before, &::after { border-color: #ff8c00; }
+        .ec-val{
+            color:#ff8c00;
+        }
+        .ec-unit{
+         color: #ff8c00;
+        }
     }
     &.green {
         border-color: rgba(0,200,100,0.35);
         background: linear-gradient(135deg, rgba(0,60,30,0.55) 0%, rgba(0,30,15,0.75) 100%);
         box-shadow: 0 0 12px rgba(0,200,100,0.15) inset;
-        &::before, &::after { border-color: #00c864; }
+        &::before, &::after { border-color: #6edeae; }
+        .ec-val{
+            color:#6edeae;
+        }
+        .ec-unit{
+         color: #6edeae;
+        }
     }
     &.blue {
         border-color: rgba(0,180,255,0.35);
         background: linear-gradient(135deg, rgba(0,50,80,0.55) 0%, rgba(0,25,40,0.75) 100%);
         box-shadow: 0 0 12px rgba(0,180,255,0.15) inset;
         &::before, &::after { border-color: #00b4ff; }
+        .ec-val{
+            color:#00b4ff;
+        }
+        .ec-unit{
+         color: #00b4ff;
+        }
     }
 }
 
@@ -1458,7 +1532,6 @@ export default {
     .ec-val {
         font-size: 18px;
         font-weight: 700;
-        color: #fff;
         line-height: 1.2;
         white-space: nowrap;
     }
@@ -1467,10 +1540,11 @@ export default {
         font-weight: 400;
         color: rgba(255,255,255,0.6);
         margin-left: 2px;
+        font-size: 18px;
     }
     .ec-lbl {
         font-size: 11px;
-        color: rgba(255,255,255,0.55);
+        color: #e4eef1;
         margin-top: 3px;
         white-space: nowrap;
     }
@@ -1481,15 +1555,17 @@ export default {
    ============================================================ */
 .industry-row {
     display: flex;
-    gap: 8px;
+    gap: 10px;
     flex-shrink: 0;
+    padding: 24px 20px 8px;
+    // padding: 14px 10px 8px;
 }
 
 .industry-tag {
     flex: 1;
     display: flex;
-    flex-direction: column;
     align-items: center;
+    justify-content: center;
     padding: 7px 6px;
     background: rgba(0,180,220,0.06);
     border: 1px solid rgba(0,180,220,0.2);
@@ -1516,28 +1592,28 @@ export default {
 
 .ind-lbl {
     font-size: 11px;
-    color: #7eb8d0;
-    margin-bottom: 3px;
+    color: #e4eef1;
+    margin-right: 6px;
 }
 
 .ind-val {
     font-size: 14px;
     font-weight: 600;
-    color: #e0f4ff;
+    color: #4cdadf;
     white-space: nowrap;
 }
 
 .ind-unit {
-    font-size: 10px;
+    font-size: 14px;
     font-weight: 400;
-    color: #5a8fa8;
-    margin-left: 1px;
+    color: #4cdadf;
+    margin-left: 4px;
 }
 
 /* ============================================================
    中栏：地图区域
    ============================================================ */
-.map-wrap {
+.map-wrap-box{
     flex: 1;
     position: relative;
     background: linear-gradient(180deg, rgba(5,28,58,0.92) 0%, rgba(2,14,30,0.96) 100%);
@@ -1545,6 +1621,8 @@ export default {
     border-radius: 4px;
     overflow: hidden;
     min-height: 0;
+    display: flex;
+    flex-direction: column;
 
     &::before {
         content: '';
@@ -1564,6 +1642,12 @@ export default {
         border-right: 2px solid #00b4d8;
         z-index: 2;
     }
+}
+.map-wrap {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    min-height: 0;
 }
 
 .map-loc {
