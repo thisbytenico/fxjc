@@ -6,19 +6,19 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      redirect: '/overview'
+      redirect: '/dataAnalysis'
     },
     {
       path: '/login',
       name: 'login',
       component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue')
     },
-    {
-      path: '/overview',
-      name: 'overview',
-      meta:{breadcrumbsName:'统计概览'},
-      component: () => import('../views/overview/index.vue')
-    },
+    // {
+    //   path: '/overview',
+    //   name: 'overview',
+    //   meta:{breadcrumbsName:'统计概览'},
+    //   component: () => import('../views/overview/index.vue')
+    // },
     {
       path: '/dataAnalysis',
       name: 'dataAnalysis',

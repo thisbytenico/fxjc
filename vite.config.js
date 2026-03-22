@@ -54,8 +54,6 @@ export default ({ mode }) => defineConfig({
     }
   },
   server: {
-    port: 3000,
-    open: true,
     proxy: {
       '/api': {
         target: 'http://10.0.52.114',//'http://172.16.7.89:8002/',//
@@ -66,9 +64,7 @@ export default ({ mode }) => defineConfig({
     // 热更新配置
     hmr: {
       enabled: true,
-      overlay: true,
-      protocol: 'ws',
-      host: 'localhost'
+      overlay: true
     }
   },
   // ******项目构建配置******

@@ -17,8 +17,10 @@
                                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
                             </div>
                             <div class="biz-info">
-                                <div class="biz-val">984,320<span class="unit">次</span></div>
-                                <div class="biz-lbl">生产批次次数</div>
+                                <div class="left">
+                                    <div class="biz-val">984,320<span class="unit">次</span></div>
+                                    <div class="biz-lbl">生产批次次数</div>
+                                </div>
                                 <div class="biz-cmp">去年同期: 2,280次 同比: <span class="up">▲3%</span></div>
                             </div>
                         </div>
@@ -359,17 +361,130 @@ export default {
         });
 
         /* ---- 中国地图 ---- */
+        let currentMapLevel = 'country'; // 当前地图级别：country, province, city
+        let currentMapName = 'china'; // 当前地图名称
+        let mapChart = null;
+        
         const initChinaMap = () => {
             const dom = document.getElementById('chinaMap');
             if (!dom) return;
-            const chart = echarts.init(dom);
-            registerResize(chart);
+            mapChart = echarts.init(dom);
+            registerResize(mapChart);
 
-            fetch('https://geo.datav.aliyun.com/areas_v3/bound/100000.json')
+            // 加载全国地图
+            loadMap('china', '100000', '全国');
+
+            // 绑定点击事件
+            mapChart.on('click', function(params) {
+                console.log('params', params);
+                if (currentMapLevel === 'country') {
+                    // 从全国下钻到省份
+                    const provinceName = params.name;
+                    const provinceCode = getProvinceCode(provinceName);
+                    console.log('provinceCode', provinceCode);
+                    currentMapLevel = 'province';
+                    if (provinceCode) {
+                        loadMap(provinceName, provinceCode, provinceName);
+                        currentMapLevel = 'province';
+                        currentMapName = provinceName;
+                    }
+                } else if (currentMapLevel === 'province') {
+                    // 从省份下钻到城市
+                    const cityName = params.name;
+                    const cityCode = getCityCode(currentMapName, cityName);
+                    currentMapLevel = 'city';
+                    if (cityCode) {
+                        loadMap(cityName, cityCode, cityName);
+                        currentMapLevel = 'city';
+                        currentMapName = cityName;
+                    }
+                }
+            });
+
+            // 添加返回按钮
+            const mapContainer = document.querySelector('.map-wrap');
+            if (mapContainer) {
+                let backBtn = document.querySelector('.map-back-btn');
+                if (!backBtn) {
+                    backBtn = document.createElement('div');
+                    backBtn.className = 'map-back-btn';
+                    backBtn.innerText = '返回';
+                    backBtn.style.cssText = `
+                        position: absolute;
+                        top: 32px;
+                        left: 10px;
+                        padding: 4px 12px;
+                        background: rgba(0, 20, 40, 0.8);
+                        border: 1px solid #00d4ff;
+                        color: #00d4ff;
+                        border-radius: 4px;
+                        cursor: pointer;
+                        font-size: 12px;
+                        z-index: 10;
+                        display: none;
+                    `;
+                    backBtn.onclick = function() {
+                        if (currentMapLevel === 'city') {
+                            // 从城市返回省份
+                            const provinceName = getProvinceNameFromCity(currentMapName);
+                            const provinceCode = getProvinceCode(provinceName);
+                            console.log('provinceCode',provinceCode,'provinceName',provinceName,'currentMapName',currentMapName)
+                            if (provinceCode) {
+                                currentMapLevel = 'province';
+                                currentMapName = provinceName;
+                                loadMap(provinceName, provinceCode, provinceName);
+                               
+                            }
+                        } else if (currentMapLevel === 'province') {
+                            // 从省份返回全国
+                            currentMapLevel = 'country';
+                            currentMapName = 'china';
+                            loadMap('china', '100000', '全国');
+                        }
+                    };
+                    mapContainer.appendChild(backBtn);
+                }
+            }
+        };
+
+        // 加载地图数据
+        const loadMap = (mapName, adcode, displayName) => {
+            // 更新地图位置显示
+            const mapLocation = document.querySelector('.map-loc');
+            if (mapLocation) {
+                mapLocation.innerText = `当前位置：${displayName}`;
+            }
+
+            // 更新面包屑导航
+            updateBreadcrumb(currentMapLevel, displayName, adcode);
+
+            // 更新返回按钮显示
+            const backBtn = document.querySelector('.map-back-btn');
+            if (backBtn) {
+                backBtn.style.display = (currentMapLevel !== 'country') ? 'block' : 'none';
+            }
+            console.log('currentMapLevel111', currentMapLevel,'mapName',mapName);
+            // 加载地图数据（从本地文件加载）
+            let mapUrl = '';
+            if (currentMapLevel === 'country') {
+                // 全国地图
+                mapUrl = '/lib/echart/map/china.json';
+            } else if (currentMapLevel === 'province') {
+                // 省份地图（使用城市代码作为省份地图）
+                mapUrl = `/lib/echart/map/province/${provinces[mapName]}.json`;
+            } else if (currentMapLevel === 'city') {
+                // 城市地图
+                mapUrl = `/lib/echart/map/city/${adcode}.json`;
+            }
+
+            fetch(mapUrl)
                 .then(r => r.json())
                 .then(geo => {
-                    echarts.registerMap('china', geo);
-                    chart.setOption({
+                    echarts.registerMap(mapName, geo);
+                    mapChart.setOption({
+                        grid: {
+                            left: '-10%',
+                        },
                         tooltip: {
                             trigger: 'item',
                             formatter: '{b}: {c}',
@@ -384,13 +499,16 @@ export default {
                             show: false,
                             inRange: {
                                 color: ['#0d2b5e', '#0e4a8e', '#1565c0', '#1976d2', '#42a5f5', '#64b5f6']
-                            }
+                            },
                         },
                         series: [{
                             name: '生产经营主体',
                             type: 'map',
-                            map: 'china',
-                            roam: false,
+                            map: mapName,
+                            roam: true, // 启用缩放和平移
+                            zoom: mapName=='china'?1.1:(1),
+                            center:mapName=='china'?[104.0711, 30.6000317]:undefined,
+                            // z: 1,
                             label: {
                                 show: true,
                                 color: 'rgba(255,255,255,0.6)',
@@ -405,28 +523,214 @@ export default {
                                 label: { show: true, color: '#fff' },
                                 itemStyle: { areaColor: '#00b4ff' }
                             },
-                            data: [
-                                { name: '北京', value: 150 }, { name: '天津', value: 120 },
-                                { name: '河北', value: 200 }, { name: '山西', value: 100 },
-                                { name: '内蒙古', value: 80 }, { name: '辽宁', value: 180 },
-                                { name: '吉林', value: 150 }, { name: '黑龙江', value: 120 },
-                                { name: '上海', value: 250 }, { name: '江苏', value: 300 },
-                                { name: '浙江', value: 350 }, { name: '安徽', value: 220 },
-                                { name: '福建', value: 200 }, { name: '江西', value: 180 },
-                                { name: '山东', value: 187 }, { name: '河南', value: 200 },
-                                { name: '湖北', value: 220 }, { name: '湖南', value: 200 },
-                                { name: '广东', value: 284 }, { name: '广西', value: 150 },
-                                { name: '海南', value: 80 }, { name: '重庆', value: 150 },
-                                { name: '四川', value: 241 }, { name: '贵州', value: 100 },
-                                { name: '云南', value: 120 }, { name: '西藏', value: 30 },
-                                { name: '陕西', value: 150 }, { name: '甘肃', value: 80 },
-                                { name: '青海', value: 50 }, { name: '宁夏', value: 60 },
-                                { name: '新疆', value: 80 }
-                            ]
+                            data: generateMapData(mapName, currentMapLevel)
                         }]
-                    });
+                    },true);
                 })
-                .catch(() => {});
+                .catch(error => {
+                    console.error('加载地图数据失败:', error);
+                });
+        };
+
+        // 生成地图数据
+        const generateMapData = (mapName, level) => {
+            // 这里可以根据实际情况生成对应级别的数据
+            // 目前使用模拟数据
+            const data = [];
+            console.log('level',level)
+            if (level === 'country') {
+                // 全国数据
+                return [
+                    { name: '北京', value: 150 }, { name: '天津', value: 120 },
+                    { name: '河北', value: 200 }, { name: '山西', value: 100 },
+                    { name: '内蒙古', value: 80 }, { name: '辽宁', value: 180 },
+                    { name: '吉林', value: 150 }, { name: '黑龙江', value: 120 },
+                    { name: '上海', value: 250 }, { name: '江苏', value: 300 },
+                    { name: '浙江', value: 350 }, { name: '安徽', value: 220 },
+                    { name: '福建', value: 200 }, { name: '江西', value: 180 },
+                    { name: '山东', value: 187 }, { name: '河南', value: 200 },
+                    { name: '湖北', value: 220 }, { name: '湖南', value: 200 },
+                    { name: '广东', value: 284 }, { name: '广西', value: 150 },
+                    { name: '海南', value: 80 }, { name: '重庆', value: 150 },
+                    { name: '四川', value: 241 }, { name: '贵州', value: 100 },
+                    { name: '云南', value: 120 }, { name: '西藏', value: 30 },
+                    { name: '陕西', value: 150 }, { name: '甘肃', value: 80 },
+                    { name: '青海', value: 50 }, { name: '宁夏', value: 60 },
+                    { name: '新疆', value: 80 }
+                ];
+            } else if (level === 'province') {
+                // 省份数据（模拟）
+                for (let i = 0; i < 10; i++) {
+                    data.push({ name: `城市${i+1}`, value: Math.floor(Math.random() * 300) + 50 });
+                }
+            } else if (level === 'city') {
+                // 城市数据（模拟）
+                for (let i = 0; i < 5; i++) {
+                    data.push({ name: `区县${i+1}`, value: Math.floor(Math.random() * 200) + 30 });
+                }
+            }
+            return data;
+        };
+
+         //34个省、市、自治区的名字拼音映射数组
+        const provinces = {
+            //23个省
+            台湾: 'taiwan',
+            台湾省: 'taiwan',
+            河北: 'hebei',
+            河北省: 'hebei',
+            山西: 'shanxi',
+            山西省: 'shanxi',
+            辽宁: 'liaoning',
+            辽宁省: 'liaoning',
+            吉林: 'jilin',
+            吉林省: 'jilin',
+            黑龙江: 'heilongjiang',
+            黑龙省: 'heilongjiang',
+            江苏: 'jiangsu',
+            江苏省: 'jiangsu',
+            浙江: 'zhejiang',
+            浙江省: 'zhejiang',
+            安徽: 'anhui',
+            安徽省: 'anhui',
+            福建: 'fujian',
+            福建省: 'fujian',
+            江西: 'jiangxi',
+            江西省: 'jiangxi',
+            山东: 'shandong',
+            山东省: 'shandong',
+            河南: 'henan',
+            河南省: 'henan',
+            湖北: 'hubei',
+            湖北省: 'hubei',
+            湖南: 'hunan',
+            湖南省: 'hunan',
+            广东: 'guangdong',
+            广东省: 'guangdong',
+            海南: 'hainan',
+            海南省: 'hainan',
+            四川: 'sichuan',
+            四川省: 'sichuan',
+            贵州: 'guizhou',
+            贵州省: 'guizhou',
+            云南: 'yunnan',
+            云南省: 'yunnan',
+            陕西: 'shanxi1',
+            陕西省: 'shanxi1',
+            甘肃: 'gansu',
+            甘肃省: 'gansu',
+            青海: 'qinghai',
+            青海省: 'qinghai',
+            //5个自治区
+            新疆: 'xinjiang',
+            新疆维吾尔自治区: 'xinjiang',
+            广西: 'guangxi',
+            广西壮族自治区: 'guangxi',
+            内蒙: 'neimenggu',
+            内蒙古: 'neimenggu',
+            内蒙古自治区: 'neimenggu',
+            宁夏: 'ningxia',
+            宁夏回族自治区: 'ningxia',
+            西藏: 'xizang',
+            西藏自治区: 'xizang',
+            //4个直辖市
+            北京: 'beijing',
+            北京市: 'beijing',
+            天津: 'tianjin',
+            天津市: 'tianjin',
+            上海: 'shanghai',
+            上海市: 'shanghai',
+            重庆: 'chongqing',
+            重庆市: 'chongqing',
+            //2个特别行政区
+            香港: 'xianggang',
+            香港特别行政区: 'xianggang',
+            澳门: 'aomen',
+            澳门特别行政区: 'aomen'
+        }
+
+        // 获取省份代码
+        const getProvinceCode = (provinceName) => {
+            const provinceMap = {
+                '北京': '110000', '天津': '120000', '河北': '130000', '山西': '140000',
+                '内蒙古': '150000', '辽宁': '210000', '吉林': '220000', '黑龙江': '230000',
+                '上海': '310000', '江苏': '320000', '浙江': '330000', '安徽': '340000',
+                '福建': '350000', '江西': '360000', '山东': '370000', '河南': '410000',
+                '湖北': '420000', '湖南': '430000', '广东': '440000', '广西': '450000',
+                '海南': '460000', '重庆': '500000', '四川': '510000', '贵州': '520000',
+                '云南': '530000', '西藏': '540000', '陕西': '610000', '甘肃': '620000',
+                '青海': '630000', '宁夏': '640000', '新疆': '650000'
+            };
+            return provinceMap[provinceName] || '';
+        };
+
+        // 获取城市代码（简化版，实际项目中可能需要更完整的映射）
+        const getCityCode = (provinceName, cityName) => {
+            // 这里返回模拟的城市代码，实际项目中需要根据真实数据映射
+            return '110100'; // 以北京为例
+        };
+
+        // 从城市名称获取省份名称
+        const getProvinceNameFromCity = (cityName) => {
+            // 这里返回模拟的省份名称，实际项目中需要根据真实数据映射
+            return currentMapName; // 简化处理，返回当前省份名称
+        };
+
+        // 更新面包屑导航
+        const updateBreadcrumb = (level, name, code) => {
+            const breadcrumb = document.getElementById('mapBreadcrumb');
+            if (!breadcrumb) return;
+
+            // 清空面包屑
+            breadcrumb.innerHTML = '';
+
+            // 添加中国
+            const chinaItem = document.createElement('span');
+            chinaItem.className = 'breadcrumb-item';
+            chinaItem.dataset.level = 'country';
+            chinaItem.dataset.code = '100000';
+            chinaItem.textContent = '中国';
+            chinaItem.onclick = function() {
+                currentMapLevel = 'country';
+                currentMapName = 'china';
+                loadMap('china', '100000', '全国');
+            };
+            breadcrumb.appendChild(chinaItem);
+
+            // 如果是省份或城市，添加省份
+            if (level === 'province') {
+                const provinceItem = document.createElement('span');
+                provinceItem.className = 'breadcrumb-item';
+                provinceItem.dataset.level = 'province';
+                provinceItem.dataset.code = code;
+                provinceItem.textContent = name;
+                // 最后一级不可点击
+                breadcrumb.appendChild(provinceItem);
+            } else if (level === 'city') {
+                // 添加省份
+                const provinceName = getProvinceNameFromCity(name);
+                const provinceCode = getProvinceCode(provinceName);
+                const provinceItem = document.createElement('span');
+                provinceItem.className = 'breadcrumb-item';
+                provinceItem.dataset.level = 'province';
+                provinceItem.dataset.code = provinceCode;
+                provinceItem.textContent = provinceName;
+                provinceItem.onclick = function() {
+                    currentMapLevel = 'province';
+                    currentMapName = provinceName;
+                    loadMap(provinceName, provinceCode, provinceName);
+                };
+                breadcrumb.appendChild(provinceItem);
+
+                // 添加城市
+                const cityItem = document.createElement('span');
+                cityItem.className = 'breadcrumb-item';
+                cityItem.dataset.level = 'city';
+                cityItem.dataset.code = code;
+                cityItem.textContent = name;
+                // 最后一级不可点击
+                breadcrumb.appendChild(cityItem);
+            }
         };
 
         /* ---- 产品批次排名柱图 ---- */
@@ -776,7 +1080,7 @@ export default {
    ============================================================ */
 .da-left,
 .da-right {
-    width: 22%;
+    width: 24%;
     min-width: 260px;
     display: flex;
     flex-direction: column;
@@ -921,8 +1225,10 @@ export default {
 .biz-info {
     flex: 1;
     min-width: 0;
+    display: flex;
+    align-items: center;
     .biz-val {
-        font-size: 18px;
+        font-size: 16px;
         font-weight: 700;
         color: #ffffff;
         line-height: 1.2;
@@ -936,14 +1242,15 @@ export default {
         font-size: 10px;
         color: #5a8fa8;
         margin-top: 3px;
+        margin-left: 8px;
     }
 }
 
 .unit {
-    font-size: 11px;
+    font-size: 15px;
     font-weight: 400;
     color: #7eb8d0;
-    margin-left: 2px;
+    margin-left: 4px;
 }
 
 .up { color: #4caf50; }
@@ -1270,7 +1577,8 @@ export default {
 .map-echarts {
     position: absolute;
     top: 0; left: 0;
-    width: 100%;
+    width:calc(100% - 286px - 10px);
+    // width: 100%;
     height: 100%;
 }
 
