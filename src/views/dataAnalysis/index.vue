@@ -282,8 +282,7 @@
                                 </div>
                                 <div class="biz-info">
                                     <div class="biz-val">56,932<span class="unit">次</span></div>
-                                    <div class="biz-lbl">监测门诊总数</div>
-                                    <div class="biz-cmp">已完成6,932家</div>
+                                    <div class="biz-lbl">监测任务总数</div>
                                 </div>
                             </div>
                             <div class="gauge-right">
@@ -1141,7 +1140,18 @@ export default {
 .da-right{
     .da-card{
         flex:3.5;
-
+        :first-child{
+            .unit{
+              font-size: 700;
+            }
+            .biz-icon.cyan {
+                background: radial-gradient(circle, rgba(0, 180, 180, 0.25) 0%, rgba(0, 80, 80, 0.08) 100%);
+                border: 1.5px solid rgba(110, 222, 174, 0.5);
+                svg{    
+                    color:#6edeae;
+                }
+            }
+        }
         &:last-child{
             flex: 2;
         }
@@ -1778,7 +1788,7 @@ export default {
     position: absolute;
     top: 10px; left: 14px;
     font-size: 11px;
-    color: #7eb8d0;
+    color: #e4eef1;
     z-index: 5;
 }
 
@@ -1876,6 +1886,10 @@ export default {
     gap: 10px;
     flex: 1;
     min-width: 0;
+    .biz-info{
+        flex-direction: column;
+        flex: none;
+    }
 }
 
 .gauge-right {
