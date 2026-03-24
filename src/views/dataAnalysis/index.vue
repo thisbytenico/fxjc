@@ -290,24 +290,27 @@
                                 <div class="gauge-lbl">完成率</div>
                             </div>
                         </div>
-                        <div class="task-grid">
-                            <div class="tg-item blue">
-                                <div class="tg-lbl">飞行检查</div>
-                                <div class="tg-val">98,054</div>
-                            </div>
-                            <div class="tg-item orange">
-                                <div class="tg-lbl">专项检查</div>
-                                <div class="tg-val">120,150</div>
-                            </div>
-                            <div class="tg-item yellow">
-                                <div class="tg-lbl">日常检查</div>
-                                <div class="tg-val">85,710</div>
-                            </div>
-                            <div class="tg-item cyan">
-                                <div class="tg-lbl">体系检查</div>
-                                <div class="tg-val">102,548</div>
+                        <div class="task-grid-box">
+                            <div class="task-grid">
+                                <div class="tg-item blue">
+                                    <i class="tg-lbl">例行监测</i>
+                                    <i class="tg-val">98,054</i>
+                                </div>
+                                <div class="tg-item orange">
+                                    <i class="tg-lbl">专项监测</i>
+                                    <i class="tg-val">120,150</i>
+                                </div>
+                                <div class="tg-item yellow">
+                                    <i class="tg-lbl">监督抽查</i>
+                                    <i class="tg-val">85,710</i>
+                                </div>
+                                <div class="tg-item cyan">
+                                    <i class="tg-lbl">复检任务</i>
+                                    <i class="tg-val">102,548</i>
+                                </div>
                             </div>
                         </div>
+                        
                     </div>
                 </div>
 
@@ -343,7 +346,7 @@
                             </div>
                             <div class="gauge-right">
                                 <div id="inspectionChart" class="gauge-mini"></div>
-                                <div class="gauge-lbl">基地检查率</div>
+                                <div class="gauge-lbl">考察合格率</div>
                             </div>
                         </div>
                     </div>
@@ -835,7 +838,13 @@ export default {
                     axisPointer: { type: 'shadow' },
                     backgroundColor: 'rgba(0,20,40,0.9)',
                     borderColor: '#00d4ff',
-                    textStyle: { color: '#fff' }
+                    textStyle: { color: '#fff' },
+                    formatter: function(params) {
+                        let result = ''
+                        let dotHtml = '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:#6edeae"></span>'
+                        result += params[0].axisValue + "</br>" + dotHtml + params[0]?.value || 0 
+                        return result
+                    }
                 },
                 grid: { left: 0, right: 10, bottom: 5, top: 30, containLabel: true },
                 xAxis: {
@@ -898,7 +907,7 @@ export default {
                     progress: {
                         show: true,
                         roundCap: true,
-                        width: 8,
+                        width:6,
                         itemStyle: {
                             color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
                                 { offset: 0, color: '#ff8c00' },
@@ -913,14 +922,13 @@ export default {
                     axisTick: { show: false },
                     splitLine: { show: false },
                     axisLabel: { show: false },
-                    title: { show: false },
-                    detail: {
+                        detail: {
                         valueAnimation: true,
-                        fontSize: 15,
+                        fontSize: 16,
                         fontWeight: 'bold',
-                        color: '#ffb74d',
+                        color: '#f7feff',
                         formatter: '{value}%',
-                        offsetCenter: [0, 0]
+                        offsetCenter: [0, -5]
                     },
                     data: [{ value: 68 }]
                 }]
@@ -944,7 +952,7 @@ export default {
                     progress: {
                         show: true,
                         roundCap: true,
-                        width: 8,
+                        width: 6,
                         itemStyle: {
                             color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
                                 { offset: 0, color: '#00c896' },
@@ -964,9 +972,9 @@ export default {
                         valueAnimation: true,
                         fontSize: 15,
                         fontWeight: 'bold',
-                        color: '#00e5b0',
+                        color: '#f7feff',
                         formatter: '{value}%',
-                        offsetCenter: [0, 0]
+                        offsetCenter: [0, -5]
                     },
                     data: [{ value: 68 }]
                 }]
@@ -1140,9 +1148,19 @@ export default {
 .da-right{
     .da-card{
         flex:3.5;
-        :first-child{
-            .unit{
-              font-size: 700;
+        display: flex;
+        flex-direction: column;
+        .da-card-bd{
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+         .unit{
+           font-weight: 700;
+        }
+        &:first-child{
+           .da-card-bd .chart-box{
+                flex: 1;
             }
             .biz-icon.cyan {
                 background: radial-gradient(circle, rgba(0, 180, 180, 0.25) 0%, rgba(0, 80, 80, 0.08) 100%);
@@ -1157,23 +1175,7 @@ export default {
         }
     }
 }
-.da-right{
-    .da-card{
-         &:nth-child(1){
-            display: flex;
-            flex-direction: column;
-            .da-card-bd{
-                flex: 1;
-                display: flex;
-                flex-direction: column;
-                .chart-box{
-                    flex: 1;
-                }
-            }
-        }
-    }
-    
-}
+
 .da-left{
     .da-card{
         flex: 3.5;
@@ -1878,6 +1880,7 @@ export default {
     align-items: center;
     justify-content: space-between;
     margin-bottom: 10px;
+    flex: 1;
 }
 
 .monitor-stat {
@@ -1898,62 +1901,139 @@ export default {
     flex-direction: column;
     align-items: center;
     width: 80px;
+    position: relative;
 }
 
 .gauge-mini {
-    width: 74px;
-    height: 74px;
+    width: 90px;
+    height: 90px;
 }
 
 .gauge-lbl {
     font-size: 10px;
-    color: #7eb8d0;
+    color: #e4eef1;
     margin-top: 2px;
     text-align: center;
+    position: absolute;
+    top: 60%; left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    min-width: 50px
 }
 
 /* ---- 任务4格 ---- */
+.task-grid-box {
+    flex: 1.2;
+    display: flex;
+    // align-items: center;
+    margin-bottom: 10px;
+}
 .task-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 8px;
+     gap: 16px;
+    // display: flex;
+    // flex-wrap: wrap;
+    // justify-content: space-around;
+    //  align-items: center;
+     justify-content: center;
+     width: 100%;
+     padding: 0 10px;
 }
 
 .tg-item {
-    padding: 7px 8px;
-    border-radius: 3px;
+    padding: 0 0;
+    border-radius: 2px;
     text-align: center;
     border: 1px solid;
-
+    transform: skewX(-15deg);
+    overflow: hidden;
+    // width: 40%;
+    display: flex;
     .tg-lbl {
         font-size: 10px;
         color: #7eb8d0;
+        width: 24px;
+        padding: 8px 8px;
+        transform: skewX(15deg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1.2;
+        &::after {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            bottom:0;
+            width: 1px; 
+            background: rgba(0, 150, 255, 0.3);
+            transform: skewX(-15deg);
+        }
     }
     .tg-val {
-        font-size: 14px;
+        font-size: 16px;
         font-weight: 600;
         color: #e0f4ff;
-        margin-top: 2px;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: skewX(15deg);
     }
 
     &.blue {
-        border-color: rgba(0,150,255,0.3);
-        background: rgba(0,150,255,0.06);
+        border-color: rgba(0,212,255,0.5);
+        background: linear-gradient(135deg, rgba(0,150,255,0.15) 0%, rgba(0,100,200,0.05) 100%);
+        box-shadow: 0 0 8px rgba(0,150,255,0.2), inset 0 0 10px rgba(0,150,255,0.1);
+        .tg-val { 
+            color: #00d4ff; 
+            text-shadow: 0 0 8px rgba(0,212,255,0.5);
+        }
     }
     &.orange {
-        border-color: rgba(255,150,0,0.3);
-        background: rgba(255,150,0,0.06);
-        .tg-val { color: #ffa726; }
+        border-color: rgba(255,150,0,0.5);
+        background: linear-gradient(135deg, rgba(255,150,0,0.15) 0%, rgba(200,100,0,0.05) 100%);
+        box-shadow: 0 0 8px rgba(255,150,0,0.2), inset 0 0 10px rgba(255,150,0,0.1);
+        .tg-val { 
+            color: #ff9800; 
+            text-shadow: 0 0 8px rgba(255,150,0,0.5);
+        }
+        .tg-lbl { 
+            &::after {
+                 background: rgba(255,150,0,0.3);
+            }
+            color: #ffb74d;
+        }
     }
     &.yellow {
-        border-color: rgba(255,200,0,0.3);
-        background: rgba(255,200,0,0.06);
-        .tg-val { color: #ffd740; }
+        border-color: rgba(255,200,0,0.5);
+        background: linear-gradient(135deg, rgba(255,200,0,0.15) 0%, rgba(200,150,0,0.05) 100%);
+        box-shadow: 0 0 8px rgba(255,200,0,0.2), inset 0 0 10px rgba(255,200,0,0.1);
+        .tg-val { 
+            color: #ffc107; 
+            text-shadow: 0 0 8px rgba(255,200,0,0.5);
+        }
+        .tg-lbl { 
+            &::after {
+                 background: rgba(255,200,0,0.3);
+            }
+            color: #ffd54f;
+        }
     }
     &.cyan {
-        border-color: rgba(0,220,220,0.3);
-        background: rgba(0,220,220,0.06);
-        .tg-val { color: #4dd0e1; }
+        border-color: rgba(0,220,220,0.5);
+        background: linear-gradient(135deg, rgba(0,220,220,0.15) 0%, rgba(0,150,150,0.05) 100%);
+        box-shadow: 0 0 8px rgba(0,220,220,0.2), inset 0 0 10px rgba(0,220,220,0.1);
+        .tg-val { 
+            color: #00e5ff; 
+            text-shadow: 0 0 8px rgba(0,220,220,0.5);
+        }
+        .tg-lbl { 
+            &::after {
+               background: rgba(0,220,220,0.3);
+            }
+            color: #4dd0e1;
+        }
     }
 }
 
@@ -1962,6 +2042,7 @@ export default {
     display: flex;
     align-items: center;
     gap: 10px;
+    height: 100%;
 }
 
 .insp-stats {
