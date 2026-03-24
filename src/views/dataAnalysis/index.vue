@@ -223,7 +223,9 @@
                         </div>
                     </div>
                     <div class="map-wrap">
-                        <div class="map-loc">当前位置：全国</div>
+                        <div class="map-loc">当前位置： 
+                            <div id="mapBreadcrumb" class="map-breadcrumb"></div>
+                        </div>
                         <div id="chinaMap" class="map-echarts"></div>
                         <!-- 右侧排行面板 -->
                         <div class="map-panel">
@@ -238,8 +240,8 @@
                             <div class="mp-unit">单位：家</div>
                             <div id="rankingChart" class="mp-ranking-chart"></div>
                             <div class="mp-note">
-                                <span class="mp-note-dot"></span>
-                                上季度新增注册生产经营主体<span class="emph">7,526家</span><br />
+                                <!-- <span class="mp-note-dot"></span> -->
+                                上季度新增注册生产经营主体<span class="emph">7,526家</span> <br/>
                                 与同期对比增长<span class="emph">3%</span>
                             </div>
                             <div class="mp-unit mp-unit-trend">单位：家</div>
@@ -397,126 +399,104 @@ export default {
         });
 
         /* ---- 中国地图 ---- */
-        let currentMapLevel = 'country'; // 当前地图级别：country, province, city
+        let currentMapLevel = 'country'; // 当前地图级别：country, province, city, district
         let currentMapName = 'china'; // 当前地图名称
         let mapChart = null;
-        
-        const initChinaMap = () => {
-            const dom = document.getElementById('chinaMap');
-            if (!dom) return;
-            mapChart = echarts.init(dom);
-            registerResize(mapChart);
+        let currentMapChildren = [];
+        const mapRoute = [
+            { level: 'country', name: '中国', displayName: '全国', mapName: 'china', adcode: '100000' }
+        ];
 
-            // 加载全国地图
-            loadMap('china', '100000', '全国');
+        const getCurrentRoute = () => mapRoute[mapRoute.length - 1];
+        const normalizeAdcode = (code) => (code === undefined || code === null ? '' : String(code));
 
-            // 绑定点击事件
-            mapChart.on('click', function(params) {
-                console.log('params', params);
-                if (currentMapLevel === 'country') {
-                    // 从全国下钻到省份
-                    const provinceName = params.name;
-                    const provinceCode = getProvinceCode(provinceName);
-                    console.log('provinceCode', provinceCode);
-                    currentMapLevel = 'province';
-                    if (provinceCode) {
-                        loadMap(provinceName, provinceCode, provinceName);
-                        currentMapLevel = 'province';
-                        currentMapName = provinceName;
-                    }
-                } else if (currentMapLevel === 'province') {
-                    // 从省份下钻到城市
-                    const cityName = params.name;
-                    const cityCode = getCityCode(currentMapName, cityName);
-                    currentMapLevel = 'city';
-                    if (cityCode) {
-                        loadMap(cityName, cityCode, cityName);
-                        currentMapLevel = 'city';
-                        currentMapName = cityName;
-                    }
-                }
-            });
-
-            // 添加返回按钮
-            const mapContainer = document.querySelector('.map-wrap');
-            if (mapContainer) {
-                let backBtn = document.querySelector('.map-back-btn');
-                if (!backBtn) {
-                    backBtn = document.createElement('div');
-                    backBtn.className = 'map-back-btn';
-                    backBtn.innerText = '返回';
-                    backBtn.style.cssText = `
-                        position: absolute;
-                        top: 32px;
-                        left: 10px;
-                        padding: 4px 12px;
-                        background: rgba(0, 20, 40, 0.8);
-                        border: 1px solid #00d4ff;
-                        color: #00d4ff;
-                        border-radius: 4px;
-                        cursor: pointer;
-                        font-size: 12px;
-                        z-index: 10;
-                        display: none;
-                    `;
-                    backBtn.onclick = function() {
-                        if (currentMapLevel === 'city') {
-                            // 从城市返回省份
-                            const provinceName = getProvinceNameFromCity(currentMapName);
-                            const provinceCode = getProvinceCode(provinceName);
-                            console.log('provinceCode',provinceCode,'provinceName',provinceName,'currentMapName',currentMapName)
-                            if (provinceCode) {
-                                currentMapLevel = 'province';
-                                currentMapName = provinceName;
-                                loadMap(provinceName, provinceCode, provinceName);
-                               
-                            }
-                        } else if (currentMapLevel === 'province') {
-                            // 从省份返回全国
-                            currentMapLevel = 'country';
-                            currentMapName = 'china';
-                            loadMap('china', '100000', '全国');
-                        }
-                    };
-                    mapContainer.appendChild(backBtn);
-                }
+        const updateBackBtn = () => {
+            const backBtn = document.querySelector('.map-back-btn');
+            if (backBtn) {
+                backBtn.style.display = mapRoute.length > 1 ? 'block' : 'none';
             }
         };
 
-        // 加载地图数据
-        const loadMap = (mapName, adcode, displayName) => {
-            // 更新地图位置显示
+        const updateMapLocation = () => {
             const mapLocation = document.querySelector('.map-loc');
-            if (mapLocation) {
-                mapLocation.innerText = `当前位置：${displayName}`;
+            const current = getCurrentRoute();
+            if (mapLocation && current) {
+                mapLocation.innerText = `当前位置：${current.displayName}`;
             }
+        };
 
-            // 更新面包屑导航
-            updateBreadcrumb(currentMapLevel, displayName, adcode);
+        const extractChildrenFromGeo = (geo) => {
+            const features = geo?.features || [];
+            return features
+                .map((feature) => {
+                    const properties = feature?.properties || {};
+                    return {
+                        name: properties.name || feature.name || '',
+                        adcode: normalizeAdcode(properties.adcode ?? feature.id),
+                        level: properties.level || ''
+                    };
+                })
+                .filter(item => item.name);
+        };
 
-            // 更新返回按钮显示
-            const backBtn = document.querySelector('.map-back-btn');
-            if (backBtn) {
-                backBtn.style.display = (currentMapLevel !== 'country') ? 'block' : 'none';
+        const getRegionCodeByName = (name) => {
+            const matched = currentMapChildren.find(item => item.name === name);
+            return matched?.adcode || '';
+        };
+
+        const getMapUrlByRoute = (route) => {
+            if (route.level === 'country') {
+                return '/lib/echart/map/china.json';
             }
-            console.log('currentMapLevel111', currentMapLevel,'mapName',mapName);
-            // 加载地图数据（从本地文件加载）
-            let mapUrl = '';
-            if (currentMapLevel === 'country') {
-                // 全国地图
-                mapUrl = '/lib/echart/map/china.json';
-            } else if (currentMapLevel === 'province') {
-                // 省份地图（使用城市代码作为省份地图）
-                mapUrl = `/lib/echart/map/province/${provinces[mapName]}.json`;
-            } else if (currentMapLevel === 'city') {
-                // 城市地图
-                mapUrl = `/lib/echart/map/city/${adcode}.json`;
+            if (route.level === 'province') {
+                const provinceFile = provinces[route.mapName];
+                return provinceFile ? `/lib/echart/map/province/${provinceFile}.json` : '';
             }
+            if (route.level === 'city') {
+                return route.adcode ? `/lib/echart/map/city/${route.adcode}.json` : '';
+            }
+            // if (route.level === 'district') {
+            //     return route.adcode ? `/lib/echart/map/city/${route.adcode}.json` : '';
+            // }
+            return '';
+        };
+
+        // 获取tmp中value最大的数值
+        const getMaxValueFromTmp = (tmpArray) => {
+            if (!tmpArray || tmpArray.length === 0) return 0;
+            return Math.max(...tmpArray.map(item => item.value));
+        };
+
+        const loadMap = (route,districtName) => {
+            const mapUrl = getMapUrlByRoute(route);
+            if (!mapUrl) return;
+
+            currentMapLevel = route.level;
+            currentMapName = route.mapName;
+            // updateMapLocation();
+            updateBreadcrumb();
+            // updateBackBtn();
 
             fetch(mapUrl)
                 .then(r => r.json())
                 .then(geo => {
-                    echarts.registerMap(mapName, geo);
+                    currentMapChildren = extractChildrenFromGeo(geo);
+                    if(districtName){
+                       geo.features = geo.features.filter(item => item.properties.name.indexOf(districtName)>=0);
+                    }
+                    let tmp=[]
+                    geo.features.forEach((item) => {
+                        tmp.push({
+                            //需要加上cityid传递渲染，下一级地图渲染需要用到，点击的时候有判断，没有下级id直接return
+                            cityid: item.id,
+                            name: item.properties.name,
+                            value: (Math.floor(Math.random() * 300)) + 50,
+                         })
+                    })
+                    
+                    const maxValue = getMaxValueFromTmp(tmp);
+                   
+                    echarts.registerMap(route.mapName, geo);
                     mapChart.setOption({
                         grid: {
                             left: '-10%',
@@ -531,7 +511,7 @@ export default {
                         visualMap: {
                             type: 'continuous',
                             min: 0,
-                            max: 500,
+                            max: maxValue,
                             show: false,
                             inRange: {
                                 color: ['#0d2b5e', '#0e4a8e', '#1565c0', '#1976d2', '#42a5f5', '#64b5f6']
@@ -540,11 +520,10 @@ export default {
                         series: [{
                             name: '生产经营主体',
                             type: 'map',
-                            map: mapName,
-                            roam: true, // 启用缩放和平移
-                            zoom: mapName=='china'?1.1:(1),
-                            center:mapName=='china'?[104.0711, 30.6000317]:undefined,
-                            // z: 1,
+                            map: route.mapName,
+                            roam: true,
+                            zoom: route.mapName === 'china' ? 1.1 : 1,
+                            center: route.mapName === 'china' ? [104.0711, 30.6000317] : undefined,
                             label: {
                                 show: true,
                                 color: 'rgba(255,255,255,0.6)',
@@ -559,13 +538,145 @@ export default {
                                 label: { show: true, color: '#fff' },
                                 itemStyle: { areaColor: '#00b4ff' }
                             },
-                            data: generateMapData(mapName, currentMapLevel)
+                            data: tmp
                         }]
-                    },true);
+                    }, true);
                 })
                 .catch(error => {
                     console.error('加载地图数据失败:', error);
                 });
+        };
+
+        const appendDistrictRoute = (districtName) => {
+            const districtCode = getRegionCodeByName(districtName);
+            const districtRoute = {
+                level: 'district',
+                name: districtName,
+                displayName: districtName,
+                mapName: currentMapName,
+                adcode: districtCode
+            };
+            const current = getCurrentRoute();
+            if (current && current.level === 'district') {
+                mapRoute.splice(mapRoute.length - 1, 1, districtRoute);
+            } else {
+                mapRoute.push(districtRoute);
+            }
+            currentMapLevel = 'district';
+            // updateMapLocation();
+            updateBreadcrumb();
+            // updateBackBtn();
+        };
+
+        const drillDownByName = (name) => {
+            if (!name) return;
+            const current = getCurrentRoute();
+            if (!current) return;
+
+            if (current.level === 'country') {
+                const provinceCode = getProvinceCode(name) || getRegionCodeByName(name);
+                if (!provinceCode) return;
+                mapRoute.push({
+                    level: 'province',
+                    name,
+                    displayName: name,
+                    mapName: name,
+                    adcode: provinceCode
+                });
+                loadMap(getCurrentRoute());
+                return;
+            }
+
+            if (current.level === 'province') {
+                const cityCode = getRegionCodeByName(name);
+                if (!cityCode) return;
+                mapRoute.push({
+                    level: 'city',
+                    name,
+                    displayName: name,
+                    mapName: name,
+                    adcode: cityCode
+                });
+                loadMap(getCurrentRoute());
+                return;
+            }
+
+            if (current.level === 'city' || current.level === 'district') {
+                loadMap(getCurrentRoute(),name);
+                appendDistrictRoute(name);
+            }
+        };
+
+        const openRouteAt = (index) => {
+            if (index < 0 || index >= mapRoute.length) return;
+            mapRoute.splice(index + 1);
+            const target = getCurrentRoute();
+            if (!target) return;
+
+            if (target.level === 'district') {
+                currentMapLevel = 'district';
+                currentMapName = target.mapName;
+                // updateMapLocation();
+                updateBreadcrumb();
+                // updateBackBtn();
+                return;
+            }
+
+            loadMap(target);
+        };
+
+        const initChinaMap = () => {
+            const dom = document.getElementById('chinaMap');
+            if (!dom) return;
+            mapChart = echarts.init(dom);
+            registerResize(mapChart);
+
+            loadMap(getCurrentRoute());
+
+            mapChart.on('click', function(params) {
+                drillDownByName(params?.name);
+            });
+
+            const mapContainer = document.querySelector('.map-wrap');
+            if (mapContainer) {
+                let backBtn = document.querySelector('.map-back-btn');
+                if (!backBtn) {
+                    backBtn = document.createElement('div');
+                    backBtn.className = 'map-back-btn';
+                    backBtn.innerText = '返回';
+                    backBtn.style.cssText = `
+                        position: absolute;
+                        top: 52px;
+                        left: 10px;
+                        padding: 4px 12px;
+                        background: rgba(0, 20, 40, 0.8);
+                        border: 1px solid #00d4ff;
+                        color: #00d4ff;
+                        border-radius: 4px;
+                        cursor: pointer;
+                        font-size: 12px;
+                        z-index: 10;
+                        display: none;
+                    `;
+                    backBtn.onclick = function() {
+                        if (mapRoute.length <= 1) return;
+                        const current = getCurrentRoute();
+                        if (current.level === 'district') {
+                            mapRoute.pop();
+                            const cityRoute = getCurrentRoute();
+                            currentMapLevel = cityRoute.level;
+                            currentMapName = cityRoute.mapName;
+                            // updateMapLocation();
+                            updateBreadcrumb();
+                            // updateBackBtn();
+                            return;
+                        }
+                        mapRoute.pop();
+                        loadMap(getCurrentRoute());
+                    };
+                    mapContainer.appendChild(backBtn);
+                }
+            }
         };
 
         // 生成地图数据
@@ -700,73 +811,32 @@ export default {
             return provinceMap[provinceName] || '';
         };
 
-        // 获取城市代码（简化版，实际项目中可能需要更完整的映射）
-        const getCityCode = (provinceName, cityName) => {
-            // 这里返回模拟的城市代码，实际项目中需要根据真实数据映射
-            return '110100'; // 以北京为例
-        };
-
-        // 从城市名称获取省份名称
-        const getProvinceNameFromCity = (cityName) => {
-            // 这里返回模拟的省份名称，实际项目中需要根据真实数据映射
-            return currentMapName; // 简化处理，返回当前省份名称
-        };
-
         // 更新面包屑导航
-        const updateBreadcrumb = (level, name, code) => {
+        const updateBreadcrumb = () => {
             const breadcrumb = document.getElementById('mapBreadcrumb');
             if (!breadcrumb) return;
-
-            // 清空面包屑
             breadcrumb.innerHTML = '';
 
-            // 添加中国
-            const chinaItem = document.createElement('span');
-            chinaItem.className = 'breadcrumb-item';
-            chinaItem.dataset.level = 'country';
-            chinaItem.dataset.code = '100000';
-            chinaItem.textContent = '中国';
-            chinaItem.onclick = function() {
-                currentMapLevel = 'country';
-                currentMapName = 'china';
-                loadMap('china', '100000', '全国');
-            };
-            breadcrumb.appendChild(chinaItem);
+            mapRoute.forEach((route, index) => {
+                const isLast = index === mapRoute.length - 1;
+                const item = document.createElement('span');
+                item.className = `breadcrumb-item${isLast ? ' current' : ' clickable'}`;
+                item.textContent = route.name;
 
-            // 如果是省份或城市，添加省份
-            if (level === 'province') {
-                const provinceItem = document.createElement('span');
-                provinceItem.className = 'breadcrumb-item';
-                provinceItem.dataset.level = 'province';
-                provinceItem.dataset.code = code;
-                provinceItem.textContent = name;
-                // 最后一级不可点击
-                breadcrumb.appendChild(provinceItem);
-            } else if (level === 'city') {
-                // 添加省份
-                const provinceName = getProvinceNameFromCity(name);
-                const provinceCode = getProvinceCode(provinceName);
-                const provinceItem = document.createElement('span');
-                provinceItem.className = 'breadcrumb-item';
-                provinceItem.dataset.level = 'province';
-                provinceItem.dataset.code = provinceCode;
-                provinceItem.textContent = provinceName;
-                provinceItem.onclick = function() {
-                    currentMapLevel = 'province';
-                    currentMapName = provinceName;
-                    loadMap(provinceName, provinceCode, provinceName);
-                };
-                breadcrumb.appendChild(provinceItem);
+                if (!isLast) {
+                    item.onclick = function() {
+                        openRouteAt(index);
+                    };
+                }
+                breadcrumb.appendChild(item);
 
-                // 添加城市
-                const cityItem = document.createElement('span');
-                cityItem.className = 'breadcrumb-item';
-                cityItem.dataset.level = 'city';
-                cityItem.dataset.code = code;
-                cityItem.textContent = name;
-                // 最后一级不可点击
-                breadcrumb.appendChild(cityItem);
-            }
+                if (!isLast) {
+                    const sep = document.createElement('span');
+                    sep.className = 'breadcrumb-sep';
+                    sep.textContent = '>';
+                    breadcrumb.appendChild(sep);
+                }
+            });
         };
 
         /* ---- 产品批次排名柱图 ---- */
@@ -1793,16 +1863,54 @@ export default {
 
 .map-loc {
     position: absolute;
-    top: 10px; left: 14px;
+    top: 20px; left: 14px;
     font-size: 11px;
     color: #e4eef1;
     z-index: 5;
+    display: flex;
+}
+
+.map-breadcrumb {
+    // position: absolute;
+    top: 8px;
+    left: 14px;
+    z-index: 6;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+.breadcrumb-item {
+    color: #76d5ff;
+    line-height: 1;
+
+    &.clickable {
+        cursor: pointer;
+        transition: color 0.2s;
+        &:hover {
+            color: #b8ecff;
+        }
+    }
+
+    &.current {
+        color: #f2f8ff;
+        font-weight: 600;
+        cursor: default;
+    }
+}
+
+.breadcrumb-sep {
+    color: rgba(126, 184, 208, 0.85);
+    font-size: 10px;
+    line-height: 1;
 }
 
 .map-echarts {
     position: absolute;
     top: 0; left: 0;
-    width:calc(100% - 286px - 10px);
+    width:calc(100% - 256px - 10px);
     // width: 100%;
     height: 100%;
 }
@@ -1811,7 +1919,7 @@ export default {
 .map-panel {
     position: absolute;
     top: 10px; right: 10px;
-    width: 278px;
+    width: 248px;
     // background: rgba(2,14,30,0.92);
     // border: 1px solid rgba(0,180,220,0.25);
     border-radius: 4px;
@@ -1821,17 +1929,27 @@ export default {
 
 .mp-title-row {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: space-between;
     margin-bottom: 8px;
-    padding-bottom: 6px;
-    border-bottom: 1px solid rgba(0, 180, 220, 0.22);
 }
 
 .mp-title {
     font-size: 12px;
     font-weight: 600;
     color: #f3f8ff;
+    border-bottom: 1px solid rgba(0, 180, 220, 0.12);
+    padding-bottom: 6px;
+    flex:1;
+    margin-right: 10px;
+    position: relative;
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 0; left: 0;
+        width: 38px; height: 1px;
+        background-color: #70bfff;
+    }
 }
 
 .mp-title-decor {
@@ -1840,7 +1958,7 @@ export default {
     gap: 6px;
     .seg {
         width: 18px;
-        height: 3px;
+        height: 1px;
         border-radius: 2px;
         display: inline-block;
         &.orange { background: #f4a126; }
@@ -1866,15 +1984,15 @@ export default {
 }
 
 .mp-note {
-    font-size: 10px;
+    font-size: 11px;
     color: #d7ecff;
     background: linear-gradient(90deg, rgba(15, 105, 140, 0.2) 0%, rgba(11, 84, 122, 0.06) 100%);
     border: 1px solid rgba(56, 214, 236, 0.34);
     border-radius: 3px;
-    padding: 8px 10px;
+    padding: 8px 8px;
     margin-bottom: 8px;
     line-height: 1.5;
-    display: flex;
+    // display: flex;
     align-items: flex-start;
     gap: 4px;
     box-shadow: inset 0 0 14px rgba(36, 154, 185, 0.18);
