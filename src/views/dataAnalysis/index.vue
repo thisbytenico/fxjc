@@ -227,12 +227,22 @@
                         <div id="chinaMap" class="map-echarts"></div>
                         <!-- 右侧排行面板 -->
                         <div class="map-panel">
-                            <div class="mp-title">注册生产经营主体地域排行</div>
+                            <div class="mp-title-row">
+                                <div class="mp-title">注册生产经营主体地域排行</div>
+                                <div class="mp-title-decor">
+                                    <span class="seg orange"></span>
+                                    <span class="seg cyan"></span>
+                                    <span class="seg blue"></span>
+                                </div>
+                            </div>
+                            <div class="mp-unit">单位：家</div>
                             <div id="rankingChart" class="mp-ranking-chart"></div>
                             <div class="mp-note">
                                 <span class="mp-note-dot"></span>
-                                上季度新增注册生产经营主体7,526家 与同期相比增长3%
+                                上季度新增注册生产经营主体<span class="emph">7,526家</span><br />
+                                与同期对比增长<span class="emph">3%</span>
                             </div>
+                            <div class="mp-unit mp-unit-trend">单位：家</div>
                             <div id="trendChart" class="mp-trend-chart"></div>
                         </div>
                     </div>
@@ -995,58 +1005,48 @@ export default {
                     textStyle: { color: '#fff' }
                 },
                 legend: { show: false },
-                grid: { left: 0, right: 8, bottom: 0, top: 8, containLabel: true },
+                grid: { left: 6, right: 8, bottom: 0, top: 8, containLabel: true },
                 xAxis: {
                     type: 'category',
                     boundaryGap: false,
-                    data: ['7月', '8月', '9月'],
-                    axisLine: { lineStyle: { color: 'rgba(0,212,255,0.3)' } },
-                    axisLabel: { color: '#7eb8d0', fontSize: 10 },
+                    data: ['7月', '8月', '9月', ''],
+                    axisLine: { lineStyle: { color: 'rgba(110, 140, 170, 0.45)' } },
+                    axisLabel: { color: 'rgba(190,210,225,0.88)', fontSize: 10, margin: 8 },
                     axisTick: { show: false }
                 },
                 yAxis: {
                     type: 'value',
-                    axisLine: { show: false },
-                    axisLabel: { color: '#7eb8d0', fontSize: 10 },
-                    splitLine: { lineStyle: { color: 'rgba(0,212,255,0.08)' } }
+                    min: 0,
+                    max: 250,
+                    interval: 50,
+                    axisLine: { show: true, lineStyle: { color: 'rgba(110, 140, 170, 0.45)' } },
+                    axisLabel: { color: 'rgba(190,210,225,0.88)', fontSize: 10 },
+                    splitLine: { lineStyle: { color: 'rgba(110, 140, 170, 0.2)' } }
                 },
                 series: [
                     {
                         type: 'line',
-                        data: [80, 130, 200],
+                        data: [190, 150, 90, 150],
                         smooth: true,
                         symbol: 'none',
-                        lineStyle: { color: '#00d4ff', width: 1.5 },
+                        lineStyle: { color: '#1fd8ea', width: 2 },
                         areaStyle: {
                             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                                { offset: 0, color: 'rgba(0,212,255,0.35)' },
-                                { offset: 1, color: 'rgba(0,212,255,0.02)' }
+                                { offset: 0, color: 'rgba(31,216,234,0.5)' },
+                                { offset: 1, color: 'rgba(31,216,234,0.03)' }
                             ])
                         }
                     },
                     {
                         type: 'line',
-                        data: [120, 170, 240],
+                        data: [55, 175, 85, 120],
                         smooth: true,
                         symbol: 'none',
-                        lineStyle: { color: '#9c4dcc', width: 1.5 },
+                        lineStyle: { color: '#b06deb', width: 2 },
                         areaStyle: {
                             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                                { offset: 0, color: 'rgba(156,77,204,0.35)' },
-                                { offset: 1, color: 'rgba(156,77,204,0.02)' }
-                            ])
-                        }
-                    },
-                    {
-                        type: 'line',
-                        data: [60, 100, 160],
-                        smooth: true,
-                        symbol: 'none',
-                        lineStyle: { color: '#00c896', width: 1.5 },
-                        areaStyle: {
-                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                                { offset: 0, color: 'rgba(0,200,150,0.35)' },
-                                { offset: 1, color: 'rgba(0,200,150,0.02)' }
+                                { offset: 0, color: 'rgba(176,109,235,0.48)' },
+                                { offset: 1, color: 'rgba(176,109,235,0.03)' }
                             ])
                         }
                     }
@@ -1068,38 +1068,43 @@ export default {
                     borderColor: '#00d4ff',
                     textStyle: { color: '#fff' }
                 },
-                grid: { left: 0, right: 50, bottom: 0, top: 4, containLabel: true },
+                grid: { left: 6, right: 36, bottom: 2, top: 2, containLabel: true },
                 xAxis: {
                     type: 'value',
-                    axisLine: { show: false },
-                    axisLabel: { color: '#7eb8d0', fontSize: 9 },
-                    splitLine: { lineStyle: { color: 'rgba(0,212,255,0.08)' } }
+                    min: 0,
+                    max: 2500,
+                    interval: 500,
+                    axisLine: { show: true, lineStyle: { color: 'rgba(110, 140, 170, 0.42)' } },
+                    axisLabel: { color: 'rgba(190,210,225,0.88)', fontSize: 9 },
+                    axisTick: { show: false },
+                    splitLine: { show: false }
                 },
                 yAxis: {
                     type: 'category',
-                    data: ['山东省', '河南省', '江苏省', '云南省', '浙江省'],
-                    inverse: false,
-                    axisLine: { show: false },
-                    axisLabel: { color: '#7eb8d0', fontSize: 10 },
+                    data: ['浙江省', '云南省', '江西省', '河北省', '山东省'],
+                    inverse: true,
+                    axisLine: { show: true, lineStyle: { color: 'rgba(110, 140, 170, 0.42)' } },
+                    axisLabel: { color: 'rgba(190,210,225,0.92)', fontSize: 10, margin: 8 },
                     axisTick: { show: false }
                 },
                 series: [{
                     type: 'bar',
-                    data: [503, 1059, 1448, 1987, 2241],
-                    barWidth: '50%',
+                    data: [2241, 1987, 1448, 1059, 503],
+                    barWidth: 9,
                     label: {
                         show: true,
                         position: 'right',
-                        color: '#7eb8d0',
-                        fontSize: 10,
+                        color: '#d9c89a',
+                        fontSize: 11,
+                        distance: 8,
                         formatter: '{c}'
                     },
                     itemStyle: {
                         color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
-                            { offset: 0, color: '#e65c00' },
-                            { offset: 1, color: '#f9d423' }
+                            { offset: 0, color: '#3ed5eb' },
+                            { offset: 1, color: '#cfbe90' }
                         ]),
-                        borderRadius: [0, 3, 3, 0]
+                        borderRadius: [0, 10, 10, 0]
                     }
                 }]
             });
@@ -1752,7 +1757,7 @@ export default {
 .map-wrap-box{
     flex: 1;
     position: relative;
-    background: linear-gradient(180deg, rgba(5,28,58,0.92) 0%, rgba(2,14,30,0.96) 100%);
+    // background: linear-gradient(180deg, rgba(5,28,58,0.92) 0%, rgba(2,14,30,0.96) 100%);
     border: 1px solid rgba(0,180,220,0.22);
     border-radius: 4px;
     overflow: hidden;
@@ -1806,70 +1811,94 @@ export default {
 .map-panel {
     position: absolute;
     top: 10px; right: 10px;
-    width: 260px;
-    background: rgba(2,14,30,0.92);
-    border: 1px solid rgba(0,180,220,0.25);
+    width: 278px;
+    // background: rgba(2,14,30,0.92);
+    // border: 1px solid rgba(0,180,220,0.25);
     border-radius: 4px;
-    padding: 10px 12px;
+    padding: 10px 10px 12px;
     z-index: 10;
+}
 
-    &::before {
-        content: '';
-        position: absolute;
-        top: 0; left: 0;
-        width: 8px; height: 8px;
-        border-top: 1.5px solid #00b4d8;
-        border-left: 1.5px solid #00b4d8;
-    }
-    &::after {
-        content: '';
-        position: absolute;
-        bottom: 0; right: 0;
-        width: 8px; height: 8px;
-        border-bottom: 1.5px solid #00b4d8;
-        border-right: 1.5px solid #00b4d8;
-    }
+.mp-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(0, 180, 220, 0.22);
 }
 
 .mp-title {
     font-size: 12px;
     font-weight: 600;
-    color: #7eb8d0;
-    margin-bottom: 8px;
+    color: #f3f8ff;
+}
+
+.mp-title-decor {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    .seg {
+        width: 18px;
+        height: 3px;
+        border-radius: 2px;
+        display: inline-block;
+        &.orange { background: #f4a126; }
+        &.cyan { background: #48d8ea; }
+        &.blue { background: #70bfff; }
+    }
+}
+
+.mp-unit {
+    font-size: 10px;
+    color: rgba(225, 238, 250, 0.78);
+    margin-bottom: 4px;
+}
+
+.mp-unit-trend {
+    margin: 2px 0 4px;
 }
 
 .mp-ranking-chart {
     width: 100%;
-    height: 120px;
-    margin-bottom: 8px;
+    height: 170px;
+    margin-bottom: 10px;
 }
 
 .mp-note {
     font-size: 10px;
-    color: #4caf50;
-    background: rgba(76,175,80,0.08);
-    border-left: 2px solid #4caf50;
-    padding: 5px 8px;
+    color: #d7ecff;
+    background: linear-gradient(90deg, rgba(15, 105, 140, 0.2) 0%, rgba(11, 84, 122, 0.06) 100%);
+    border: 1px solid rgba(56, 214, 236, 0.34);
+    border-radius: 3px;
+    padding: 8px 10px;
     margin-bottom: 8px;
-    line-height: 1.4;
+    line-height: 1.5;
     display: flex;
     align-items: flex-start;
     gap: 4px;
+    box-shadow: inset 0 0 14px rgba(36, 154, 185, 0.18);
+    .emph {
+        color: #3ddbf0;
+        font-weight: 700;
+        margin: 0 1px;
+    }
 }
 
 .mp-note-dot {
     display: inline-block;
-    width: 6px;
-    height: 6px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
-    background: #4caf50;
+    background: linear-gradient(180deg, #47e1f2 0%, #1ba1bb 100%);
     flex-shrink: 0;
-    margin-top: 2px;
+    margin-top: 3px;
+    box-shadow: 0 0 6px rgba(63, 218, 240, 0.6);
 }
 
 .mp-trend-chart {
     width: 100%;
-    height: 100px;
+    height: 170px;
 }
 
 /* ============================================================
@@ -2043,11 +2072,15 @@ export default {
     align-items: center;
     gap: 10px;
     height: 100%;
+    padding: 0 10px;
 }
 
 .insp-stats {
     flex: 1;
     min-width: 0;
+    .biz-item:first-child {
+        margin-bottom: 12px;
+    }
 }
 
 /* ============================================================
