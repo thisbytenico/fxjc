@@ -39,6 +39,7 @@
                 <Header />
                 <div
                     class="main"
+                    :class="{ 'main--data-analysis': isDataAnalysis }"
                     v-loading="g_loading && g_loading.show"
                     element-loading-spinner="el-icon-loading"
                     element-loading-background="rgba(255, 255, 255, 0.4)"
@@ -93,6 +94,7 @@ export default {
         const route = useRoute();
         // console.log('route.meta.breadcrumbsName',route.meta)
         const breadcrumbsName = computed(() => route.meta.breadcrumbsName);
+        const isDataAnalysis = computed(() => route.path === '/dataAnalysis');
 
         const store = useStore();
         const g_loading = computed(() => store.state.loading);
@@ -170,6 +172,7 @@ export default {
             g_loading,
             locale,
             breadcrumbsName,
+            isDataAnalysis,
             menuSelect
         };
     }
@@ -235,6 +238,9 @@ export default {
     flex-direction: column;
     background-color: #0a1428;
     min-height: 0;
+}
+.main.main--data-analysis {
+    overflow: hidden;
 }
 .main > * {
     flex: 1;

@@ -9,28 +9,37 @@
                 :key="item.key"
                 type="button"
                 :class="{ active: activeTab === item.key }"
-                @click="handleTabClick(item.key)"
+                @click="handleTabClick(item)"
             >{{ item.label }}</button>
         </nav>
     </header>
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
 export default {
     name: 'Header',
     setup() {
+        const route = useRoute();
+        const router = useRouter();
         const navItems = [
-            { key: 'traceability', label: '追溯业务' },
+            { key: 'traceability', label: '追溯业务', path: '/dataAnalysis' },
             { key: 'regulatory', label: '监管业务' },
-            { key: 'monitoring', label: '监测业务' },
+            { key: 'monitoring', label: '监测业务', path: '/monitoring' },
             { key: 'enforcement', label: '执法业务' }
         ];
-        const activeTab = ref('traceability');
-        const handleTabClick = key => {
-            activeTab.value = key;
+        const tabFromPath = path => path.startsWith('/monitoring') ? 'monitoring' : 'traceability';
+        const activeTab = ref(tabFromPath(route.path));
+        const handleTabClick = item => {
+            activeTab.value = item.key;
+            if (item.path && route.path !== item.path) router.push(item.path);
         };
+
+        watch(() => route.path, path => {
+            activeTab.value = tabFromPath(path);
+        });
 
         return { navItems, activeTab, handleTabClick };
     }
@@ -87,6 +96,7 @@ export default {
     font: 700 23px/1 "Microsoft YaHei", sans-serif;
     letter-spacing: 0;
     cursor: pointer;
+    position: relative;
     clip-path: polygon(7px 0, 100% 0, 100% 100%, 0 100%, 0 8px);
     background: linear-gradient(180deg, rgba(48, 131, 215, .46), rgba(43, 133, 218, .85));
     box-shadow: inset 0 0 14px rgba(84, 177, 255, .32), 0 0 9px rgba(20, 105, 178, .48);
@@ -99,6 +109,20 @@ export default {
     background: linear-gradient(180deg, rgba(156, 124, 20, .75), rgba(225, 181, 23, .96));
     box-shadow: inset 0 0 16px rgba(255, 238, 94, .35), 0 0 10px rgba(244, 200, 38, .42);
 }
+.business-nav button.active::before,
+.business-nav button.active::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    transform: translateY(-50%);
+    filter: drop-shadow(0 0 3px rgba(255, 246, 147, .85));
+}
+.business-nav button.active::before { left: 0; border-left: 9px solid #fff4a5; }
+.business-nav button.active::after { right: 0; border-right: 9px solid #fff4a5; }
 
 @media (max-width: 1560px) {
     .platform-header { height: 66px; flex-basis: 66px; padding: 0 20px; gap: 16px; }

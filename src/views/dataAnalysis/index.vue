@@ -275,10 +275,9 @@ export default {
                 }
                 const values = regionValues(geo, remoteValues);
                 echarts.registerMap(route.mapName, geo);
-                mapChart.setOption({
+                const mapOption = {
                     animationDurationUpdate: 450,
                     tooltip: { ...tooltip, formatter: params => `${params.name}<br/>主体数：${formatNumber(params.value)} 家` },
-                    visualMap: { show: false, min: 0, max: Math.max(...values.map(item => item.value), 1), inRange: { color: ['#079bd5', '#0ab9e7', '#22cef1'] } },
                     series: [{
                         type: 'map', map: route.mapName, roam: true,
                         zoom: route.level === 'country' ? 1.08 : .95,
@@ -290,7 +289,16 @@ export default {
                         emphasis: { label: { color: '#fff' }, itemStyle: { areaColor: '#32d3ed' } },
                         select: { disabled: true }, data: values
                     }]
-                }, true);
+                };
+                if (route.level !== 'country') {
+                    mapOption.visualMap = {
+                        show: false,
+                        min: 0,
+                        max: Math.max(...values.map(item => item.value), 1),
+                        inRange: { color: ['#079bd5', '#0ab9e7', '#22cef1'] }
+                    };
+                }
+                mapChart.setOption(mapOption, true);
             } catch (error) {
                 if (route.fallbackGeo) {
                     route.geo = route.fallbackGeo;
@@ -373,7 +381,7 @@ export default {
     width: 100%;
     height: 100%;
     min-width: 1200px;
-    min-height: 790px;
+    min-height: 0;
     overflow: auto;
     color: #f4f9ff;
     font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
@@ -387,11 +395,12 @@ export default {
 
 .dashboard-grid {
     width: 100%;
-    min-height: 100%;
+    height: 100%;
+    min-height: 0;
     padding: 30px 30px 44px;
     display: grid;
     grid-template-columns: minmax(280px, 24.6%) minmax(520px, 1fr) minmax(280px, 24.6%);
-    grid-template-rows: minmax(450px, 1.82fr) minmax(240px, 1fr);
+    grid-template-rows: minmax(0, 1.82fr) minmax(0, 1fr);
     grid-template-areas:
         "subject map trace"
         "cert farming product";
@@ -401,6 +410,7 @@ export default {
 .screen-panel {
     min-width: 0;
     min-height: 0;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     border: 1px solid rgba(35, 132, 197, .62);
@@ -465,7 +475,7 @@ export default {
 .china-map { flex: 1; width: 100%; z-index: 1; }
 .map-pedestal { height: 78px; margin: -52px 6% 0; border-radius: 50%; background: repeating-radial-gradient(ellipse, rgba(24, 183, 238, .32) 0 2px, rgba(7, 55, 91, .12) 4px 11px, transparent 13px 20px); border-bottom: 2px solid rgba(29, 151, 207, .32); transform: perspective(120px) rotateX(42deg); }
 
-.trace-content { flex: 1; min-height: 0; padding: 12px 14px 10px; display: grid; grid-template-rows: 73px 73px minmax(92px, 1fr) 73px minmax(92px, 1fr); gap: 10px; }
+.trace-content { flex: 1; min-height: 0; padding: 12px 14px 10px; display: grid; grid-template-rows: 73px 73px minmax(0, 1fr) 73px minmax(0, 1fr); gap: 10px; }
 .trace-card { min-height: 0; padding: 7px 13px; display: flex; align-items: center; justify-content: space-between; border: 1px solid #48708d; border-radius: 7px; background: rgba(5, 20, 37, .88); box-shadow: inset 0 0 12px rgba(71, 152, 197, .1); }
 .trace-card h3 { margin: 0; font-size: 18px; font-style: italic; line-height: 1; }
 .trace-card strong { display: block; margin-top: 4px; font: 700 30px/.95 "Arial Narrow", Arial, sans-serif; letter-spacing: 0; }
