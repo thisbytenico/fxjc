@@ -205,14 +205,44 @@ export default {
         });
 
         const axisText = { color: '#d8e5f2', fontSize: 12 };
+        const subjectPieLabelLayout = params => {
+            const width = subjectPieRef.value?.clientWidth || 220;
+            const height = subjectPieRef.value?.clientHeight || 190;
+            const radius = Math.min(width, height) * .67 / 2;
+            const centerX = width * .67;
+            const centerY = height * .52;
+            const layouts = [
+                { x: width * .14, y: height * .88, anchor: [centerX - radius * .35, centerY + radius * .92] },
+                { x: 0, y: height * .58, anchor: [centerX - radius * .96, centerY + radius * .18] },
+                { x: 0, y: height * .34, anchor: [centerX - radius * .78, centerY - radius * .55] },
+                { x: 0, y: height * .12, anchor: [centerX - radius * .16, centerY - radius * .98] }
+            ];
+            const layout = layouts[params.dataIndex] || layouts[0];
+            const lineEndX = layout.x + params.labelRect.width + 3;
+            return {
+                x: layout.x,
+                y: layout.y,
+                align: 'left',
+                verticalAlign: 'middle',
+                labelLinePoints: [layout.anchor, [lineEndX + 8, layout.y], [lineEndX, layout.y]]
+            };
+        };
         const initCharts = () => {
             const data = dashboard.value;
             initChart(subjectPieRef.value, {
                 ...pieOption(data.subjects.industry, ['#2bd1ab', '#f09a42', '#2aa9e6', '#fff14f'], ['45%', '67%']),
                 series: [{
                     ...pieOption(data.subjects.industry, [], ['45%', '67%']).series[0],
-                    label: { show: true, color: '#ecf7ff', fontSize: 11, formatter: '{b}:{c}' },
-                    labelLine: { length: 9, length2: 8, lineStyle: { color: '#7fdfff' } },
+                    center: ['67%', '52%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        show: true,
+                        color: '#ecf7ff',
+                        fontSize: 11,
+                        formatter: '{b}:{c}'
+                    },
+                    labelLine: { length: 8, length2: 6, lineStyle: { color: '#d9f8ff' } },
+                    labelLayout: subjectPieLabelLayout,
                     data: data.subjects.industry
                 }]
             });
@@ -511,24 +541,25 @@ export default {
 
 .chart { min-width: 0; min-height: 0; }
 .subject-overview { flex: 0 0 190px; padding: 25px 13px 2px; display: flex; align-items: center; gap: 8px; }
-.subject-totals { width: 43%; display: flex; flex-direction: column; gap: 36px; }
-.metric-box { padding: 7px 7px 8px; display: flex; flex-direction: column; border: 1px solid #47789b; border-radius: 7px; background: rgba(3, 17, 32, .9); box-shadow: 0 0 13px rgba(40, 176, 238, .22); }
-.metric-box strong { font-family: "Arial Narrow", Arial, sans-serif; font-size: 31px; line-height: .95; letter-spacing: 0; }
+.subject-totals { width: 47%; flex: 0 0 47%; display: flex; flex-direction: column; gap: 36px; }
+.metric-box { padding: 7px 10px 8px; display: flex; flex-direction: column; border: 1px solid #47789b; border-radius: 7px; background: rgba(3, 17, 32, .9); box-shadow: 0 0 13px rgba(40, 176, 238, .22); }
+.metric-box strong { font-family: Arial, sans-serif; font-size: 34px; font-weight: 700; line-height: .95; letter-spacing: 0; }
 .metric-box > span { margin-top: 4px; font-size: 16px; white-space: nowrap; }
 .metric-box small { font-size: 12px; font-weight: normal; }
 .metric-box small b { color: #ff385e; }
 .blue-box strong { color: #2dbcf7; }
 .cyan-box { border-color: #168999; }
 .cyan-box strong { color: #48e0e4; }
-.subject-pie { width: 62%; height: 100%; margin-left: -5%; }
+.subject-pie { flex: 1; width: auto; height: 100%; }
 
 .subject-category-grid { flex: 1; min-height: 0; padding: 10px 34px 20px; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 16px 40px; }
-.subject-category { min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-.subject-category > strong { font: 700 32px/1 "Arial Narrow", Arial, sans-serif; }
+.subject-category { width: 100%; max-width: 156px; min-width: 0; justify-self: center; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.subject-category > strong { font: 700 32px/1 Arial, sans-serif; }
 .subject-category > span { margin-top: 2px; font-size: 18px; white-space: nowrap; }
-.active-label { width: 100%; margin-top: 11px; display: flex; justify-content: space-between; color: #7f9bb1; font-size: 15px; }
+.active-label { position: relative; z-index: 1; width: calc(100% - 28px); margin-top: 11px; display: flex; justify-content: space-between; color: #7f9bb1; font-size: 15px; }
+.active-label::before { content: ''; position: absolute; top: -5px; right: -14px; left: -14px; z-index: -1; height: 42px; clip-path: polygon(7% 0, 93% 0, 100% 100%, 0 100%); border-bottom: 1px solid rgba(49, 152, 194, .45); background: linear-gradient(180deg, rgba(9, 39, 62, .12), rgba(13, 61, 88, .72)); box-shadow: inset 0 -8px 12px rgba(20, 113, 151, .12); }
 .active-label b { color: #91aabe; font-weight: normal; }
-.progress { width: 100%; height: 9px; margin-top: 6px; padding: 2px 5px; background: rgba(10, 49, 73, .95); border: 1px solid rgba(48, 103, 138, .8); transform: skew(-8deg); }
+.progress { position: relative; z-index: 1; width: calc(100% - 16px); height: 8px; margin-top: 6px; padding: 2px 4px; background: rgba(6, 30, 48, .96); border: 1px solid rgba(48, 103, 138, .8); transform: skew(-8deg); }
 .progress i { display: block; height: 3px; box-shadow: 0 0 6px currentColor; }
 
 .map-location { position: absolute; top: 8px; left: 8px; z-index: 3; height: 32px; display: flex; align-items: center; color: #dfe9f2; font-size: 19px; }
@@ -595,7 +626,9 @@ export default {
 @media (max-width: 1600px) {
     .dashboard-grid { padding: 10px 10px 12px; gap: 10px; grid-template-columns: minmax(270px, 24%) minmax(540px, 1fr) minmax(270px, 24%); }
     .panel-heading h2 { font-size: 18px; }
-    .subject-overview { padding-left: 9px; padding-right: 9px; }
+    .subject-overview { padding-left: 9px; padding-right: 9px; gap: 5px; }
+    .subject-totals { width: 46%; flex-basis: 46%; }
+    .metric-box { padding-left: 7px; padding-right: 7px; }
     .metric-box strong, .subject-category > strong { font-size: 26px; }
     .metric-box > span, .subject-category > span, .product-metric span { font-size: 14px; }
     .subject-category-grid { padding-left: 22px; padding-right: 22px; gap: 12px 24px; }

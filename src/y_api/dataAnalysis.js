@@ -7,10 +7,10 @@ const mockDashboard = {
         activeRate: 93,
         recentActive: 9384,
         industry: [
-            { name: '种植业', value: 466201 },
-            { name: '畜牧业', value: 150823 },
-            { name: '渔业', value: 36486 },
-            { name: '其他行业', value: 890 }
+            { name: '种植业', value: 313914 },
+            { name: '畜牧业', value: 125566 },
+            { name: '渔业', value: 94174 },
+            { name: '其他行业', value: 94174 }
         ],
         categories: [
             { name: '屠宰主体', value: 2835, activeRate: 90.9, color: '#28b8ff' },
