@@ -9,6 +9,18 @@ const router = createRouter({
       redirect: '/dataAnalysis'
     },
     {
+      path: '/home',
+      name: 'home',
+      meta:{breadcrumbsName:'首页'},
+      component: () => import('../views/home/index.vue')
+    },
+    {
+      path: '/how-to-use',
+      name: 'howToUse',
+      meta:{breadcrumbsName:'How to use'},
+      component: () => import('../views/howToUse/index.vue')
+    },
+    {
       path: '/login',
       name: 'login',
       component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue')

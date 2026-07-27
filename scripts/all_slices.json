@@ -1,0 +1,1212 @@
+[
+  {
+    "id": "A9608166-85F3-461E-A832-F6FB95E1A491",
+    "name": "蒙版",
+    "type": "shape",
+    "download_url": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnga233db4ecb5f4325faf0be401d5c578d35138f9d90a5c1ddb714b34efc44d595",
+    "size": "1440x700",
+    "format": "png",
+    "scale_urls": {
+      "1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnga233db4ecb5f4325faf0be401d5c578d35138f9d90a5c1ddb714b34efc44d595?x-oss-process=image/resize,w_1440,h_700/format,png",
+      "2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnga233db4ecb5f4325faf0be401d5c578d35138f9d90a5c1ddb714b34efc44d595",
+      "3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnga233db4ecb5f4325faf0be401d5c578d35138f9d90a5c1ddb714b34efc44d595?x-oss-process=image/resize,w_4320,h_2100/format,png",
+      "ios_1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnga233db4ecb5f4325faf0be401d5c578d35138f9d90a5c1ddb714b34efc44d595?x-oss-process=image/resize,w_720,h_350/format,png",
+      "ios_2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnga233db4ecb5f4325faf0be401d5c578d35138f9d90a5c1ddb714b34efc44d595?x-oss-process=image/resize,w_1440,h_700/format,png",
+      "ios_3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnga233db4ecb5f4325faf0be401d5c578d35138f9d90a5c1ddb714b34efc44d595?x-oss-process=image/resize,w_2160,h_1050/format,png",
+      "android_mdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnga233db4ecb5f4325faf0be401d5c578d35138f9d90a5c1ddb714b34efc44d595?x-oss-process=image/resize,w_720,h_350/format,png",
+      "android_hdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnga233db4ecb5f4325faf0be401d5c578d35138f9d90a5c1ddb714b34efc44d595?x-oss-process=image/resize,w_1080,h_525/format,png",
+      "android_xhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnga233db4ecb5f4325faf0be401d5c578d35138f9d90a5c1ddb714b34efc44d595?x-oss-process=image/resize,w_1440,h_700/format,png",
+      "android_xxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnga233db4ecb5f4325faf0be401d5c578d35138f9d90a5c1ddb714b34efc44d595?x-oss-process=image/resize,w_2160,h_1050/format,png",
+      "android_xxxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnga233db4ecb5f4325faf0be401d5c578d35138f9d90a5c1ddb714b34efc44d595"
+    },
+    "logical_size": {
+      "width": 1440,
+      "height": 700,
+      "note": "1x logical px; stored at 2x = 2880x1400px"
+    },
+    "position": {
+      "x": 0,
+      "y": 0
+    },
+    "layer_path": "蒙版"
+  },
+  {
+    "id": "A5DF40F2-5086-429E-AF75-D17E46AAC301",
+    "name": "位图",
+    "type": "bitmap",
+    "download_url": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng8677d5c5edd860155fe9759464057c03476c4d59de701617bb78b6af9f43def3",
+    "size": "602x594",
+    "format": "png",
+    "scale_urls": {
+      "1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng8677d5c5edd860155fe9759464057c03476c4d59de701617bb78b6af9f43def3?x-oss-process=image/resize,w_602,h_594/format,png",
+      "2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng8677d5c5edd860155fe9759464057c03476c4d59de701617bb78b6af9f43def3",
+      "3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng8677d5c5edd860155fe9759464057c03476c4d59de701617bb78b6af9f43def3?x-oss-process=image/resize,w_1806,h_1782/format,png",
+      "ios_1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng8677d5c5edd860155fe9759464057c03476c4d59de701617bb78b6af9f43def3?x-oss-process=image/resize,w_301,h_297/format,png",
+      "ios_2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng8677d5c5edd860155fe9759464057c03476c4d59de701617bb78b6af9f43def3?x-oss-process=image/resize,w_602,h_594/format,png",
+      "ios_3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng8677d5c5edd860155fe9759464057c03476c4d59de701617bb78b6af9f43def3?x-oss-process=image/resize,w_903,h_891/format,png",
+      "android_mdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng8677d5c5edd860155fe9759464057c03476c4d59de701617bb78b6af9f43def3?x-oss-process=image/resize,w_301,h_297/format,png",
+      "android_hdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng8677d5c5edd860155fe9759464057c03476c4d59de701617bb78b6af9f43def3?x-oss-process=image/resize,w_452,h_446/format,png",
+      "android_xhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng8677d5c5edd860155fe9759464057c03476c4d59de701617bb78b6af9f43def3?x-oss-process=image/resize,w_602,h_594/format,png",
+      "android_xxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng8677d5c5edd860155fe9759464057c03476c4d59de701617bb78b6af9f43def3?x-oss-process=image/resize,w_903,h_891/format,png",
+      "android_xxxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng8677d5c5edd860155fe9759464057c03476c4d59de701617bb78b6af9f43def3"
+    },
+    "logical_size": {
+      "width": 602,
+      "height": 594,
+      "note": "1x logical px; stored at 2x = 1204x1188px"
+    },
+    "position": {
+      "x": 825,
+      "y": 32
+    },
+    "layer_path": "位图"
+  },
+  {
+    "id": "57B0A7CB-1FD2-41C8-B131-9DFE8CB0DA61",
+    "name": "697e9045af4ad6d3cb74fcfa712bb7fee92dc9173df8-FQoD7H",
+    "type": "bitmap",
+    "download_url": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng982bd7f252ed8faec653c105abdf3a3c933c527bbf68106482ba78954f855a35",
+    "size": "911x700",
+    "format": "png",
+    "scale_urls": {
+      "1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng982bd7f252ed8faec653c105abdf3a3c933c527bbf68106482ba78954f855a35?x-oss-process=image/resize,w_911,h_700/format,png",
+      "2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng982bd7f252ed8faec653c105abdf3a3c933c527bbf68106482ba78954f855a35",
+      "3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng982bd7f252ed8faec653c105abdf3a3c933c527bbf68106482ba78954f855a35?x-oss-process=image/resize,w_2733,h_2100/format,png",
+      "ios_1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng982bd7f252ed8faec653c105abdf3a3c933c527bbf68106482ba78954f855a35?x-oss-process=image/resize,w_456,h_350/format,png",
+      "ios_2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng982bd7f252ed8faec653c105abdf3a3c933c527bbf68106482ba78954f855a35?x-oss-process=image/resize,w_911,h_700/format,png",
+      "ios_3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng982bd7f252ed8faec653c105abdf3a3c933c527bbf68106482ba78954f855a35?x-oss-process=image/resize,w_1367,h_1050/format,png",
+      "android_mdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng982bd7f252ed8faec653c105abdf3a3c933c527bbf68106482ba78954f855a35?x-oss-process=image/resize,w_456,h_350/format,png",
+      "android_hdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng982bd7f252ed8faec653c105abdf3a3c933c527bbf68106482ba78954f855a35?x-oss-process=image/resize,w_683,h_525/format,png",
+      "android_xhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng982bd7f252ed8faec653c105abdf3a3c933c527bbf68106482ba78954f855a35?x-oss-process=image/resize,w_911,h_700/format,png",
+      "android_xxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng982bd7f252ed8faec653c105abdf3a3c933c527bbf68106482ba78954f855a35?x-oss-process=image/resize,w_1367,h_1050/format,png",
+      "android_xxxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng982bd7f252ed8faec653c105abdf3a3c933c527bbf68106482ba78954f855a35"
+    },
+    "logical_size": {
+      "width": 911,
+      "height": 700,
+      "note": "1x logical px; stored at 2x = 1822x1400px"
+    },
+    "position": {
+      "x": 0,
+      "y": 0
+    },
+    "layer_path": "697e9045af4ad6d3cb74fcfa712bb7fee92dc9173df8-FQoD7H"
+  },
+  {
+    "id": "C0063B0C-B7E0-4162-B070-5BBD800131F7",
+    "name": "矩形",
+    "type": "shape",
+    "download_url": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng1c2176502fe30c60b1bd1d1f35825f589f607a071620192355b1082f5c8137b0",
+    "size": "1440x700",
+    "format": "png",
+    "scale_urls": {
+      "1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng1c2176502fe30c60b1bd1d1f35825f589f607a071620192355b1082f5c8137b0?x-oss-process=image/resize,w_1440,h_700/format,png",
+      "2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng1c2176502fe30c60b1bd1d1f35825f589f607a071620192355b1082f5c8137b0",
+      "3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng1c2176502fe30c60b1bd1d1f35825f589f607a071620192355b1082f5c8137b0?x-oss-process=image/resize,w_4320,h_2100/format,png",
+      "ios_1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng1c2176502fe30c60b1bd1d1f35825f589f607a071620192355b1082f5c8137b0?x-oss-process=image/resize,w_720,h_350/format,png",
+      "ios_2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng1c2176502fe30c60b1bd1d1f35825f589f607a071620192355b1082f5c8137b0?x-oss-process=image/resize,w_1440,h_700/format,png",
+      "ios_3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng1c2176502fe30c60b1bd1d1f35825f589f607a071620192355b1082f5c8137b0?x-oss-process=image/resize,w_2160,h_1050/format,png",
+      "android_mdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng1c2176502fe30c60b1bd1d1f35825f589f607a071620192355b1082f5c8137b0?x-oss-process=image/resize,w_720,h_350/format,png",
+      "android_hdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng1c2176502fe30c60b1bd1d1f35825f589f607a071620192355b1082f5c8137b0?x-oss-process=image/resize,w_1080,h_525/format,png",
+      "android_xhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng1c2176502fe30c60b1bd1d1f35825f589f607a071620192355b1082f5c8137b0?x-oss-process=image/resize,w_1440,h_700/format,png",
+      "android_xxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng1c2176502fe30c60b1bd1d1f35825f589f607a071620192355b1082f5c8137b0?x-oss-process=image/resize,w_2160,h_1050/format,png",
+      "android_xxxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng1c2176502fe30c60b1bd1d1f35825f589f607a071620192355b1082f5c8137b0"
+    },
+    "logical_size": {
+      "width": 1440,
+      "height": 700,
+      "note": "1x logical px; stored at 2x = 2880x1400px"
+    },
+    "position": {
+      "x": 0,
+      "y": 0
+    },
+    "layer_path": "矩形"
+  },
+  {
+    "id": "91721DB0-E2E6-4C06-95A4-DB8020F99FF0",
+    "name": "椭圆形",
+    "type": "shape",
+    "download_url": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngbbbc581168adbb7c4df866e1bc6099b49f6f04f2399183fb4504fd61c93ec0e7",
+    "size": "52x52",
+    "format": "png",
+    "scale_urls": {
+      "1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngbbbc581168adbb7c4df866e1bc6099b49f6f04f2399183fb4504fd61c93ec0e7?x-oss-process=image/resize,w_52,h_52/format,png",
+      "2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngbbbc581168adbb7c4df866e1bc6099b49f6f04f2399183fb4504fd61c93ec0e7",
+      "3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngbbbc581168adbb7c4df866e1bc6099b49f6f04f2399183fb4504fd61c93ec0e7?x-oss-process=image/resize,w_156,h_156/format,png",
+      "ios_1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngbbbc581168adbb7c4df866e1bc6099b49f6f04f2399183fb4504fd61c93ec0e7?x-oss-process=image/resize,w_26,h_26/format,png",
+      "ios_2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngbbbc581168adbb7c4df866e1bc6099b49f6f04f2399183fb4504fd61c93ec0e7?x-oss-process=image/resize,w_52,h_52/format,png",
+      "ios_3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngbbbc581168adbb7c4df866e1bc6099b49f6f04f2399183fb4504fd61c93ec0e7?x-oss-process=image/resize,w_78,h_78/format,png",
+      "android_mdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngbbbc581168adbb7c4df866e1bc6099b49f6f04f2399183fb4504fd61c93ec0e7?x-oss-process=image/resize,w_26,h_26/format,png",
+      "android_hdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngbbbc581168adbb7c4df866e1bc6099b49f6f04f2399183fb4504fd61c93ec0e7?x-oss-process=image/resize,w_39,h_39/format,png",
+      "android_xhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngbbbc581168adbb7c4df866e1bc6099b49f6f04f2399183fb4504fd61c93ec0e7?x-oss-process=image/resize,w_52,h_52/format,png",
+      "android_xxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngbbbc581168adbb7c4df866e1bc6099b49f6f04f2399183fb4504fd61c93ec0e7?x-oss-process=image/resize,w_78,h_78/format,png",
+      "android_xxxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngbbbc581168adbb7c4df866e1bc6099b49f6f04f2399183fb4504fd61c93ec0e7"
+    },
+    "logical_size": {
+      "width": 52,
+      "height": 52,
+      "note": "1x logical px; stored at 2x = 104x104px"
+    },
+    "position": {
+      "x": 187,
+      "y": 153
+    },
+    "layer_path": "椭圆形"
+  },
+  {
+    "id": "C7243A48-B675-4BF9-906C-42E30D33FB66",
+    "name": "椭圆形",
+    "type": "shape",
+    "download_url": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngddcf7dd49966d707f430ed6b1d3b38aa0457dd866db0456da3f04f999f902b97",
+    "size": "16x16",
+    "format": "png",
+    "scale_urls": {
+      "1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngddcf7dd49966d707f430ed6b1d3b38aa0457dd866db0456da3f04f999f902b97?x-oss-process=image/resize,w_16,h_16/format,png",
+      "2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngddcf7dd49966d707f430ed6b1d3b38aa0457dd866db0456da3f04f999f902b97",
+      "3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngddcf7dd49966d707f430ed6b1d3b38aa0457dd866db0456da3f04f999f902b97?x-oss-process=image/resize,w_48,h_48/format,png",
+      "ios_1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngddcf7dd49966d707f430ed6b1d3b38aa0457dd866db0456da3f04f999f902b97?x-oss-process=image/resize,w_8,h_8/format,png",
+      "ios_2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngddcf7dd49966d707f430ed6b1d3b38aa0457dd866db0456da3f04f999f902b97?x-oss-process=image/resize,w_16,h_16/format,png",
+      "ios_3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngddcf7dd49966d707f430ed6b1d3b38aa0457dd866db0456da3f04f999f902b97?x-oss-process=image/resize,w_24,h_24/format,png",
+      "android_mdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngddcf7dd49966d707f430ed6b1d3b38aa0457dd866db0456da3f04f999f902b97?x-oss-process=image/resize,w_8,h_8/format,png",
+      "android_hdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngddcf7dd49966d707f430ed6b1d3b38aa0457dd866db0456da3f04f999f902b97?x-oss-process=image/resize,w_12,h_12/format,png",
+      "android_xhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngddcf7dd49966d707f430ed6b1d3b38aa0457dd866db0456da3f04f999f902b97?x-oss-process=image/resize,w_16,h_16/format,png",
+      "android_xxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngddcf7dd49966d707f430ed6b1d3b38aa0457dd866db0456da3f04f999f902b97?x-oss-process=image/resize,w_24,h_24/format,png",
+      "android_xxxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngddcf7dd49966d707f430ed6b1d3b38aa0457dd866db0456da3f04f999f902b97"
+    },
+    "logical_size": {
+      "width": 16,
+      "height": 16,
+      "note": "1x logical px; stored at 2x = 32x32px"
+    },
+    "position": {
+      "x": 205,
+      "y": 171
+    },
+    "layer_path": "椭圆形"
+  },
+  {
+    "id": "A7FACF23-44EF-4BD6-B120-DE615FB76E55",
+    "name": "形状结合",
+    "type": "shape",
+    "download_url": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7601005f941730e45b9374cc657fd7cdba57c2dcface627a57b4128618035611",
+    "size": "26x2",
+    "format": "png",
+    "scale_urls": {
+      "1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7601005f941730e45b9374cc657fd7cdba57c2dcface627a57b4128618035611?x-oss-process=image/resize,w_26,h_2/format,png",
+      "2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7601005f941730e45b9374cc657fd7cdba57c2dcface627a57b4128618035611",
+      "3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7601005f941730e45b9374cc657fd7cdba57c2dcface627a57b4128618035611?x-oss-process=image/resize,w_78,h_6/format,png",
+      "ios_1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7601005f941730e45b9374cc657fd7cdba57c2dcface627a57b4128618035611?x-oss-process=image/resize,w_13,h_1/format,png",
+      "ios_2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7601005f941730e45b9374cc657fd7cdba57c2dcface627a57b4128618035611?x-oss-process=image/resize,w_26,h_2/format,png",
+      "ios_3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7601005f941730e45b9374cc657fd7cdba57c2dcface627a57b4128618035611?x-oss-process=image/resize,w_39,h_3/format,png",
+      "android_mdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7601005f941730e45b9374cc657fd7cdba57c2dcface627a57b4128618035611?x-oss-process=image/resize,w_13,h_1/format,png",
+      "android_hdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7601005f941730e45b9374cc657fd7cdba57c2dcface627a57b4128618035611?x-oss-process=image/resize,w_20,h_2/format,png",
+      "android_xhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7601005f941730e45b9374cc657fd7cdba57c2dcface627a57b4128618035611?x-oss-process=image/resize,w_26,h_2/format,png",
+      "android_xxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7601005f941730e45b9374cc657fd7cdba57c2dcface627a57b4128618035611?x-oss-process=image/resize,w_39,h_3/format,png",
+      "android_xxxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7601005f941730e45b9374cc657fd7cdba57c2dcface627a57b4128618035611"
+    },
+    "logical_size": {
+      "width": 26,
+      "height": 2,
+      "note": "1x logical px; stored at 2x = 52x4px"
+    },
+    "position": {
+      "x": 143,
+      "y": 178
+    },
+    "layer_path": "形状结合"
+  },
+  {
+    "id": "2D26DD93-D13A-46E4-8C78-36E4D8135BDD",
+    "name": "路径",
+    "type": "shape",
+    "download_url": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng8b8cc34bf21e13dbbcae1b21d986de711cd9547db5d0741504bc9af02695f7b5",
+    "size": "10x10",
+    "format": "png",
+    "scale_urls": {
+      "1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng8b8cc34bf21e13dbbcae1b21d986de711cd9547db5d0741504bc9af02695f7b5?x-oss-process=image/resize,w_10,h_10/format,png",
+      "2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng8b8cc34bf21e13dbbcae1b21d986de711cd9547db5d0741504bc9af02695f7b5",
+      "3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng8b8cc34bf21e13dbbcae1b21d986de711cd9547db5d0741504bc9af02695f7b5?x-oss-process=image/resize,w_30,h_30/format,png",
+      "ios_1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng8b8cc34bf21e13dbbcae1b21d986de711cd9547db5d0741504bc9af02695f7b5?x-oss-process=image/resize,w_5,h_5/format,png",
+      "ios_2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng8b8cc34bf21e13dbbcae1b21d986de711cd9547db5d0741504bc9af02695f7b5?x-oss-process=image/resize,w_10,h_10/format,png",
+      "ios_3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng8b8cc34bf21e13dbbcae1b21d986de711cd9547db5d0741504bc9af02695f7b5?x-oss-process=image/resize,w_15,h_15/format,png",
+      "android_mdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng8b8cc34bf21e13dbbcae1b21d986de711cd9547db5d0741504bc9af02695f7b5?x-oss-process=image/resize,w_5,h_5/format,png",
+      "android_hdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng8b8cc34bf21e13dbbcae1b21d986de711cd9547db5d0741504bc9af02695f7b5?x-oss-process=image/resize,w_8,h_8/format,png",
+      "android_xhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng8b8cc34bf21e13dbbcae1b21d986de711cd9547db5d0741504bc9af02695f7b5?x-oss-process=image/resize,w_10,h_10/format,png",
+      "android_xxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng8b8cc34bf21e13dbbcae1b21d986de711cd9547db5d0741504bc9af02695f7b5?x-oss-process=image/resize,w_15,h_15/format,png",
+      "android_xxxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng8b8cc34bf21e13dbbcae1b21d986de711cd9547db5d0741504bc9af02695f7b5"
+    },
+    "logical_size": {
+      "width": 10,
+      "height": 10,
+      "note": "1x logical px; stored at 2x = 20x20px"
+    },
+    "position": {
+      "x": 159,
+      "y": 179
+    },
+    "layer_path": "路径"
+  },
+  {
+    "id": "5B5B5678-7F97-47C1-9395-704FC8BC7B89",
+    "name": "路径",
+    "type": "shape",
+    "download_url": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngc5b457397043d8669b9ed3b7f3218b8dca677eb7ee44779c5e89c19d2dd00128",
+    "size": "10x10",
+    "format": "png",
+    "scale_urls": {
+      "1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngc5b457397043d8669b9ed3b7f3218b8dca677eb7ee44779c5e89c19d2dd00128?x-oss-process=image/resize,w_10,h_10/format,png",
+      "2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngc5b457397043d8669b9ed3b7f3218b8dca677eb7ee44779c5e89c19d2dd00128",
+      "3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngc5b457397043d8669b9ed3b7f3218b8dca677eb7ee44779c5e89c19d2dd00128?x-oss-process=image/resize,w_30,h_30/format,png",
+      "ios_1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngc5b457397043d8669b9ed3b7f3218b8dca677eb7ee44779c5e89c19d2dd00128?x-oss-process=image/resize,w_5,h_5/format,png",
+      "ios_2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngc5b457397043d8669b9ed3b7f3218b8dca677eb7ee44779c5e89c19d2dd00128?x-oss-process=image/resize,w_10,h_10/format,png",
+      "ios_3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngc5b457397043d8669b9ed3b7f3218b8dca677eb7ee44779c5e89c19d2dd00128?x-oss-process=image/resize,w_15,h_15/format,png",
+      "android_mdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngc5b457397043d8669b9ed3b7f3218b8dca677eb7ee44779c5e89c19d2dd00128?x-oss-process=image/resize,w_5,h_5/format,png",
+      "android_hdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngc5b457397043d8669b9ed3b7f3218b8dca677eb7ee44779c5e89c19d2dd00128?x-oss-process=image/resize,w_8,h_8/format,png",
+      "android_xhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngc5b457397043d8669b9ed3b7f3218b8dca677eb7ee44779c5e89c19d2dd00128?x-oss-process=image/resize,w_10,h_10/format,png",
+      "android_xxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngc5b457397043d8669b9ed3b7f3218b8dca677eb7ee44779c5e89c19d2dd00128?x-oss-process=image/resize,w_15,h_15/format,png",
+      "android_xxxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngc5b457397043d8669b9ed3b7f3218b8dca677eb7ee44779c5e89c19d2dd00128"
+    },
+    "logical_size": {
+      "width": 10,
+      "height": 10,
+      "note": "1x logical px; stored at 2x = 20x20px"
+    },
+    "position": {
+      "x": 159,
+      "y": 170
+    },
+    "layer_path": "路径"
+  },
+  {
+    "id": "EF63F3BF-713B-4C78-8CCE-BE771BF44635",
+    "name": " home_ico_decorate_title",
+    "type": "layer-group",
+    "download_url": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng152e8c172c5d419841c30feec668f6bb5b906d659663c7b46909c04bcd5b0d93",
+    "size": "120x52",
+    "format": "png",
+    "scale_urls": {
+      "1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng152e8c172c5d419841c30feec668f6bb5b906d659663c7b46909c04bcd5b0d93?x-oss-process=image/resize,w_120,h_52/format,png",
+      "2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng152e8c172c5d419841c30feec668f6bb5b906d659663c7b46909c04bcd5b0d93",
+      "3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng152e8c172c5d419841c30feec668f6bb5b906d659663c7b46909c04bcd5b0d93?x-oss-process=image/resize,w_360,h_156/format,png",
+      "ios_1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng152e8c172c5d419841c30feec668f6bb5b906d659663c7b46909c04bcd5b0d93?x-oss-process=image/resize,w_60,h_26/format,png",
+      "ios_2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng152e8c172c5d419841c30feec668f6bb5b906d659663c7b46909c04bcd5b0d93?x-oss-process=image/resize,w_120,h_52/format,png",
+      "ios_3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng152e8c172c5d419841c30feec668f6bb5b906d659663c7b46909c04bcd5b0d93?x-oss-process=image/resize,w_180,h_78/format,png",
+      "android_mdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng152e8c172c5d419841c30feec668f6bb5b906d659663c7b46909c04bcd5b0d93?x-oss-process=image/resize,w_60,h_26/format,png",
+      "android_hdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng152e8c172c5d419841c30feec668f6bb5b906d659663c7b46909c04bcd5b0d93?x-oss-process=image/resize,w_90,h_39/format,png",
+      "android_xhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng152e8c172c5d419841c30feec668f6bb5b906d659663c7b46909c04bcd5b0d93?x-oss-process=image/resize,w_120,h_52/format,png",
+      "android_xxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng152e8c172c5d419841c30feec668f6bb5b906d659663c7b46909c04bcd5b0d93?x-oss-process=image/resize,w_180,h_78/format,png",
+      "android_xxxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng152e8c172c5d419841c30feec668f6bb5b906d659663c7b46909c04bcd5b0d93"
+    },
+    "logical_size": {
+      "width": 120,
+      "height": 52,
+      "note": "1x logical px; stored at 2x = 240x104px"
+    },
+    "position": {
+      "x": 119,
+      "y": 153
+    },
+    "layer_path": " home_ico_decorate_title"
+  },
+  {
+    "id": "7A28061D-066A-475F-8881-F857681DEAD4",
+    "name": "形状结合",
+    "type": "shape",
+    "download_url": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngbdc222c29c32842db6feff6601d628e33116950640f666ad3f23df553ba3712c",
+    "size": "3x35",
+    "format": "png",
+    "scale_urls": {
+      "1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngbdc222c29c32842db6feff6601d628e33116950640f666ad3f23df553ba3712c?x-oss-process=image/resize,w_3,h_35/format,png",
+      "2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngbdc222c29c32842db6feff6601d628e33116950640f666ad3f23df553ba3712c",
+      "3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngbdc222c29c32842db6feff6601d628e33116950640f666ad3f23df553ba3712c?x-oss-process=image/resize,w_9,h_105/format,png",
+      "ios_1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngbdc222c29c32842db6feff6601d628e33116950640f666ad3f23df553ba3712c?x-oss-process=image/resize,w_2,h_18/format,png",
+      "ios_2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngbdc222c29c32842db6feff6601d628e33116950640f666ad3f23df553ba3712c?x-oss-process=image/resize,w_3,h_35/format,png",
+      "ios_3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngbdc222c29c32842db6feff6601d628e33116950640f666ad3f23df553ba3712c?x-oss-process=image/resize,w_5,h_53/format,png",
+      "android_mdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngbdc222c29c32842db6feff6601d628e33116950640f666ad3f23df553ba3712c?x-oss-process=image/resize,w_2,h_18/format,png",
+      "android_hdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngbdc222c29c32842db6feff6601d628e33116950640f666ad3f23df553ba3712c?x-oss-process=image/resize,w_2,h_26/format,png",
+      "android_xhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngbdc222c29c32842db6feff6601d628e33116950640f666ad3f23df553ba3712c?x-oss-process=image/resize,w_3,h_35/format,png",
+      "android_xxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngbdc222c29c32842db6feff6601d628e33116950640f666ad3f23df553ba3712c?x-oss-process=image/resize,w_5,h_53/format,png",
+      "android_xxxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngbdc222c29c32842db6feff6601d628e33116950640f666ad3f23df553ba3712c"
+    },
+    "logical_size": {
+      "width": 3,
+      "height": 35,
+      "note": "1x logical px; stored at 2x = 6x70px"
+    },
+    "position": {
+      "x": 718,
+      "y": 642
+    },
+    "layer_path": "形状结合"
+  },
+  {
+    "id": "2168DBE2-B2BB-49D2-959B-E2FCA06A57A0",
+    "name": "路径",
+    "type": "shape",
+    "download_url": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngd426ac21f80cf984d9747f2cfba599186bf87130fb57a8061492c2ef02bbe9c7",
+    "size": "16x17",
+    "format": "png",
+    "scale_urls": {
+      "1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngd426ac21f80cf984d9747f2cfba599186bf87130fb57a8061492c2ef02bbe9c7?x-oss-process=image/resize,w_16,h_17/format,png",
+      "2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngd426ac21f80cf984d9747f2cfba599186bf87130fb57a8061492c2ef02bbe9c7",
+      "3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngd426ac21f80cf984d9747f2cfba599186bf87130fb57a8061492c2ef02bbe9c7?x-oss-process=image/resize,w_48,h_51/format,png",
+      "ios_1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngd426ac21f80cf984d9747f2cfba599186bf87130fb57a8061492c2ef02bbe9c7?x-oss-process=image/resize,w_8,h_9/format,png",
+      "ios_2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngd426ac21f80cf984d9747f2cfba599186bf87130fb57a8061492c2ef02bbe9c7?x-oss-process=image/resize,w_16,h_17/format,png",
+      "ios_3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngd426ac21f80cf984d9747f2cfba599186bf87130fb57a8061492c2ef02bbe9c7?x-oss-process=image/resize,w_24,h_26/format,png",
+      "android_mdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngd426ac21f80cf984d9747f2cfba599186bf87130fb57a8061492c2ef02bbe9c7?x-oss-process=image/resize,w_8,h_9/format,png",
+      "android_hdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngd426ac21f80cf984d9747f2cfba599186bf87130fb57a8061492c2ef02bbe9c7?x-oss-process=image/resize,w_12,h_13/format,png",
+      "android_xhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngd426ac21f80cf984d9747f2cfba599186bf87130fb57a8061492c2ef02bbe9c7?x-oss-process=image/resize,w_16,h_17/format,png",
+      "android_xxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngd426ac21f80cf984d9747f2cfba599186bf87130fb57a8061492c2ef02bbe9c7?x-oss-process=image/resize,w_24,h_26/format,png",
+      "android_xxxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngd426ac21f80cf984d9747f2cfba599186bf87130fb57a8061492c2ef02bbe9c7"
+    },
+    "logical_size": {
+      "width": 16,
+      "height": 17,
+      "note": "1x logical px; stored at 2x = 32x34px"
+    },
+    "position": {
+      "x": 704,
+      "y": 661
+    },
+    "layer_path": "路径"
+  },
+  {
+    "id": "47F1282F-CB12-4A5B-8949-CF2586C2E965",
+    "name": "路径",
+    "type": "shape",
+    "download_url": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng8d8f3217a6a4006b2d64605d610749996ef6f913a0bcc330f0c73a86e5abb504",
+    "size": "17x17",
+    "format": "png",
+    "scale_urls": {
+      "1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng8d8f3217a6a4006b2d64605d610749996ef6f913a0bcc330f0c73a86e5abb504?x-oss-process=image/resize,w_17,h_17/format,png",
+      "2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng8d8f3217a6a4006b2d64605d610749996ef6f913a0bcc330f0c73a86e5abb504",
+      "3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng8d8f3217a6a4006b2d64605d610749996ef6f913a0bcc330f0c73a86e5abb504?x-oss-process=image/resize,w_51,h_51/format,png",
+      "ios_1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng8d8f3217a6a4006b2d64605d610749996ef6f913a0bcc330f0c73a86e5abb504?x-oss-process=image/resize,w_9,h_9/format,png",
+      "ios_2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng8d8f3217a6a4006b2d64605d610749996ef6f913a0bcc330f0c73a86e5abb504?x-oss-process=image/resize,w_17,h_17/format,png",
+      "ios_3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng8d8f3217a6a4006b2d64605d610749996ef6f913a0bcc330f0c73a86e5abb504?x-oss-process=image/resize,w_26,h_26/format,png",
+      "android_mdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng8d8f3217a6a4006b2d64605d610749996ef6f913a0bcc330f0c73a86e5abb504?x-oss-process=image/resize,w_9,h_9/format,png",
+      "android_hdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng8d8f3217a6a4006b2d64605d610749996ef6f913a0bcc330f0c73a86e5abb504?x-oss-process=image/resize,w_13,h_13/format,png",
+      "android_xhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng8d8f3217a6a4006b2d64605d610749996ef6f913a0bcc330f0c73a86e5abb504?x-oss-process=image/resize,w_17,h_17/format,png",
+      "android_xxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng8d8f3217a6a4006b2d64605d610749996ef6f913a0bcc330f0c73a86e5abb504?x-oss-process=image/resize,w_26,h_26/format,png",
+      "android_xxxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng8d8f3217a6a4006b2d64605d610749996ef6f913a0bcc330f0c73a86e5abb504"
+    },
+    "logical_size": {
+      "width": 17,
+      "height": 17,
+      "note": "1x logical px; stored at 2x = 34x34px"
+    },
+    "position": {
+      "x": 719,
+      "y": 661
+    },
+    "layer_path": "路径"
+  },
+  {
+    "id": "BC174301-7C98-4B0B-9CCF-7EA2C67495D2",
+    "name": " home_ico_decorate_down arrow",
+    "type": "layer-group",
+    "download_url": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng95fa1cf52ae8cc7301b7817715b33d0809f31ba884328403e486c1b6ff126682",
+    "size": "100x92",
+    "format": "png",
+    "scale_urls": {
+      "1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng95fa1cf52ae8cc7301b7817715b33d0809f31ba884328403e486c1b6ff126682?x-oss-process=image/resize,w_100,h_92/format,png",
+      "2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng95fa1cf52ae8cc7301b7817715b33d0809f31ba884328403e486c1b6ff126682",
+      "3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng95fa1cf52ae8cc7301b7817715b33d0809f31ba884328403e486c1b6ff126682?x-oss-process=image/resize,w_300,h_276/format,png",
+      "ios_1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng95fa1cf52ae8cc7301b7817715b33d0809f31ba884328403e486c1b6ff126682?x-oss-process=image/resize,w_50,h_46/format,png",
+      "ios_2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng95fa1cf52ae8cc7301b7817715b33d0809f31ba884328403e486c1b6ff126682?x-oss-process=image/resize,w_100,h_92/format,png",
+      "ios_3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng95fa1cf52ae8cc7301b7817715b33d0809f31ba884328403e486c1b6ff126682?x-oss-process=image/resize,w_150,h_138/format,png",
+      "android_mdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng95fa1cf52ae8cc7301b7817715b33d0809f31ba884328403e486c1b6ff126682?x-oss-process=image/resize,w_50,h_46/format,png",
+      "android_hdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng95fa1cf52ae8cc7301b7817715b33d0809f31ba884328403e486c1b6ff126682?x-oss-process=image/resize,w_75,h_69/format,png",
+      "android_xhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng95fa1cf52ae8cc7301b7817715b33d0809f31ba884328403e486c1b6ff126682?x-oss-process=image/resize,w_100,h_92/format,png",
+      "android_xxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng95fa1cf52ae8cc7301b7817715b33d0809f31ba884328403e486c1b6ff126682?x-oss-process=image/resize,w_150,h_138/format,png",
+      "android_xxxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng95fa1cf52ae8cc7301b7817715b33d0809f31ba884328403e486c1b6ff126682"
+    },
+    "logical_size": {
+      "width": 100,
+      "height": 92,
+      "note": "1x logical px; stored at 2x = 200x184px"
+    },
+    "position": {
+      "x": 670,
+      "y": 608
+    },
+    "layer_path": " home_ico_decorate_down arrow"
+  },
+  {
+    "id": "07CB8F72-9996-43F3-9334-918877960E66",
+    "name": "蒙版",
+    "type": "shape",
+    "download_url": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngd4c5a2f79ac317db26cd1c5ee1eb32cc169fbaad3e54a669e8fa0f26781fee48",
+    "size": "406x406",
+    "format": "png",
+    "scale_urls": {
+      "1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngd4c5a2f79ac317db26cd1c5ee1eb32cc169fbaad3e54a669e8fa0f26781fee48?x-oss-process=image/resize,w_406,h_406/format,png",
+      "2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngd4c5a2f79ac317db26cd1c5ee1eb32cc169fbaad3e54a669e8fa0f26781fee48",
+      "3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngd4c5a2f79ac317db26cd1c5ee1eb32cc169fbaad3e54a669e8fa0f26781fee48?x-oss-process=image/resize,w_1218,h_1218/format,png",
+      "ios_1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngd4c5a2f79ac317db26cd1c5ee1eb32cc169fbaad3e54a669e8fa0f26781fee48?x-oss-process=image/resize,w_203,h_203/format,png",
+      "ios_2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngd4c5a2f79ac317db26cd1c5ee1eb32cc169fbaad3e54a669e8fa0f26781fee48?x-oss-process=image/resize,w_406,h_406/format,png",
+      "ios_3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngd4c5a2f79ac317db26cd1c5ee1eb32cc169fbaad3e54a669e8fa0f26781fee48?x-oss-process=image/resize,w_609,h_609/format,png",
+      "android_mdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngd4c5a2f79ac317db26cd1c5ee1eb32cc169fbaad3e54a669e8fa0f26781fee48?x-oss-process=image/resize,w_203,h_203/format,png",
+      "android_hdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngd4c5a2f79ac317db26cd1c5ee1eb32cc169fbaad3e54a669e8fa0f26781fee48?x-oss-process=image/resize,w_305,h_305/format,png",
+      "android_xhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngd4c5a2f79ac317db26cd1c5ee1eb32cc169fbaad3e54a669e8fa0f26781fee48?x-oss-process=image/resize,w_406,h_406/format,png",
+      "android_xxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngd4c5a2f79ac317db26cd1c5ee1eb32cc169fbaad3e54a669e8fa0f26781fee48?x-oss-process=image/resize,w_609,h_609/format,png",
+      "android_xxxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngd4c5a2f79ac317db26cd1c5ee1eb32cc169fbaad3e54a669e8fa0f26781fee48"
+    },
+    "logical_size": {
+      "width": 406,
+      "height": 406,
+      "note": "1x logical px; stored at 2x = 812x812px"
+    },
+    "position": {
+      "x": 914,
+      "y": 186
+    },
+    "layer_path": "蒙版"
+  },
+  {
+    "id": "8FD3C70D-A7B4-48F0-AFF4-5EBC3B0DEBAB",
+    "name": "Clip 2",
+    "type": "shape",
+    "download_url": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec",
+    "size": "400x181",
+    "format": "png",
+    "scale_urls": {
+      "1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec?x-oss-process=image/resize,w_400,h_181/format,png",
+      "2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec",
+      "3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec?x-oss-process=image/resize,w_1200,h_543/format,png",
+      "ios_1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec?x-oss-process=image/resize,w_200,h_91/format,png",
+      "ios_2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec?x-oss-process=image/resize,w_400,h_181/format,png",
+      "ios_3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec?x-oss-process=image/resize,w_600,h_272/format,png",
+      "android_mdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec?x-oss-process=image/resize,w_200,h_91/format,png",
+      "android_hdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec?x-oss-process=image/resize,w_300,h_136/format,png",
+      "android_xhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec?x-oss-process=image/resize,w_400,h_181/format,png",
+      "android_xxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec?x-oss-process=image/resize,w_600,h_272/format,png",
+      "android_xxxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec"
+    },
+    "logical_size": {
+      "width": 400,
+      "height": 181,
+      "note": "1x logical px; stored at 2x = 800x362px"
+    },
+    "position": {
+      "x": 917,
+      "y": 201
+    },
+    "layer_path": "Clip 2"
+  },
+  {
+    "id": "E248C2E4-BFA9-48FD-A9CD-345F8915868A",
+    "name": "Fill 1",
+    "type": "shape",
+    "download_url": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec",
+    "size": "400x181",
+    "format": "png",
+    "scale_urls": {
+      "1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec?x-oss-process=image/resize,w_400,h_181/format,png",
+      "2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec",
+      "3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec?x-oss-process=image/resize,w_1200,h_543/format,png",
+      "ios_1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec?x-oss-process=image/resize,w_200,h_91/format,png",
+      "ios_2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec?x-oss-process=image/resize,w_400,h_181/format,png",
+      "ios_3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec?x-oss-process=image/resize,w_600,h_272/format,png",
+      "android_mdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec?x-oss-process=image/resize,w_200,h_91/format,png",
+      "android_hdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec?x-oss-process=image/resize,w_300,h_136/format,png",
+      "android_xhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec?x-oss-process=image/resize,w_400,h_181/format,png",
+      "android_xxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec?x-oss-process=image/resize,w_600,h_272/format,png",
+      "android_xxxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec"
+    },
+    "logical_size": {
+      "width": 400,
+      "height": 181,
+      "note": "1x logical px; stored at 2x = 800x362px"
+    },
+    "position": {
+      "x": 917,
+      "y": 201
+    },
+    "layer_path": "Fill 1"
+  },
+  {
+    "id": "EECBA01B-0D6D-45AE-8C79-B25BF584CA1F",
+    "name": "08ae9b57f1fcbd69eb161a3fb4263e279851340649b99f-UaqXss",
+    "type": "bitmap",
+    "download_url": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng051647dbdb8b4544da5b8c0ad86ab057b1f68005a195c1fd48bd4d773c2e8ada",
+    "size": "381x181",
+    "format": "png",
+    "scale_urls": {
+      "1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng051647dbdb8b4544da5b8c0ad86ab057b1f68005a195c1fd48bd4d773c2e8ada?x-oss-process=image/resize,w_381,h_181/format,png",
+      "2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng051647dbdb8b4544da5b8c0ad86ab057b1f68005a195c1fd48bd4d773c2e8ada",
+      "3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng051647dbdb8b4544da5b8c0ad86ab057b1f68005a195c1fd48bd4d773c2e8ada?x-oss-process=image/resize,w_1143,h_543/format,png",
+      "ios_1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng051647dbdb8b4544da5b8c0ad86ab057b1f68005a195c1fd48bd4d773c2e8ada?x-oss-process=image/resize,w_191,h_91/format,png",
+      "ios_2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng051647dbdb8b4544da5b8c0ad86ab057b1f68005a195c1fd48bd4d773c2e8ada?x-oss-process=image/resize,w_381,h_181/format,png",
+      "ios_3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng051647dbdb8b4544da5b8c0ad86ab057b1f68005a195c1fd48bd4d773c2e8ada?x-oss-process=image/resize,w_572,h_272/format,png",
+      "android_mdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng051647dbdb8b4544da5b8c0ad86ab057b1f68005a195c1fd48bd4d773c2e8ada?x-oss-process=image/resize,w_191,h_91/format,png",
+      "android_hdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng051647dbdb8b4544da5b8c0ad86ab057b1f68005a195c1fd48bd4d773c2e8ada?x-oss-process=image/resize,w_286,h_136/format,png",
+      "android_xhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng051647dbdb8b4544da5b8c0ad86ab057b1f68005a195c1fd48bd4d773c2e8ada?x-oss-process=image/resize,w_381,h_181/format,png",
+      "android_xxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng051647dbdb8b4544da5b8c0ad86ab057b1f68005a195c1fd48bd4d773c2e8ada?x-oss-process=image/resize,w_572,h_272/format,png",
+      "android_xxxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng051647dbdb8b4544da5b8c0ad86ab057b1f68005a195c1fd48bd4d773c2e8ada"
+    },
+    "logical_size": {
+      "width": 381,
+      "height": 181,
+      "note": "1x logical px; stored at 2x = 762x362px"
+    },
+    "position": {
+      "x": 929,
+      "y": 201
+    },
+    "layer_path": "08ae9b57f1fcbd69eb161a3fb4263e279851340649b99f-UaqXss"
+  },
+  {
+    "id": "AB141237-192D-420B-BE47-FEB7217AD38B",
+    "name": "0041638715198d6d738374cf0121ef525cd87c0452e0e-RUs2at",
+    "type": "bitmap",
+    "download_url": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng633d0340d5955020ecb63a98587f448e6ab6d6a3c6201d143c5ceb6b090b29b2",
+    "size": "400x181",
+    "format": "png",
+    "scale_urls": {
+      "1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng633d0340d5955020ecb63a98587f448e6ab6d6a3c6201d143c5ceb6b090b29b2?x-oss-process=image/resize,w_400,h_181/format,png",
+      "2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng633d0340d5955020ecb63a98587f448e6ab6d6a3c6201d143c5ceb6b090b29b2",
+      "3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng633d0340d5955020ecb63a98587f448e6ab6d6a3c6201d143c5ceb6b090b29b2?x-oss-process=image/resize,w_1200,h_543/format,png",
+      "ios_1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng633d0340d5955020ecb63a98587f448e6ab6d6a3c6201d143c5ceb6b090b29b2?x-oss-process=image/resize,w_200,h_91/format,png",
+      "ios_2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng633d0340d5955020ecb63a98587f448e6ab6d6a3c6201d143c5ceb6b090b29b2?x-oss-process=image/resize,w_400,h_181/format,png",
+      "ios_3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng633d0340d5955020ecb63a98587f448e6ab6d6a3c6201d143c5ceb6b090b29b2?x-oss-process=image/resize,w_600,h_272/format,png",
+      "android_mdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng633d0340d5955020ecb63a98587f448e6ab6d6a3c6201d143c5ceb6b090b29b2?x-oss-process=image/resize,w_200,h_91/format,png",
+      "android_hdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng633d0340d5955020ecb63a98587f448e6ab6d6a3c6201d143c5ceb6b090b29b2?x-oss-process=image/resize,w_300,h_136/format,png",
+      "android_xhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng633d0340d5955020ecb63a98587f448e6ab6d6a3c6201d143c5ceb6b090b29b2?x-oss-process=image/resize,w_400,h_181/format,png",
+      "android_xxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng633d0340d5955020ecb63a98587f448e6ab6d6a3c6201d143c5ceb6b090b29b2?x-oss-process=image/resize,w_600,h_272/format,png",
+      "android_xxxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng633d0340d5955020ecb63a98587f448e6ab6d6a3c6201d143c5ceb6b090b29b2"
+    },
+    "logical_size": {
+      "width": 400,
+      "height": 181,
+      "note": "1x logical px; stored at 2x = 800x362px"
+    },
+    "position": {
+      "x": 917,
+      "y": 201
+    },
+    "layer_path": "0041638715198d6d738374cf0121ef525cd87c0452e0e-RUs2at"
+  },
+  {
+    "id": "644EB880-FB7C-4368-8E2A-F05954F57A23",
+    "name": "路径",
+    "type": "shape",
+    "download_url": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng5e54d8e766841340438357275c90e898a8171dc7a3a20c79b1162c1ec52b6884",
+    "size": "402x181",
+    "format": "png",
+    "scale_urls": {
+      "1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng5e54d8e766841340438357275c90e898a8171dc7a3a20c79b1162c1ec52b6884?x-oss-process=image/resize,w_402,h_181/format,png",
+      "2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng5e54d8e766841340438357275c90e898a8171dc7a3a20c79b1162c1ec52b6884",
+      "3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng5e54d8e766841340438357275c90e898a8171dc7a3a20c79b1162c1ec52b6884?x-oss-process=image/resize,w_1206,h_543/format,png",
+      "ios_1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng5e54d8e766841340438357275c90e898a8171dc7a3a20c79b1162c1ec52b6884?x-oss-process=image/resize,w_201,h_91/format,png",
+      "ios_2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng5e54d8e766841340438357275c90e898a8171dc7a3a20c79b1162c1ec52b6884?x-oss-process=image/resize,w_402,h_181/format,png",
+      "ios_3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng5e54d8e766841340438357275c90e898a8171dc7a3a20c79b1162c1ec52b6884?x-oss-process=image/resize,w_603,h_272/format,png",
+      "android_mdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng5e54d8e766841340438357275c90e898a8171dc7a3a20c79b1162c1ec52b6884?x-oss-process=image/resize,w_201,h_91/format,png",
+      "android_hdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng5e54d8e766841340438357275c90e898a8171dc7a3a20c79b1162c1ec52b6884?x-oss-process=image/resize,w_302,h_136/format,png",
+      "android_xhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng5e54d8e766841340438357275c90e898a8171dc7a3a20c79b1162c1ec52b6884?x-oss-process=image/resize,w_402,h_181/format,png",
+      "android_xxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng5e54d8e766841340438357275c90e898a8171dc7a3a20c79b1162c1ec52b6884?x-oss-process=image/resize,w_603,h_272/format,png",
+      "android_xxxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng5e54d8e766841340438357275c90e898a8171dc7a3a20c79b1162c1ec52b6884"
+    },
+    "logical_size": {
+      "width": 402,
+      "height": 181,
+      "note": "1x logical px; stored at 2x = 804x362px"
+    },
+    "position": {
+      "x": 917,
+      "y": 201
+    },
+    "layer_path": "路径"
+  },
+  {
+    "id": "11CC496B-EBB1-4E77-AEDB-EABAA9018CCC",
+    "name": "Clip 4",
+    "type": "shape",
+    "download_url": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec",
+    "size": "400x181",
+    "format": "png",
+    "scale_urls": {
+      "1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec?x-oss-process=image/resize,w_400,h_181/format,png",
+      "2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec",
+      "3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec?x-oss-process=image/resize,w_1200,h_543/format,png",
+      "ios_1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec?x-oss-process=image/resize,w_200,h_91/format,png",
+      "ios_2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec?x-oss-process=image/resize,w_400,h_181/format,png",
+      "ios_3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec?x-oss-process=image/resize,w_600,h_272/format,png",
+      "android_mdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec?x-oss-process=image/resize,w_200,h_91/format,png",
+      "android_hdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec?x-oss-process=image/resize,w_300,h_136/format,png",
+      "android_xhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec?x-oss-process=image/resize,w_400,h_181/format,png",
+      "android_xxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec?x-oss-process=image/resize,w_600,h_272/format,png",
+      "android_xxxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec"
+    },
+    "logical_size": {
+      "width": 400,
+      "height": 181,
+      "note": "1x logical px; stored at 2x = 800x362px"
+    },
+    "position": {
+      "x": 917,
+      "y": 397
+    },
+    "layer_path": "Clip 4"
+  },
+  {
+    "id": "05907C36-43C7-4D83-9379-8E05087D06CF",
+    "name": "Fill 3",
+    "type": "shape",
+    "download_url": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec",
+    "size": "400x181",
+    "format": "png",
+    "scale_urls": {
+      "1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec?x-oss-process=image/resize,w_400,h_181/format,png",
+      "2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec",
+      "3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec?x-oss-process=image/resize,w_1200,h_543/format,png",
+      "ios_1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec?x-oss-process=image/resize,w_200,h_91/format,png",
+      "ios_2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec?x-oss-process=image/resize,w_400,h_181/format,png",
+      "ios_3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec?x-oss-process=image/resize,w_600,h_272/format,png",
+      "android_mdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec?x-oss-process=image/resize,w_200,h_91/format,png",
+      "android_hdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec?x-oss-process=image/resize,w_300,h_136/format,png",
+      "android_xhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec?x-oss-process=image/resize,w_400,h_181/format,png",
+      "android_xxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec?x-oss-process=image/resize,w_600,h_272/format,png",
+      "android_xxxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge947a94a194e74d18fa1c14b3d5c32fb6bb237bf299d1c3591ee5151f0e2afec"
+    },
+    "logical_size": {
+      "width": 400,
+      "height": 181,
+      "note": "1x logical px; stored at 2x = 800x362px"
+    },
+    "position": {
+      "x": 917,
+      "y": 397
+    },
+    "layer_path": "Fill 3"
+  },
+  {
+    "id": "6538444C-A9C0-442E-A2D1-12E8AE7B41FC",
+    "name": "0041638715198d6d738374cf0121ef525cd87c0452e0e-RUs2at",
+    "type": "bitmap",
+    "download_url": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnga28e89f9766daa0aeb00c5e59d4a33bd9571561493324771ee71e362aae8d00f",
+    "size": "400x181",
+    "format": "png",
+    "scale_urls": {
+      "1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnga28e89f9766daa0aeb00c5e59d4a33bd9571561493324771ee71e362aae8d00f?x-oss-process=image/resize,w_400,h_181/format,png",
+      "2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnga28e89f9766daa0aeb00c5e59d4a33bd9571561493324771ee71e362aae8d00f",
+      "3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnga28e89f9766daa0aeb00c5e59d4a33bd9571561493324771ee71e362aae8d00f?x-oss-process=image/resize,w_1200,h_543/format,png",
+      "ios_1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnga28e89f9766daa0aeb00c5e59d4a33bd9571561493324771ee71e362aae8d00f?x-oss-process=image/resize,w_200,h_91/format,png",
+      "ios_2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnga28e89f9766daa0aeb00c5e59d4a33bd9571561493324771ee71e362aae8d00f?x-oss-process=image/resize,w_400,h_181/format,png",
+      "ios_3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnga28e89f9766daa0aeb00c5e59d4a33bd9571561493324771ee71e362aae8d00f?x-oss-process=image/resize,w_600,h_272/format,png",
+      "android_mdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnga28e89f9766daa0aeb00c5e59d4a33bd9571561493324771ee71e362aae8d00f?x-oss-process=image/resize,w_200,h_91/format,png",
+      "android_hdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnga28e89f9766daa0aeb00c5e59d4a33bd9571561493324771ee71e362aae8d00f?x-oss-process=image/resize,w_300,h_136/format,png",
+      "android_xhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnga28e89f9766daa0aeb00c5e59d4a33bd9571561493324771ee71e362aae8d00f?x-oss-process=image/resize,w_400,h_181/format,png",
+      "android_xxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnga28e89f9766daa0aeb00c5e59d4a33bd9571561493324771ee71e362aae8d00f?x-oss-process=image/resize,w_600,h_272/format,png",
+      "android_xxxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnga28e89f9766daa0aeb00c5e59d4a33bd9571561493324771ee71e362aae8d00f"
+    },
+    "logical_size": {
+      "width": 400,
+      "height": 181,
+      "note": "1x logical px; stored at 2x = 800x362px"
+    },
+    "position": {
+      "x": 917,
+      "y": 397
+    },
+    "layer_path": "0041638715198d6d738374cf0121ef525cd87c0452e0e-RUs2at"
+  },
+  {
+    "id": "96134BF2-4547-49A4-81D0-31F940D5D183",
+    "name": "路径",
+    "type": "shape",
+    "download_url": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng4eb2c1e0a1ffc83f9a824c9a9d278131784f1acddf629e2fe2e08c3491c86f90",
+    "size": "402x136",
+    "format": "png",
+    "scale_urls": {
+      "1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng4eb2c1e0a1ffc83f9a824c9a9d278131784f1acddf629e2fe2e08c3491c86f90?x-oss-process=image/resize,w_402,h_136/format,png",
+      "2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng4eb2c1e0a1ffc83f9a824c9a9d278131784f1acddf629e2fe2e08c3491c86f90",
+      "3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng4eb2c1e0a1ffc83f9a824c9a9d278131784f1acddf629e2fe2e08c3491c86f90?x-oss-process=image/resize,w_1206,h_408/format,png",
+      "ios_1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng4eb2c1e0a1ffc83f9a824c9a9d278131784f1acddf629e2fe2e08c3491c86f90?x-oss-process=image/resize,w_201,h_68/format,png",
+      "ios_2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng4eb2c1e0a1ffc83f9a824c9a9d278131784f1acddf629e2fe2e08c3491c86f90?x-oss-process=image/resize,w_402,h_136/format,png",
+      "ios_3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng4eb2c1e0a1ffc83f9a824c9a9d278131784f1acddf629e2fe2e08c3491c86f90?x-oss-process=image/resize,w_603,h_204/format,png",
+      "android_mdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng4eb2c1e0a1ffc83f9a824c9a9d278131784f1acddf629e2fe2e08c3491c86f90?x-oss-process=image/resize,w_201,h_68/format,png",
+      "android_hdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng4eb2c1e0a1ffc83f9a824c9a9d278131784f1acddf629e2fe2e08c3491c86f90?x-oss-process=image/resize,w_302,h_102/format,png",
+      "android_xhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng4eb2c1e0a1ffc83f9a824c9a9d278131784f1acddf629e2fe2e08c3491c86f90?x-oss-process=image/resize,w_402,h_136/format,png",
+      "android_xxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng4eb2c1e0a1ffc83f9a824c9a9d278131784f1acddf629e2fe2e08c3491c86f90?x-oss-process=image/resize,w_603,h_204/format,png",
+      "android_xxxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng4eb2c1e0a1ffc83f9a824c9a9d278131784f1acddf629e2fe2e08c3491c86f90"
+    },
+    "logical_size": {
+      "width": 402,
+      "height": 136,
+      "note": "1x logical px; stored at 2x = 804x272px"
+    },
+    "position": {
+      "x": 917,
+      "y": 397
+    },
+    "layer_path": "路径"
+  },
+  {
+    "id": "1B504D8B-808B-4F8E-AE1B-43647F11B063",
+    "name": "矩形",
+    "type": "shape",
+    "download_url": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng16143b653174e0bbc18bb4c92c918e79fafebe623e29680e3fcfd3712a65a72b",
+    "size": "1200x80",
+    "format": "png",
+    "scale_urls": {
+      "1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng16143b653174e0bbc18bb4c92c918e79fafebe623e29680e3fcfd3712a65a72b?x-oss-process=image/resize,w_1200,h_80/format,png",
+      "2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng16143b653174e0bbc18bb4c92c918e79fafebe623e29680e3fcfd3712a65a72b",
+      "3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng16143b653174e0bbc18bb4c92c918e79fafebe623e29680e3fcfd3712a65a72b?x-oss-process=image/resize,w_3600,h_240/format,png",
+      "ios_1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng16143b653174e0bbc18bb4c92c918e79fafebe623e29680e3fcfd3712a65a72b?x-oss-process=image/resize,w_600,h_40/format,png",
+      "ios_2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng16143b653174e0bbc18bb4c92c918e79fafebe623e29680e3fcfd3712a65a72b?x-oss-process=image/resize,w_1200,h_80/format,png",
+      "ios_3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng16143b653174e0bbc18bb4c92c918e79fafebe623e29680e3fcfd3712a65a72b?x-oss-process=image/resize,w_1800,h_120/format,png",
+      "android_mdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng16143b653174e0bbc18bb4c92c918e79fafebe623e29680e3fcfd3712a65a72b?x-oss-process=image/resize,w_600,h_40/format,png",
+      "android_hdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng16143b653174e0bbc18bb4c92c918e79fafebe623e29680e3fcfd3712a65a72b?x-oss-process=image/resize,w_900,h_60/format,png",
+      "android_xhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng16143b653174e0bbc18bb4c92c918e79fafebe623e29680e3fcfd3712a65a72b?x-oss-process=image/resize,w_1200,h_80/format,png",
+      "android_xxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng16143b653174e0bbc18bb4c92c918e79fafebe623e29680e3fcfd3712a65a72b?x-oss-process=image/resize,w_1800,h_120/format,png",
+      "android_xxxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng16143b653174e0bbc18bb4c92c918e79fafebe623e29680e3fcfd3712a65a72b"
+    },
+    "logical_size": {
+      "width": 1200,
+      "height": 80,
+      "note": "1x logical px; stored at 2x = 2400x160px"
+    },
+    "position": {
+      "x": 120,
+      "y": 0
+    },
+    "layer_path": "矩形"
+  },
+  {
+    "id": "BBA95AE1-7ED8-48DA-B7F9-B071F6FBA08E",
+    "name": "Home",
+    "type": "text",
+    "download_url": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7b9072af1ef46bebc64d847f6d31b9a5361043d618e7ed3a375b2a92a53842f9",
+    "size": "60x16",
+    "format": "png",
+    "svg_url": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchSVGedd89c2e262898feaf3c136e1244af320123876dc6e7c570293f48c300f23beb",
+    "scale_urls": {
+      "1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7b9072af1ef46bebc64d847f6d31b9a5361043d618e7ed3a375b2a92a53842f9?x-oss-process=image/resize,w_60,h_16/format,png",
+      "2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7b9072af1ef46bebc64d847f6d31b9a5361043d618e7ed3a375b2a92a53842f9",
+      "3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7b9072af1ef46bebc64d847f6d31b9a5361043d618e7ed3a375b2a92a53842f9?x-oss-process=image/resize,w_180,h_48/format,png",
+      "ios_1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7b9072af1ef46bebc64d847f6d31b9a5361043d618e7ed3a375b2a92a53842f9?x-oss-process=image/resize,w_30,h_8/format,png",
+      "ios_2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7b9072af1ef46bebc64d847f6d31b9a5361043d618e7ed3a375b2a92a53842f9?x-oss-process=image/resize,w_60,h_16/format,png",
+      "ios_3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7b9072af1ef46bebc64d847f6d31b9a5361043d618e7ed3a375b2a92a53842f9?x-oss-process=image/resize,w_90,h_24/format,png",
+      "android_mdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7b9072af1ef46bebc64d847f6d31b9a5361043d618e7ed3a375b2a92a53842f9?x-oss-process=image/resize,w_30,h_8/format,png",
+      "android_hdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7b9072af1ef46bebc64d847f6d31b9a5361043d618e7ed3a375b2a92a53842f9?x-oss-process=image/resize,w_45,h_12/format,png",
+      "android_xhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7b9072af1ef46bebc64d847f6d31b9a5361043d618e7ed3a375b2a92a53842f9?x-oss-process=image/resize,w_60,h_16/format,png",
+      "android_xxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7b9072af1ef46bebc64d847f6d31b9a5361043d618e7ed3a375b2a92a53842f9?x-oss-process=image/resize,w_90,h_24/format,png",
+      "android_xxxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7b9072af1ef46bebc64d847f6d31b9a5361043d618e7ed3a375b2a92a53842f9"
+    },
+    "logical_size": {
+      "width": 60,
+      "height": 16,
+      "note": "1x logical px; stored at 2x = 120x32px"
+    },
+    "position": {
+      "x": 0,
+      "y": 0
+    },
+    "layer_path": "Home"
+  },
+  {
+    "id": "6C7443DF-E185-4821-8025-07DCBEC61D93",
+    "name": "编组 4",
+    "type": "layer-group",
+    "download_url": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng514a82242674d4495e840560553e646e2e7f9eb15f76e057d24e0677086c9d61",
+    "size": "1200x4",
+    "format": "png",
+    "scale_urls": {
+      "1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng514a82242674d4495e840560553e646e2e7f9eb15f76e057d24e0677086c9d61?x-oss-process=image/resize,w_1200,h_4/format,png",
+      "2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng514a82242674d4495e840560553e646e2e7f9eb15f76e057d24e0677086c9d61",
+      "3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng514a82242674d4495e840560553e646e2e7f9eb15f76e057d24e0677086c9d61?x-oss-process=image/resize,w_3600,h_12/format,png",
+      "ios_1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng514a82242674d4495e840560553e646e2e7f9eb15f76e057d24e0677086c9d61?x-oss-process=image/resize,w_600,h_2/format,png",
+      "ios_2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng514a82242674d4495e840560553e646e2e7f9eb15f76e057d24e0677086c9d61?x-oss-process=image/resize,w_1200,h_4/format,png",
+      "ios_3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng514a82242674d4495e840560553e646e2e7f9eb15f76e057d24e0677086c9d61?x-oss-process=image/resize,w_1800,h_6/format,png",
+      "android_mdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng514a82242674d4495e840560553e646e2e7f9eb15f76e057d24e0677086c9d61?x-oss-process=image/resize,w_600,h_2/format,png",
+      "android_hdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng514a82242674d4495e840560553e646e2e7f9eb15f76e057d24e0677086c9d61?x-oss-process=image/resize,w_900,h_3/format,png",
+      "android_xhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng514a82242674d4495e840560553e646e2e7f9eb15f76e057d24e0677086c9d61?x-oss-process=image/resize,w_1200,h_4/format,png",
+      "android_xxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng514a82242674d4495e840560553e646e2e7f9eb15f76e057d24e0677086c9d61?x-oss-process=image/resize,w_1800,h_6/format,png",
+      "android_xxxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng514a82242674d4495e840560553e646e2e7f9eb15f76e057d24e0677086c9d61"
+    },
+    "logical_size": {
+      "width": 1200,
+      "height": 4,
+      "note": "1x logical px; stored at 2x = 2400x8px"
+    },
+    "position": {
+      "x": 120,
+      "y": 77
+    },
+    "layer_path": "编组 4"
+  },
+  {
+    "id": "497EA409-CD5D-4116-AEB7-0B9D0F3EF462",
+    "name": " home_ico_decorate_down arrow",
+    "type": "slice",
+    "download_url": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7f6e4b3d65a06b461186262c0cc1a58b00261d90d7951d3942dfded33390c8b4",
+    "size": "100x92",
+    "format": "png",
+    "scale_urls": {
+      "1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7f6e4b3d65a06b461186262c0cc1a58b00261d90d7951d3942dfded33390c8b4?x-oss-process=image/resize,w_100,h_92/format,png",
+      "2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7f6e4b3d65a06b461186262c0cc1a58b00261d90d7951d3942dfded33390c8b4",
+      "3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7f6e4b3d65a06b461186262c0cc1a58b00261d90d7951d3942dfded33390c8b4?x-oss-process=image/resize,w_300,h_276/format,png",
+      "ios_1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7f6e4b3d65a06b461186262c0cc1a58b00261d90d7951d3942dfded33390c8b4?x-oss-process=image/resize,w_50,h_46/format,png",
+      "ios_2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7f6e4b3d65a06b461186262c0cc1a58b00261d90d7951d3942dfded33390c8b4?x-oss-process=image/resize,w_100,h_92/format,png",
+      "ios_3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7f6e4b3d65a06b461186262c0cc1a58b00261d90d7951d3942dfded33390c8b4?x-oss-process=image/resize,w_150,h_138/format,png",
+      "android_mdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7f6e4b3d65a06b461186262c0cc1a58b00261d90d7951d3942dfded33390c8b4?x-oss-process=image/resize,w_50,h_46/format,png",
+      "android_hdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7f6e4b3d65a06b461186262c0cc1a58b00261d90d7951d3942dfded33390c8b4?x-oss-process=image/resize,w_75,h_69/format,png",
+      "android_xhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7f6e4b3d65a06b461186262c0cc1a58b00261d90d7951d3942dfded33390c8b4?x-oss-process=image/resize,w_100,h_92/format,png",
+      "android_xxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7f6e4b3d65a06b461186262c0cc1a58b00261d90d7951d3942dfded33390c8b4?x-oss-process=image/resize,w_150,h_138/format,png",
+      "android_xxxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7f6e4b3d65a06b461186262c0cc1a58b00261d90d7951d3942dfded33390c8b4"
+    },
+    "logical_size": {
+      "width": 100,
+      "height": 92,
+      "note": "1x logical px; stored at 2x = 200x184px"
+    },
+    "position": {
+      "x": 0,
+      "y": 0
+    },
+    "layer_path": " home_ico_decorate_down arrow"
+  },
+  {
+    "id": "451794D2-745C-4641-A0CF-52E69FFB8846",
+    "name": "Fill 1",
+    "type": "shape",
+    "download_url": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng29e7cfc9612c44a435caa33d71ce98cd22388a18cce6f834847465dbe593a065",
+    "size": "80x80",
+    "format": "png",
+    "scale_urls": {
+      "1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng29e7cfc9612c44a435caa33d71ce98cd22388a18cce6f834847465dbe593a065?x-oss-process=image/resize,w_80,h_80/format,png",
+      "2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng29e7cfc9612c44a435caa33d71ce98cd22388a18cce6f834847465dbe593a065",
+      "3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng29e7cfc9612c44a435caa33d71ce98cd22388a18cce6f834847465dbe593a065?x-oss-process=image/resize,w_240,h_240/format,png",
+      "ios_1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng29e7cfc9612c44a435caa33d71ce98cd22388a18cce6f834847465dbe593a065?x-oss-process=image/resize,w_40,h_40/format,png",
+      "ios_2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng29e7cfc9612c44a435caa33d71ce98cd22388a18cce6f834847465dbe593a065?x-oss-process=image/resize,w_80,h_80/format,png",
+      "ios_3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng29e7cfc9612c44a435caa33d71ce98cd22388a18cce6f834847465dbe593a065?x-oss-process=image/resize,w_120,h_120/format,png",
+      "android_mdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng29e7cfc9612c44a435caa33d71ce98cd22388a18cce6f834847465dbe593a065?x-oss-process=image/resize,w_40,h_40/format,png",
+      "android_hdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng29e7cfc9612c44a435caa33d71ce98cd22388a18cce6f834847465dbe593a065?x-oss-process=image/resize,w_60,h_60/format,png",
+      "android_xhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng29e7cfc9612c44a435caa33d71ce98cd22388a18cce6f834847465dbe593a065?x-oss-process=image/resize,w_80,h_80/format,png",
+      "android_xxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng29e7cfc9612c44a435caa33d71ce98cd22388a18cce6f834847465dbe593a065?x-oss-process=image/resize,w_120,h_120/format,png",
+      "android_xxxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng29e7cfc9612c44a435caa33d71ce98cd22388a18cce6f834847465dbe593a065"
+    },
+    "logical_size": {
+      "width": 80,
+      "height": 80,
+      "note": "1x logical px; stored at 2x = 160x160px"
+    },
+    "position": {
+      "x": 799,
+      "y": 156
+    },
+    "layer_path": "Fill 1"
+  },
+  {
+    "id": "570A2E2C-4378-4983-B46E-787D4BC7B4C4",
+    "name": "位图",
+    "type": "bitmap",
+    "download_url": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng508c27aff82bb9edb20a64e920c32256a46136c64d5322a2c8a7e1a780e701bf",
+    "size": "278x168",
+    "format": "png",
+    "scale_urls": {
+      "1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng508c27aff82bb9edb20a64e920c32256a46136c64d5322a2c8a7e1a780e701bf?x-oss-process=image/resize,w_278,h_168/format,png",
+      "2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng508c27aff82bb9edb20a64e920c32256a46136c64d5322a2c8a7e1a780e701bf",
+      "3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng508c27aff82bb9edb20a64e920c32256a46136c64d5322a2c8a7e1a780e701bf?x-oss-process=image/resize,w_834,h_504/format,png",
+      "ios_1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng508c27aff82bb9edb20a64e920c32256a46136c64d5322a2c8a7e1a780e701bf?x-oss-process=image/resize,w_139,h_84/format,png",
+      "ios_2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng508c27aff82bb9edb20a64e920c32256a46136c64d5322a2c8a7e1a780e701bf?x-oss-process=image/resize,w_278,h_168/format,png",
+      "ios_3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng508c27aff82bb9edb20a64e920c32256a46136c64d5322a2c8a7e1a780e701bf?x-oss-process=image/resize,w_417,h_252/format,png",
+      "android_mdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng508c27aff82bb9edb20a64e920c32256a46136c64d5322a2c8a7e1a780e701bf?x-oss-process=image/resize,w_139,h_84/format,png",
+      "android_hdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng508c27aff82bb9edb20a64e920c32256a46136c64d5322a2c8a7e1a780e701bf?x-oss-process=image/resize,w_209,h_126/format,png",
+      "android_xhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng508c27aff82bb9edb20a64e920c32256a46136c64d5322a2c8a7e1a780e701bf?x-oss-process=image/resize,w_278,h_168/format,png",
+      "android_xxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng508c27aff82bb9edb20a64e920c32256a46136c64d5322a2c8a7e1a780e701bf?x-oss-process=image/resize,w_417,h_252/format,png",
+      "android_xxxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng508c27aff82bb9edb20a64e920c32256a46136c64d5322a2c8a7e1a780e701bf"
+    },
+    "logical_size": {
+      "width": 278,
+      "height": 168,
+      "note": "1x logical px; stored at 2x = 556x336px"
+    },
+    "position": {
+      "x": 139,
+      "y": 553
+    },
+    "layer_path": "位图"
+  },
+  {
+    "id": "4B0FA0D0-C9BD-41B3-9CF9-1F478D7FEC98",
+    "name": "蒙版",
+    "type": "shape",
+    "download_url": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng45d4caa566ca264ddb82b90216542250fc7639165a9be116d7395c2774ea3f53",
+    "size": "208x60",
+    "format": "png",
+    "scale_urls": {
+      "1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng45d4caa566ca264ddb82b90216542250fc7639165a9be116d7395c2774ea3f53?x-oss-process=image/resize,w_208,h_60/format,png",
+      "2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng45d4caa566ca264ddb82b90216542250fc7639165a9be116d7395c2774ea3f53",
+      "3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng45d4caa566ca264ddb82b90216542250fc7639165a9be116d7395c2774ea3f53?x-oss-process=image/resize,w_624,h_180/format,png",
+      "ios_1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng45d4caa566ca264ddb82b90216542250fc7639165a9be116d7395c2774ea3f53?x-oss-process=image/resize,w_104,h_30/format,png",
+      "ios_2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng45d4caa566ca264ddb82b90216542250fc7639165a9be116d7395c2774ea3f53?x-oss-process=image/resize,w_208,h_60/format,png",
+      "ios_3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng45d4caa566ca264ddb82b90216542250fc7639165a9be116d7395c2774ea3f53?x-oss-process=image/resize,w_312,h_90/format,png",
+      "android_mdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng45d4caa566ca264ddb82b90216542250fc7639165a9be116d7395c2774ea3f53?x-oss-process=image/resize,w_104,h_30/format,png",
+      "android_hdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng45d4caa566ca264ddb82b90216542250fc7639165a9be116d7395c2774ea3f53?x-oss-process=image/resize,w_156,h_45/format,png",
+      "android_xhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng45d4caa566ca264ddb82b90216542250fc7639165a9be116d7395c2774ea3f53?x-oss-process=image/resize,w_208,h_60/format,png",
+      "android_xxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng45d4caa566ca264ddb82b90216542250fc7639165a9be116d7395c2774ea3f53?x-oss-process=image/resize,w_312,h_90/format,png",
+      "android_xxxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng45d4caa566ca264ddb82b90216542250fc7639165a9be116d7395c2774ea3f53"
+    },
+    "logical_size": {
+      "width": 208,
+      "height": 60,
+      "note": "1x logical px; stored at 2x = 416x120px"
+    },
+    "position": {
+      "x": 120,
+      "y": 538
+    },
+    "layer_path": "蒙版"
+  },
+  {
+    "id": "B9804FC9-F4B5-427C-BB7D-2F4CEB1373D7",
+    "name": "位图",
+    "type": "bitmap",
+    "download_url": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge9979b6b5264f42e4e40d94c622b14a7dc13749c9a5b3e24db0b801a29b1b3ab",
+    "size": "208x60",
+    "format": "png",
+    "scale_urls": {
+      "1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge9979b6b5264f42e4e40d94c622b14a7dc13749c9a5b3e24db0b801a29b1b3ab?x-oss-process=image/resize,w_208,h_60/format,png",
+      "2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge9979b6b5264f42e4e40d94c622b14a7dc13749c9a5b3e24db0b801a29b1b3ab",
+      "3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge9979b6b5264f42e4e40d94c622b14a7dc13749c9a5b3e24db0b801a29b1b3ab?x-oss-process=image/resize,w_624,h_180/format,png",
+      "ios_1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge9979b6b5264f42e4e40d94c622b14a7dc13749c9a5b3e24db0b801a29b1b3ab?x-oss-process=image/resize,w_104,h_30/format,png",
+      "ios_2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge9979b6b5264f42e4e40d94c622b14a7dc13749c9a5b3e24db0b801a29b1b3ab?x-oss-process=image/resize,w_208,h_60/format,png",
+      "ios_3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge9979b6b5264f42e4e40d94c622b14a7dc13749c9a5b3e24db0b801a29b1b3ab?x-oss-process=image/resize,w_312,h_90/format,png",
+      "android_mdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge9979b6b5264f42e4e40d94c622b14a7dc13749c9a5b3e24db0b801a29b1b3ab?x-oss-process=image/resize,w_104,h_30/format,png",
+      "android_hdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge9979b6b5264f42e4e40d94c622b14a7dc13749c9a5b3e24db0b801a29b1b3ab?x-oss-process=image/resize,w_156,h_45/format,png",
+      "android_xhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge9979b6b5264f42e4e40d94c622b14a7dc13749c9a5b3e24db0b801a29b1b3ab?x-oss-process=image/resize,w_208,h_60/format,png",
+      "android_xxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge9979b6b5264f42e4e40d94c622b14a7dc13749c9a5b3e24db0b801a29b1b3ab?x-oss-process=image/resize,w_312,h_90/format,png",
+      "android_xxxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPnge9979b6b5264f42e4e40d94c622b14a7dc13749c9a5b3e24db0b801a29b1b3ab"
+    },
+    "logical_size": {
+      "width": 208,
+      "height": 60,
+      "note": "1x logical px; stored at 2x = 416x120px"
+    },
+    "position": {
+      "x": 120,
+      "y": 538
+    },
+    "layer_path": "位图"
+  },
+  {
+    "id": "3C3FF304-140F-4AD1-AFA4-86D6CE089495",
+    "name": "路径 4",
+    "type": "shape",
+    "download_url": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngc29e11b0866cd9f43c686b5a1034aeff2955d1991a69cb55fd7700e5f067d220",
+    "size": "33x10",
+    "format": "png",
+    "scale_urls": {
+      "1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngc29e11b0866cd9f43c686b5a1034aeff2955d1991a69cb55fd7700e5f067d220?x-oss-process=image/resize,w_33,h_10/format,png",
+      "2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngc29e11b0866cd9f43c686b5a1034aeff2955d1991a69cb55fd7700e5f067d220",
+      "3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngc29e11b0866cd9f43c686b5a1034aeff2955d1991a69cb55fd7700e5f067d220?x-oss-process=image/resize,w_99,h_30/format,png",
+      "ios_1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngc29e11b0866cd9f43c686b5a1034aeff2955d1991a69cb55fd7700e5f067d220?x-oss-process=image/resize,w_17,h_5/format,png",
+      "ios_2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngc29e11b0866cd9f43c686b5a1034aeff2955d1991a69cb55fd7700e5f067d220?x-oss-process=image/resize,w_33,h_10/format,png",
+      "ios_3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngc29e11b0866cd9f43c686b5a1034aeff2955d1991a69cb55fd7700e5f067d220?x-oss-process=image/resize,w_50,h_15/format,png",
+      "android_mdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngc29e11b0866cd9f43c686b5a1034aeff2955d1991a69cb55fd7700e5f067d220?x-oss-process=image/resize,w_17,h_5/format,png",
+      "android_hdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngc29e11b0866cd9f43c686b5a1034aeff2955d1991a69cb55fd7700e5f067d220?x-oss-process=image/resize,w_25,h_8/format,png",
+      "android_xhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngc29e11b0866cd9f43c686b5a1034aeff2955d1991a69cb55fd7700e5f067d220?x-oss-process=image/resize,w_33,h_10/format,png",
+      "android_xxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngc29e11b0866cd9f43c686b5a1034aeff2955d1991a69cb55fd7700e5f067d220?x-oss-process=image/resize,w_50,h_15/format,png",
+      "android_xxxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngc29e11b0866cd9f43c686b5a1034aeff2955d1991a69cb55fd7700e5f067d220"
+    },
+    "logical_size": {
+      "width": 33,
+      "height": 10,
+      "note": "1x logical px; stored at 2x = 66x20px"
+    },
+    "position": {
+      "x": 274,
+      "y": 564
+    },
+    "layer_path": "路径 4"
+  },
+  {
+    "id": "72808D41-800A-491F-95F7-9F2BDC2CE8A7",
+    "name": " home_ico_button",
+    "type": "slice",
+    "download_url": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng491b13dfcce9c1690a7151154a2240d5539b6376c72795aa3b730d729e06cb35",
+    "size": "252x160",
+    "format": "png",
+    "scale_urls": {
+      "1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng491b13dfcce9c1690a7151154a2240d5539b6376c72795aa3b730d729e06cb35?x-oss-process=image/resize,w_252,h_160/format,png",
+      "2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng491b13dfcce9c1690a7151154a2240d5539b6376c72795aa3b730d729e06cb35",
+      "3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng491b13dfcce9c1690a7151154a2240d5539b6376c72795aa3b730d729e06cb35?x-oss-process=image/resize,w_756,h_480/format,png",
+      "ios_1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng491b13dfcce9c1690a7151154a2240d5539b6376c72795aa3b730d729e06cb35?x-oss-process=image/resize,w_126,h_80/format,png",
+      "ios_2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng491b13dfcce9c1690a7151154a2240d5539b6376c72795aa3b730d729e06cb35?x-oss-process=image/resize,w_252,h_160/format,png",
+      "ios_3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng491b13dfcce9c1690a7151154a2240d5539b6376c72795aa3b730d729e06cb35?x-oss-process=image/resize,w_378,h_240/format,png",
+      "android_mdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng491b13dfcce9c1690a7151154a2240d5539b6376c72795aa3b730d729e06cb35?x-oss-process=image/resize,w_126,h_80/format,png",
+      "android_hdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng491b13dfcce9c1690a7151154a2240d5539b6376c72795aa3b730d729e06cb35?x-oss-process=image/resize,w_189,h_120/format,png",
+      "android_xhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng491b13dfcce9c1690a7151154a2240d5539b6376c72795aa3b730d729e06cb35?x-oss-process=image/resize,w_252,h_160/format,png",
+      "android_xxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng491b13dfcce9c1690a7151154a2240d5539b6376c72795aa3b730d729e06cb35?x-oss-process=image/resize,w_378,h_240/format,png",
+      "android_xxxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng491b13dfcce9c1690a7151154a2240d5539b6376c72795aa3b730d729e06cb35"
+    },
+    "logical_size": {
+      "width": 252,
+      "height": 160,
+      "note": "1x logical px; stored at 2x = 504x320px"
+    },
+    "position": {
+      "x": 0,
+      "y": 0
+    },
+    "layer_path": " home_ico_button"
+  },
+  {
+    "id": "E2F582B1-3D0D-468F-AECA-F218944436B3",
+    "name": " home_ico_decorate_star",
+    "type": "slice",
+    "download_url": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngaaff851f40ff63ae8e0fa6e88eb17ddece154ecb88f8b57d75b7fb591cbc19f4",
+    "size": "80x80",
+    "format": "png",
+    "scale_urls": {
+      "1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngaaff851f40ff63ae8e0fa6e88eb17ddece154ecb88f8b57d75b7fb591cbc19f4?x-oss-process=image/resize,w_80,h_80/format,png",
+      "2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngaaff851f40ff63ae8e0fa6e88eb17ddece154ecb88f8b57d75b7fb591cbc19f4",
+      "3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngaaff851f40ff63ae8e0fa6e88eb17ddece154ecb88f8b57d75b7fb591cbc19f4?x-oss-process=image/resize,w_240,h_240/format,png",
+      "ios_1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngaaff851f40ff63ae8e0fa6e88eb17ddece154ecb88f8b57d75b7fb591cbc19f4?x-oss-process=image/resize,w_40,h_40/format,png",
+      "ios_2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngaaff851f40ff63ae8e0fa6e88eb17ddece154ecb88f8b57d75b7fb591cbc19f4?x-oss-process=image/resize,w_80,h_80/format,png",
+      "ios_3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngaaff851f40ff63ae8e0fa6e88eb17ddece154ecb88f8b57d75b7fb591cbc19f4?x-oss-process=image/resize,w_120,h_120/format,png",
+      "android_mdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngaaff851f40ff63ae8e0fa6e88eb17ddece154ecb88f8b57d75b7fb591cbc19f4?x-oss-process=image/resize,w_40,h_40/format,png",
+      "android_hdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngaaff851f40ff63ae8e0fa6e88eb17ddece154ecb88f8b57d75b7fb591cbc19f4?x-oss-process=image/resize,w_60,h_60/format,png",
+      "android_xhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngaaff851f40ff63ae8e0fa6e88eb17ddece154ecb88f8b57d75b7fb591cbc19f4?x-oss-process=image/resize,w_80,h_80/format,png",
+      "android_xxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngaaff851f40ff63ae8e0fa6e88eb17ddece154ecb88f8b57d75b7fb591cbc19f4?x-oss-process=image/resize,w_120,h_120/format,png",
+      "android_xxxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngaaff851f40ff63ae8e0fa6e88eb17ddece154ecb88f8b57d75b7fb591cbc19f4"
+    },
+    "logical_size": {
+      "width": 80,
+      "height": 80,
+      "note": "1x logical px; stored at 2x = 160x160px"
+    },
+    "position": {
+      "x": 0,
+      "y": 0
+    },
+    "layer_path": " home_ico_decorate_star"
+  },
+  {
+    "id": "A64B026A-B958-4029-A65A-E99604163FA7",
+    "name": " home_ico_decorate_title",
+    "type": "slice",
+    "download_url": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngfa1d5fe75c971722e673102ed4a73da55b939a0e281f672513de554f8d2fcc7f",
+    "size": "120x52",
+    "format": "png",
+    "scale_urls": {
+      "1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngfa1d5fe75c971722e673102ed4a73da55b939a0e281f672513de554f8d2fcc7f?x-oss-process=image/resize,w_120,h_52/format,png",
+      "2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngfa1d5fe75c971722e673102ed4a73da55b939a0e281f672513de554f8d2fcc7f",
+      "3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngfa1d5fe75c971722e673102ed4a73da55b939a0e281f672513de554f8d2fcc7f?x-oss-process=image/resize,w_360,h_156/format,png",
+      "ios_1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngfa1d5fe75c971722e673102ed4a73da55b939a0e281f672513de554f8d2fcc7f?x-oss-process=image/resize,w_60,h_26/format,png",
+      "ios_2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngfa1d5fe75c971722e673102ed4a73da55b939a0e281f672513de554f8d2fcc7f?x-oss-process=image/resize,w_120,h_52/format,png",
+      "ios_3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngfa1d5fe75c971722e673102ed4a73da55b939a0e281f672513de554f8d2fcc7f?x-oss-process=image/resize,w_180,h_78/format,png",
+      "android_mdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngfa1d5fe75c971722e673102ed4a73da55b939a0e281f672513de554f8d2fcc7f?x-oss-process=image/resize,w_60,h_26/format,png",
+      "android_hdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngfa1d5fe75c971722e673102ed4a73da55b939a0e281f672513de554f8d2fcc7f?x-oss-process=image/resize,w_90,h_39/format,png",
+      "android_xhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngfa1d5fe75c971722e673102ed4a73da55b939a0e281f672513de554f8d2fcc7f?x-oss-process=image/resize,w_120,h_52/format,png",
+      "android_xxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngfa1d5fe75c971722e673102ed4a73da55b939a0e281f672513de554f8d2fcc7f?x-oss-process=image/resize,w_180,h_78/format,png",
+      "android_xxxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngfa1d5fe75c971722e673102ed4a73da55b939a0e281f672513de554f8d2fcc7f"
+    },
+    "logical_size": {
+      "width": 120,
+      "height": 52,
+      "note": "1x logical px; stored at 2x = 240x104px"
+    },
+    "position": {
+      "x": 0,
+      "y": 0
+    },
+    "layer_path": " home_ico_decorate_title"
+  },
+  {
+    "id": "111F4BEE-47D0-4A26-ACB5-22B8FD22913C",
+    "name": " home_ico_decorate_logo",
+    "type": "slice",
+    "download_url": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng0fa560fba41aa145017a8ba6bce069f38e6cb846b12b10d887029167cf1a9a51",
+    "size": "406x406",
+    "format": "png",
+    "scale_urls": {
+      "1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng0fa560fba41aa145017a8ba6bce069f38e6cb846b12b10d887029167cf1a9a51?x-oss-process=image/resize,w_406,h_406/format,png",
+      "2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng0fa560fba41aa145017a8ba6bce069f38e6cb846b12b10d887029167cf1a9a51",
+      "3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng0fa560fba41aa145017a8ba6bce069f38e6cb846b12b10d887029167cf1a9a51?x-oss-process=image/resize,w_1218,h_1218/format,png",
+      "ios_1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng0fa560fba41aa145017a8ba6bce069f38e6cb846b12b10d887029167cf1a9a51?x-oss-process=image/resize,w_203,h_203/format,png",
+      "ios_2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng0fa560fba41aa145017a8ba6bce069f38e6cb846b12b10d887029167cf1a9a51?x-oss-process=image/resize,w_406,h_406/format,png",
+      "ios_3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng0fa560fba41aa145017a8ba6bce069f38e6cb846b12b10d887029167cf1a9a51?x-oss-process=image/resize,w_609,h_609/format,png",
+      "android_mdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng0fa560fba41aa145017a8ba6bce069f38e6cb846b12b10d887029167cf1a9a51?x-oss-process=image/resize,w_203,h_203/format,png",
+      "android_hdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng0fa560fba41aa145017a8ba6bce069f38e6cb846b12b10d887029167cf1a9a51?x-oss-process=image/resize,w_305,h_305/format,png",
+      "android_xhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng0fa560fba41aa145017a8ba6bce069f38e6cb846b12b10d887029167cf1a9a51?x-oss-process=image/resize,w_406,h_406/format,png",
+      "android_xxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng0fa560fba41aa145017a8ba6bce069f38e6cb846b12b10d887029167cf1a9a51?x-oss-process=image/resize,w_609,h_609/format,png",
+      "android_xxxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng0fa560fba41aa145017a8ba6bce069f38e6cb846b12b10d887029167cf1a9a51"
+    },
+    "logical_size": {
+      "width": 406,
+      "height": 406,
+      "note": "1x logical px; stored at 2x = 812x812px"
+    },
+    "position": {
+      "x": 0,
+      "y": 0
+    },
+    "layer_path": " home_ico_decorate_logo"
+  },
+  {
+    "id": "67A3FD3D-51A5-4382-9D5D-62813DBEE48C",
+    "name": "4c8c51aa379bb3ad045b116bba18b5c75656f1ed138c2-RVn5hh_fw1200",
+    "type": "bitmap",
+    "download_url": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7e1b6e34968a919d6871d6cafd082734e6a543a2ef2fe2347432fdc9fd5640e2",
+    "size": "56x48",
+    "format": "png",
+    "scale_urls": {
+      "1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7e1b6e34968a919d6871d6cafd082734e6a543a2ef2fe2347432fdc9fd5640e2?x-oss-process=image/resize,w_56,h_48/format,png",
+      "2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7e1b6e34968a919d6871d6cafd082734e6a543a2ef2fe2347432fdc9fd5640e2",
+      "3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7e1b6e34968a919d6871d6cafd082734e6a543a2ef2fe2347432fdc9fd5640e2?x-oss-process=image/resize,w_168,h_144/format,png",
+      "ios_1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7e1b6e34968a919d6871d6cafd082734e6a543a2ef2fe2347432fdc9fd5640e2?x-oss-process=image/resize,w_28,h_24/format,png",
+      "ios_2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7e1b6e34968a919d6871d6cafd082734e6a543a2ef2fe2347432fdc9fd5640e2?x-oss-process=image/resize,w_56,h_48/format,png",
+      "ios_3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7e1b6e34968a919d6871d6cafd082734e6a543a2ef2fe2347432fdc9fd5640e2?x-oss-process=image/resize,w_84,h_72/format,png",
+      "android_mdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7e1b6e34968a919d6871d6cafd082734e6a543a2ef2fe2347432fdc9fd5640e2?x-oss-process=image/resize,w_28,h_24/format,png",
+      "android_hdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7e1b6e34968a919d6871d6cafd082734e6a543a2ef2fe2347432fdc9fd5640e2?x-oss-process=image/resize,w_42,h_36/format,png",
+      "android_xhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7e1b6e34968a919d6871d6cafd082734e6a543a2ef2fe2347432fdc9fd5640e2?x-oss-process=image/resize,w_56,h_48/format,png",
+      "android_xxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7e1b6e34968a919d6871d6cafd082734e6a543a2ef2fe2347432fdc9fd5640e2?x-oss-process=image/resize,w_84,h_72/format,png",
+      "android_xxxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng7e1b6e34968a919d6871d6cafd082734e6a543a2ef2fe2347432fdc9fd5640e2"
+    },
+    "logical_size": {
+      "width": 56,
+      "height": 48,
+      "note": "1x logical px; stored at 2x = 112x96px"
+    },
+    "position": {
+      "x": 515,
+      "y": 317
+    },
+    "layer_path": "4c8c51aa379bb3ad045b116bba18b5c75656f1ed138c2-RVn5hh_fw1200"
+  },
+  {
+    "id": "73E1C87F-4D0D-4B35-805A-CC092A69725E",
+    "name": " home_ico_decorate_3d",
+    "type": "slice",
+    "download_url": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng264cfea188387b56cdb5d780ccabfa6152d88c79d986cf2d8c662937a26ed5c2",
+    "size": "64x48",
+    "format": "png",
+    "scale_urls": {
+      "1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng264cfea188387b56cdb5d780ccabfa6152d88c79d986cf2d8c662937a26ed5c2?x-oss-process=image/resize,w_64,h_48/format,png",
+      "2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng264cfea188387b56cdb5d780ccabfa6152d88c79d986cf2d8c662937a26ed5c2",
+      "3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng264cfea188387b56cdb5d780ccabfa6152d88c79d986cf2d8c662937a26ed5c2?x-oss-process=image/resize,w_192,h_144/format,png",
+      "ios_1x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng264cfea188387b56cdb5d780ccabfa6152d88c79d986cf2d8c662937a26ed5c2?x-oss-process=image/resize,w_32,h_24/format,png",
+      "ios_2x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng264cfea188387b56cdb5d780ccabfa6152d88c79d986cf2d8c662937a26ed5c2?x-oss-process=image/resize,w_64,h_48/format,png",
+      "ios_3x": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng264cfea188387b56cdb5d780ccabfa6152d88c79d986cf2d8c662937a26ed5c2?x-oss-process=image/resize,w_96,h_72/format,png",
+      "android_mdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng264cfea188387b56cdb5d780ccabfa6152d88c79d986cf2d8c662937a26ed5c2?x-oss-process=image/resize,w_32,h_24/format,png",
+      "android_hdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng264cfea188387b56cdb5d780ccabfa6152d88c79d986cf2d8c662937a26ed5c2?x-oss-process=image/resize,w_48,h_36/format,png",
+      "android_xhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng264cfea188387b56cdb5d780ccabfa6152d88c79d986cf2d8c662937a26ed5c2?x-oss-process=image/resize,w_64,h_48/format,png",
+      "android_xxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng264cfea188387b56cdb5d780ccabfa6152d88c79d986cf2d8c662937a26ed5c2?x-oss-process=image/resize,w_96,h_72/format,png",
+      "android_xxxhdpi": "https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng264cfea188387b56cdb5d780ccabfa6152d88c79d986cf2d8c662937a26ed5c2"
+    },
+    "logical_size": {
+      "width": 64,
+      "height": 48,
+      "note": "1x logical px; stored at 2x = 128x96px"
+    },
+    "position": {
+      "x": 0,
+      "y": 0
+    },
+    "layer_path": " home_ico_decorate_3d"
+  }
+]

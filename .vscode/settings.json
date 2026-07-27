@@ -1,0 +1,11 @@
+{
+  "files.exclude": {
+    "**/.trae": true
+  },
+  "search.exclude": {
+    "**/.trae": true
+  },
+  "files.watcherExclude": {
+    "**/.trae/**": true
+  }
+}
