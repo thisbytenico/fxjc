@@ -26,10 +26,10 @@ const router = createRouter({
     //   component: () => import('../views/overview/index.vue')
     // },
     {
-      path: '/dataAnalysis1',
-      name: 'dataAnalysis1',
-      meta:{breadcrumbsName:'数据分析'},
-      component: () => import('../views/dataAnalysis1/index.vue')
+      path: '/monitoring',
+      name: 'monitoring',
+      meta:{breadcrumbsName:'监测业务'},
+      component: () => import('../views/monitoring/index.vue')
     },
     {
       path: '/dataAnalysis',
