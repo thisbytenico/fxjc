@@ -141,7 +141,8 @@ const REGION_MAP_VIEW = {
     layoutCenter: ['50%', '46%'],
     layoutSize: '90%'
 };
-const MAP_COLORS = ['#0d2b5e', '#0e4a8e', '#1565c0', '#1976d2', '#42a5f5', '#64b5f6'];
+const MAP_COLORS =['#0d2b5e', '#0e4a8e', '#1565c0', '#1976d2', '#42a5f5', '#64b5f6'];
+
 const PROVINCE_FILES = {
     北京: 'beijing', 天津: 'tianjin', 河北: 'hebei', 山西: 'shanxi', 内蒙古: 'neimenggu',
     辽宁: 'liaoning', 吉林: 'jilin', 黑龙江: 'heilongjiang', 上海: 'shanghai', 江苏: 'jiangsu',
@@ -385,7 +386,9 @@ export default {
                         layoutSize: isCountry ? '100%' : REGION_MAP_VIEW.layoutSize,
                         scaleLimit: { min: .8, max: 4 },
                         label: { show: true, color: '#f5fbff', fontSize: route.level === 'country' ? 10 : 12, textShadowColor: '#024d79', textShadowBlur: 3 },
-                        itemStyle: { areaColor: '#0d2b5e', borderColor: 'rgba(0,180,255,.4)', borderWidth: .8 },
+                        itemStyle: { areaColor: '#0d2b5e', 
+                        borderColor: 'rgba(0,180,255,.4)',//'rgba(190, 240, 255, 0.85)'
+                        borderWidth: .8 },
                         emphasis: { label: { color: '#fff' }, itemStyle: { areaColor: '#00b4ff' } },
                         select: { disabled: true }, data: values
                     }]
@@ -578,7 +581,23 @@ export default {
 .subject-category > strong { font: 700 32px/1 Arial, sans-serif; }
 .subject-category > span { margin-top: 2px; font-size: 18px; white-space: nowrap; }
 .active-label { position: relative; z-index: 1; width: calc(100% - 28px); margin-top: 11px; display: flex; justify-content: space-between; color: #7f9bb1; font-size: 15px; }
-.active-label::before { content: ''; position: absolute; top: -5px; right: -14px; left: -14px; z-index: -1; height: 42px; clip-path: polygon(7% 0, 93% 0, 100% 100%, 0 100%); border-bottom: 1px solid rgba(49, 152, 194, .45); background: linear-gradient(180deg, rgba(9, 39, 62, .12), rgba(13, 61, 88, .72)); box-shadow: inset 0 -8px 12px rgba(20, 113, 151, .12); }
+.active-label::before {
+    content: '';
+    position: absolute;
+    top: 0;//-5px;
+    right: -14px;
+    left: -14px;
+    z-index: -1;
+    height: 42px;
+    clip-path: polygon(7% 0, 93% 0, 100% 100%, 0 100%);
+    border-bottom: 1px solid rgba(75, 202, 229, .72);
+    background: linear-gradient(180deg, rgba(8, 34, 54, .08) 0%, rgba(12, 59, 82, .56) 62%, rgba(5, 35, 55, .92) 100%);
+    box-shadow:
+        inset 0 -2px 0 rgba(21, 101, 132, .92),
+        inset 0 -9px 13px rgba(18, 111, 145, .18),
+        0 2px 4px rgba(10, 93, 127, .16);
+    filter: drop-shadow(-1px 0 rgba(37, 130, 164, .38)) drop-shadow(1px 0 rgba(37, 130, 164, .38));
+}
 .active-label b { color: #91aabe; font-weight: normal; }
 .progress { position: relative; z-index: 1; width: calc(100% - 16px); height: 8px; margin-top: 6px; padding: 2px 4px; background: rgba(6, 30, 48, .96); border: 1px solid rgba(48, 103, 138, .8); transform: skew(-8deg); }
 .progress i { display: block; height: 3px; box-shadow: 0 0 6px currentColor; }
@@ -680,7 +699,7 @@ export default {
     .subject-category > strong { font-size: 24px; }
     .subject-category > span { margin-top: 1px; }
     .active-label { margin-top: 5px; font-size: 12px; }
-    .active-label::before { top: -3px; height: 32px; }
+    .active-label::before { top: 0; height: 32px; }
     .progress { margin-top: 3px; }
     .trace-content { padding: 8px 10px 7px; grid-template-rows: 65px 65px minmax(58px, 1fr) 65px minmax(58px, 1fr); gap: 6px; }
     .trace-card { padding-left: 9px; padding-right: 9px; }
