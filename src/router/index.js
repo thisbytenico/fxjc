@@ -32,6 +32,12 @@ const router = createRouter({
       component: () => import('../views/dataAnalysis1/index.vue')
     },
     {
+      path: '/dataAnalysis',
+      name: 'dataAnalysis',
+      meta:{breadcrumbsName:'数据分析'},
+      component: () => import('../views/dataAnalysis/index.vue')
+    },
+    {
       path: '/assets',
       name: 'assets',
       // meta:{breadcrumbsName:'资产管理1'},
