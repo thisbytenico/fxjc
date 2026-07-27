@@ -530,11 +530,29 @@ export default {
     border-bottom: 1px solid rgba(36, 104, 159, .42);
 }
 .panel-heading i {
-    width: 14px;
-    height: 14px;
-    flex: 0 0 14px;
-    transform: rotate(45deg);
-    background: linear-gradient(135deg, #4aa9fc 0 43%, transparent 43% 56%, #2376c9 56%);
+    position: relative;
+    width: 18px;
+    height: 18px;
+    flex: 0 0 18px;
+}
+.panel-heading i::before,
+.panel-heading i::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+    box-shadow: 0 0 5px rgba(48, 148, 239, .35);
+}
+.panel-heading i::before {
+    top: 0;
+    left: 4px;
+    background: #1d65ad;
+}
+.panel-heading i::after {
+    left: 4px;
+    bottom: 0;
+    background: #3289dc;
 }
 .panel-heading h2 { margin: 0; font-size: 21px; line-height: 1; letter-spacing: 0; text-shadow: 0 0 8px rgba(75, 176, 255, .45); }
 .panel-heading span { width: 26px; height: 1px; margin-left: auto; background: #ffeb54; }
