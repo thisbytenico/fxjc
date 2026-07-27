@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="324" height="84" viewBox="0 0 324 84" fill="none">
+  <defs>
+    <linearGradient id="fill" x1="162" y1="4" x2="162" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1A5C96"/>
+      <stop offset="0.52" stop-color="#257FC2"/>
+      <stop offset="1" stop-color="#3194D5"/>
+    </linearGradient>
+    <linearGradient id="edge" x1="18" y1="4" x2="312" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#66C3FA"/>
+      <stop offset="0.5" stop-color="#439EDB"/>
+      <stop offset="1" stop-color="#75CAFA"/>
+    </linearGradient>
+    <linearGradient id="sheen" x1="12" y1="6" x2="92" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#C5ECFF" stop-opacity="0.28"/>
+      <stop offset="0.55" stop-color="#8DD6FA" stop-opacity="0.06"/>
+      <stop offset="1" stop-color="#8DD6FA" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <path d="M18 3H321V75L312 81H3V19L18 3Z" fill="url(#fill)"/>
+  <path d="M18 3H321V28M321 56V75L312 81H3V56M3 28V19L18 3" stroke="url(#edge)" stroke-width="2"/>
+  <path d="M20 7H317V30M317 54V72L309 77H7V54M7 30V21L20 7" stroke="#B6E5FF" stroke-opacity="0.22"/>
+  <path d="M18 3H102L55 81H3V19L18 3Z" fill="url(#sheen)"/>
+  <path d="M20 5H319" stroke="#B6E5FF" stroke-opacity="0.38"/>
+  <path d="M5 78H311" stroke="#52B8EE" stroke-opacity="0.5"/>
+</svg>

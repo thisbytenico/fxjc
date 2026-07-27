@@ -92,46 +92,25 @@ export default {
     width: 162px;
     height: 42px;
     padding: 0 10px;
-    border: 1px solid rgba(91, 190, 250, .94);
-    border-bottom-color: rgba(124, 210, 255, .96);
+    border: 0;
     color: #f7fbff;
     font: 700 23px/1 "Microsoft YaHei", sans-serif;
     letter-spacing: 0;
     cursor: pointer;
     position: relative;
-    isolation: isolate;
-    clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 8px);
-    background:
-        linear-gradient(135deg, rgba(151, 218, 255, .3), transparent 30%) top left / 46px 100% no-repeat,
-        linear-gradient(180deg, rgba(31, 100, 165, .92), rgba(42, 146, 216, .94));
-    box-shadow: inset 0 1px rgba(185, 229, 255, .38), inset 0 -1px rgba(94, 194, 248, .55), inset 0 0 14px rgba(84, 177, 255, .3), 0 0 9px rgba(20, 105, 178, .45);
-    filter: drop-shadow(0 0 1px rgba(94, 195, 255, .8));
-    transition: filter .18s ease, background .18s ease;
+    background: transparent url('../assets/slices/business-nav-default.svg') center / 100% 100% no-repeat;
+    transition: filter .18s ease;
 }
-.business-nav button:hover { filter: drop-shadow(0 0 2px rgba(94, 195, 255, .9)) brightness(1.12); }
+.business-nav button:hover { filter: brightness(1.12); }
 .business-nav button.active {
     color: #fff9d8;
-    border-color: rgba(255, 232, 80, .98);
-    background:
-        linear-gradient(90deg, rgba(255, 249, 160, .28), transparent 17%, transparent 83%, rgba(255, 244, 132, .2)),
-        linear-gradient(180deg, rgba(141, 108, 13, .94), rgba(225, 184, 22, .98));
-    box-shadow: inset 0 1px rgba(255, 250, 179, .58), inset 0 -1px rgba(255, 224, 62, .7), inset 0 0 17px rgba(255, 238, 94, .38), 0 0 11px rgba(244, 200, 38, .48);
-    filter: drop-shadow(0 0 2px rgba(255, 225, 69, .82));
+    background-image: url('../assets/slices/business-nav-active.svg');
 }
-.business-nav button.active:hover { filter: drop-shadow(0 0 3px rgba(255, 225, 69, .9)) brightness(1.08); }
+.business-nav button.active:hover { filter: brightness(1.08); }
 .business-nav button.active::before,
 .business-nav button.active::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    width: 13px;
-    height: 20px;
-    transform: translateY(-50%);
-    background: linear-gradient(90deg, #fffbd0, #ffe65b 58%, rgba(255, 222, 54, .66));
-    filter: drop-shadow(0 0 4px rgba(255, 246, 147, .92));
+    content: none;
 }
-.business-nav button.active::before { left: -1px; clip-path: polygon(0 0, 100% 50%, 0 100%, 34% 50%); }
-.business-nav button.active::after { right: -1px; clip-path: polygon(100% 0, 0 50%, 100% 100%, 66% 50%); }
 
 @media (max-width: 1560px) {
     .platform-header { height: 66px; flex-basis: 66px; padding: 0 20px; gap: 16px; }

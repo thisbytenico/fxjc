@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="324" height="84" viewBox="0 0 324 84" fill="none">
+  <defs>
+    <linearGradient id="fill" x1="162" y1="3" x2="162" y2="81" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#856710"/>
+      <stop offset="0.5" stop-color="#B68E10"/>
+      <stop offset="1" stop-color="#DDB518"/>
+    </linearGradient>
+    <linearGradient id="edge" x1="18" y1="3" x2="312" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF28A"/>
+      <stop offset="0.5" stop-color="#F8D83B"/>
+      <stop offset="1" stop-color="#FFE96A"/>
+    </linearGradient>
+    <linearGradient id="sheen" x1="12" y1="6" x2="92" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF9BB" stop-opacity="0.48"/>
+      <stop offset="0.55" stop-color="#FFF08A" stop-opacity="0.08"/>
+      <stop offset="1" stop-color="#FFF08A" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="glow" x="-5" y="-5" width="334" height="94" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <path d="M18 3H321V75L312 81H3V19L18 3Z" fill="url(#fill)"/>
+  <path d="M18 3H321V28M321 56V75L312 81H3V56M3 28V19L18 3" stroke="url(#edge)" stroke-width="2"/>
+  <path d="M20 7H317V30M317 54V72L309 77H7V54M7 30V21L20 7" stroke="#FFF6A3" stroke-opacity="0.34"/>
+  <path d="M18 3H102L55 81H3V19L18 3Z" fill="url(#sheen)"/>
+  <path d="M20 5H319" stroke="#FFF7AA" stroke-opacity="0.62"/>
+  <path d="M5 78H311" stroke="#FFE65A" stroke-opacity="0.68"/>
+  <g filter="url(#glow)">
+    <path d="M1 33L10 42L1 51L5 42L1 33Z" fill="#FFFFFF" fill-opacity="0.38"/>
+    <path d="M11 27L30 42L11 57L18 42L11 27Z" fill="#FFFFFF"/>
+    <path d="M323 33L314 42L323 51L319 42L323 33Z" fill="#FFFFFF" fill-opacity="0.38"/>
+    <path d="M313 27L294 42L313 57L306 42L313 27Z" fill="#FFFFFF"/>
+  </g>
+</svg>
