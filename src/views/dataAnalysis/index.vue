@@ -141,14 +141,7 @@ const REGION_MAP_VIEW = {
     layoutCenter: ['50%', '46%'],
     layoutSize: '90%'
 };
-const MAP_COLOR_PIECES = [
-    { lte: 20000, color: '#0aa6df' },
-    { gt: 20000, lte: 45000, color: '#0b96d7' },
-    { gt: 45000, lte: 70000, color: '#08799f' },
-    { gt: 70000, lte: 100000, color: '#0a8fce' },
-    { gt: 100000, lte: 140000, color: '#0aa2dd' },
-    { gt: 140000, color: '#0798d3' }
-];
+const MAP_COLORS = ['#0d2b5e', '#0e4a8e', '#1565c0', '#1976d2', '#42a5f5', '#64b5f6'];
 const PROVINCE_FILES = {
     北京: 'beijing', 天津: 'tianjin', 河北: 'hebei', 山西: 'shanxi', 内蒙古: 'neimenggu',
     辽宁: 'liaoning', 吉林: 'jilin', 黑龙江: 'heilongjiang', 上海: 'shanghai', 江苏: 'jiangsu',
@@ -300,7 +293,7 @@ export default {
             return (geo.features || []).map((feature, index) => {
                 const props = feature.properties || {};
                 const seed = Number(String(props.adcode || feature.id || index).slice(-5));
-                return { name: props.name, value: supplied.get(props.name) || 18000 + ((seed * 37 + index * 7919) % 82000) };
+                return { name: props.name, value: supplied.get(props.name) || 50 + ((seed * 37 + index * 7919) % 300) };
             });
         };
 
@@ -369,6 +362,7 @@ export default {
                     remoteValues = response && response.values ? response.values : [];
                 }
                 const values = regionValues(geo, remoteValues);
+                const maxValue = Math.max(...values.map(item => Number(item.value) || 0), 1);
                 const isCountry = route.level === 'country';
                 const mapCenter = isCountry ? CHINA_MAP_VIEW.center : getGeoBoundsCenter(geo);
                 echarts.registerMap(route.mapName, geo);
@@ -376,10 +370,12 @@ export default {
                     animationDurationUpdate: 450,
                     tooltip: { ...tooltip, formatter: params => `${params.name}<br/>主体数：${formatNumber(params.value)} 家` },
                     visualMap: {
-                        type: 'piecewise',
+                        type: 'continuous',
                         show: false,
+                        min: 0,
+                        max: maxValue,
                         dimension: 0,
-                        pieces: MAP_COLOR_PIECES
+                        inRange: { color: MAP_COLORS }
                     },
                     series: [{
                         type: 'map', map: route.mapName, roam: true,
@@ -389,8 +385,8 @@ export default {
                         layoutSize: isCountry ? '100%' : REGION_MAP_VIEW.layoutSize,
                         scaleLimit: { min: .8, max: 4 },
                         label: { show: true, color: '#f5fbff', fontSize: route.level === 'country' ? 10 : 12, textShadowColor: '#024d79', textShadowBlur: 3 },
-                        itemStyle: { areaColor: '#08a9dd', borderColor: '#b8f4ff', borderWidth: 1.2, shadowColor: 'rgba(0,190,255,.65)', shadowBlur: 9 },
-                        emphasis: { label: { color: '#fff' }, itemStyle: { areaColor: '#32d3ed' } },
+                        itemStyle: { areaColor: '#0d2b5e', borderColor: 'rgba(0,180,255,.4)', borderWidth: .8 },
+                        emphasis: { label: { color: '#fff' }, itemStyle: { areaColor: '#00b4ff' } },
                         select: { disabled: true }, data: values
                     }]
                 };
