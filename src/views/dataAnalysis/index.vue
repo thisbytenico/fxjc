@@ -679,14 +679,22 @@ export default {
     .subject-totals { width: 46%; flex-basis: 46%; }
     .metric-box { padding-left: 7px; padding-right: 7px; }
     .metric-box strong, .subject-category > strong { font-size: 26px; }
-    .metric-box > span, .subject-category > span, .product-metric span { font-size: 14px; }
+    .metric-box > span, .subject-category > span, .product-metric span { font-size: 13px; }
     .subject-category-grid { padding-left: 22px; padding-right: 22px; gap: 12px 24px; }
+    .subject-category > strong { font-size: 24px; }
+    .subject-category > span { margin-top: 1px; }
+    .active-label { margin-top: 5px; font-size: 12px; }
+    .active-label::before { top: -3px; height: 32px; }
+    .progress { margin-top: 3px; }
+    .trace-content { padding: 8px 10px 7px; grid-template-rows: 65px 65px minmax(58px, 1fr) 65px minmax(58px, 1fr); gap: 6px; }
     .trace-card { padding-left: 9px; padding-right: 9px; }
     .trace-card h3, .trace-card dt { font-size: 15px; }
     .trace-card strong { font-size: 25px; }
     .trace-card dl { gap: 10px; }
-    .certification-content { padding-left: 16px; padding-right: 16px; }
+    .certification-content { padding: 10px 16px 6px; }
+    .certification-metric { padding-top: 5px; padding-bottom: 5px; }
     .legend-list { font-size: 12px; }
+    .legend-list li { margin: 4px 0; }
     .farming-content { grid-template-columns: 31% minmax(0, 1fr); }
     .farming-total { width: 100%; }
     .farming-total strong { font-size: 30px; }
