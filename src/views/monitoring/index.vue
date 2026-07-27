@@ -1916,7 +1916,7 @@ export default {
 }
 
 /* ---- 排行面板 ---- */
-.map-panel {
+.da-wrap .map-panel {
     position: absolute;
     top: 10px; right: 10px;
     width: 248px;
