@@ -15,12 +15,6 @@ const router = createRouter({
       component: () => import('../views/home/index.vue')
     },
     {
-      path: '/how-to-use',
-      name: 'howToUse',
-      meta:{breadcrumbsName:'How to use'},
-      component: () => import('../views/howToUse/index.vue')
-    },
-    {
       path: '/login',
       name: 'login',
       component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue')
@@ -32,10 +26,10 @@ const router = createRouter({
     //   component: () => import('../views/overview/index.vue')
     // },
     {
-      path: '/dataAnalysis',
-      name: 'dataAnalysis',
+      path: '/dataAnalysis1',
+      name: 'dataAnalysis1',
       meta:{breadcrumbsName:'数据分析'},
-      component: () => import('../views/dataAnalysis/index.vue')
+      component: () => import('../views/dataAnalysis1/index.vue')
     },
     {
       path: '/assets',
