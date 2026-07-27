@@ -78,22 +78,23 @@ const mockDashboard = {
     },
     map: {
         values: [
-            { name: '北京', value: 38640 }, { name: '天津', value: 26710 },
-            { name: '河北', value: 78120 }, { name: '山西', value: 43280 },
-            { name: '内蒙古', value: 31690 }, { name: '辽宁', value: 55820 },
-            { name: '吉林', value: 41280 }, { name: '黑龙江', value: 62540 },
-            { name: '上海', value: 48150 }, { name: '江苏', value: 82660 },
-            { name: '浙江', value: 75220 }, { name: '安徽', value: 69810 },
-            { name: '福建', value: 52130 }, { name: '江西', value: 48970 },
-            { name: '山东', value: 90850 }, { name: '河南', value: 86190 },
-            { name: '湖北', value: 67380 }, { name: '湖南', value: 64760 },
-            { name: '广东', value: 95120 }, { name: '广西', value: 57420 },
-            { name: '海南', value: 23810 }, { name: '重庆', value: 45980 },
-            { name: '四川', value: 93670 }, { name: '贵州', value: 39240 },
-            { name: '云南', value: 50630 }, { name: '西藏', value: 12890 },
-            { name: '陕西', value: 61570 }, { name: '甘肃', value: 34780 },
-            { name: '青海', value: 18240 }, { name: '宁夏', value: 21670 },
-            { name: '新疆', value: 44630 }
+            { name: '北京', value: 88000 }, { name: '天津', value: 18000 },
+            { name: '河北', value: 126000 }, { name: '山西', value: 43000 },
+            { name: '内蒙古', value: 8000 }, { name: '辽宁', value: 73500 },
+            { name: '吉林', value: 26000 }, { name: '黑龙江', value: 112000 },
+            { name: '上海', value: 96000 }, { name: '江苏', value: 145000 },
+            { name: '浙江', value: 118000 }, { name: '安徽', value: 58000 },
+            { name: '福建', value: 36000 }, { name: '江西', value: 47000 },
+            { name: '山东', value: 160000 }, { name: '河南', value: 133000 },
+            { name: '湖北', value: 84000 }, { name: '湖南', value: 69000 },
+            { name: '广东', value: 178000 }, { name: '广西', value: 51000 },
+            { name: '海南', value: 12000 }, { name: '重庆', value: 62000 },
+            { name: '四川', value: 152000 }, { name: '贵州', value: 33000 },
+            { name: '云南', value: 77000 }, { name: '西藏', value: 6000 },
+            { name: '陕西', value: 55000 }, { name: '甘肃', value: 24000 },
+            { name: '青海', value: 9000 }, { name: '宁夏', value: 15000 },
+            { name: '新疆', value: 44000 }, { name: '台湾', value: 29000 },
+            { name: '香港', value: 101000 }, { name: '澳门', value: 23000 }
         ]
     }
 };

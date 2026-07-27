@@ -29,17 +29,17 @@
             </section>
 
             <section class="map-panel">
-                <div class="map-location">
-                    <span>当前位置：</span>
-                    <button
-                        v-for="(route, index) in mapRoutes"
-                        :key="`${route.adcode}-${index}`"
-                        type="button"
-                        :disabled="index === mapRoutes.length - 1"
-                        @click="goToMapRoute(index)"
-                    >{{ route.displayName }}<em v-if="index < mapRoutes.length - 1">/</em></button>
-                </div>
                 <div class="map-stage">
+                    <div class="map-location">
+                        <span>当前位置：</span>
+                        <button
+                            v-for="(route, index) in mapRoutes"
+                            :key="`${route.adcode}-${index}`"
+                            type="button"
+                            :disabled="index === mapRoutes.length - 1"
+                            @click="goToMapRoute(index)"
+                        >{{ route.displayName }}<em v-if="index < mapRoutes.length - 1">/</em></button>
+                    </div>
                     <div ref="mapRef" class="china-map chart" aria-label="全国主体分布地图，点击行政区可下钻"></div>
                     <div class="map-pedestal" aria-hidden="true"></div>
                 </div>
@@ -122,8 +122,17 @@
 import { nextTick, onBeforeUnmount, onMounted, reactive, ref } from 'vue';
 import * as echarts from 'echarts';
 import { getDataAnalysisDashboard, getDataAnalysisRegion } from '@/y_api/dataAnalysis';
+import { SHOW_CHINA_MAP_NINE_DASH_LINE } from '@/config/dataAnalysis';
 
 const CHART_COLORS = ['#31d3ae', '#f19a42', '#2faeea', '#f8ef51', '#51dce6'];
+const MAP_COLOR_PIECES = [
+    { lte: 20000, color: '#064579' },
+    { gt: 20000, lte: 45000, color: '#08669c' },
+    { gt: 45000, lte: 70000, color: '#0787bd' },
+    { gt: 70000, lte: 100000, color: '#08a8d4' },
+    { gt: 100000, lte: 140000, color: '#0bc6df' },
+    { gt: 140000, color: '#3cdeea' }
+];
 const PROVINCE_FILES = {
     北京: 'beijing', 天津: 'tianjin', 河北: 'hebei', 山西: 'shanxi', 内蒙古: 'neimenggu',
     辽宁: 'liaoning', 吉林: 'jilin', 黑龙江: 'heilongjiang', 上海: 'shanghai', 江苏: 'jiangsu',
@@ -264,6 +273,16 @@ export default {
                     if (!response.ok) throw new Error(`地图资源加载失败: ${response.status}`);
                     geo = await response.json();
                 }
+                if (route.level === 'country' && !SHOW_CHINA_MAP_NINE_DASH_LINE) {
+                    geo = {
+                        ...geo,
+                        // ECharts will still add its complete South China Sea inset for maps named "china".
+                        features: (geo.features || []).filter(feature => {
+                            const properties = feature.properties || {};
+                            return properties.adchar !== 'JD' && properties.adcode !== '100000_JD';
+                        })
+                    };
+                }
                 if (destroyed || !mapChart) return;
                 currentGeo = geo;
                 let remoteValues = [];
@@ -278,6 +297,12 @@ export default {
                 const mapOption = {
                     animationDurationUpdate: 450,
                     tooltip: { ...tooltip, formatter: params => `${params.name}<br/>主体数：${formatNumber(params.value)} 家` },
+                    visualMap: {
+                        type: 'piecewise',
+                        show: false,
+                        dimension: 0,
+                        pieces: MAP_COLOR_PIECES
+                    },
                     series: [{
                         type: 'map', map: route.mapName, roam: true,
                         zoom: route.level === 'country' ? 1.08 : .95,
@@ -290,14 +315,6 @@ export default {
                         select: { disabled: true }, data: values
                     }]
                 };
-                if (route.level !== 'country') {
-                    mapOption.visualMap = {
-                        show: false,
-                        min: 0,
-                        max: Math.max(...values.map(item => item.value), 1),
-                        inRange: { color: ['#079bd5', '#0ab9e7', '#22cef1'] }
-                    };
-                }
                 mapChart.setOption(mapOption, true);
             } catch (error) {
                 if (route.fallbackGeo) {
@@ -397,14 +414,14 @@ export default {
     width: 100%;
     height: 100%;
     min-height: 0;
-    padding: 30px 30px 44px;
+    padding: 18px 20px 22px;
     display: grid;
     grid-template-columns: minmax(280px, 24.6%) minmax(520px, 1fr) minmax(280px, 24.6%);
     grid-template-rows: minmax(0, 1.82fr) minmax(0, 1fr);
     grid-template-areas:
         "subject map trace"
         "cert farming product";
-    gap: 28px 30px;
+    gap: 16px 18px;
 }
 
 .screen-panel {
@@ -467,11 +484,11 @@ export default {
 .progress { width: 100%; height: 9px; margin-top: 6px; padding: 2px 5px; background: rgba(10, 49, 73, .95); border: 1px solid rgba(48, 103, 138, .8); transform: skew(-8deg); }
 .progress i { display: block; height: 3px; box-shadow: 0 0 6px currentColor; }
 
-.map-location { height: 40px; flex: 0 0 40px; display: flex; align-items: center; color: #dfe9f2; font-size: 19px; }
+.map-location { position: absolute; top: 8px; left: 8px; z-index: 3; height: 32px; display: flex; align-items: center; color: #dfe9f2; font-size: 19px; }
 .map-location button { padding: 0; border: 0; color: #55cfff; font: inherit; background: transparent; cursor: pointer; }
 .map-location button:disabled { color: #fff; cursor: default; }
 .map-location em { padding: 0 6px; color: #7194ae; font-style: normal; }
-.map-stage { flex: 1; min-height: 0; display: flex; flex-direction: column; align-items: stretch; }
+.map-stage { position: relative; width: 100%; height: 100%; min-height: 0; display: flex; flex-direction: column; align-items: stretch; }
 .china-map { flex: 1; width: 100%; z-index: 1; }
 .map-pedestal { height: 78px; margin: -52px 6% 0; border-radius: 50%; background: repeating-radial-gradient(ellipse, rgba(24, 183, 238, .32) 0 2px, rgba(7, 55, 91, .12) 4px 11px, transparent 13px 20px); border-bottom: 2px solid rgba(29, 151, 207, .32); transform: perspective(120px) rotateX(42deg); }
 
@@ -528,8 +545,8 @@ export default {
 .data-error { padding: 8px 18px; color: #ffd0d0; background: rgba(130, 23, 39, .88); text-align: center; }
 .loading-state { min-height: 100%; display: flex; align-items: center; justify-content: center; color: #5adcea; font-size: 20px; }
 
-@media (max-width: 1500px) {
-    .dashboard-grid { padding: 20px 18px 28px; gap: 18px; grid-template-columns: minmax(270px, 24%) minmax(540px, 1fr) minmax(270px, 24%); }
+@media (max-width: 1600px) {
+    .dashboard-grid { padding: 10px 10px 12px; gap: 10px; grid-template-columns: minmax(270px, 24%) minmax(540px, 1fr) minmax(270px, 24%); }
     .panel-heading h2 { font-size: 18px; }
     .subject-overview { padding-left: 9px; padding-right: 9px; }
     .metric-box strong, .subject-category > strong { font-size: 26px; }
