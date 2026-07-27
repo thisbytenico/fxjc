@@ -125,6 +125,15 @@ import { getDataAnalysisDashboard, getDataAnalysisRegion } from '@/y_api/dataAna
 import { SHOW_CHINA_MAP_NINE_DASH_LINE } from '@/config/dataAnalysis';
 
 const CHART_COLORS = ['#31d3ae', '#f19a42', '#2faeea', '#f8ef51', '#51dce6'];
+const CHINA_MAP_VIEW = {
+    center: [104.3, 34.4],
+    zoom: 1.2
+};
+const REGION_MAP_VIEW = {
+    zoom: .9,
+    layoutCenter: ['50%', '46%'],
+    layoutSize: '90%'
+};
 const MAP_COLOR_PIECES = [
     { lte: 20000, color: '#064579' },
     { gt: 20000, lte: 45000, color: '#08669c' },
@@ -258,6 +267,36 @@ export default {
             });
         };
 
+        const getGeoBoundsCenter = geo => {
+            let minX = Infinity;
+            let maxX = -Infinity;
+            let minY = Infinity;
+            let maxY = -Infinity;
+            const includePoint = point => {
+                if (!Array.isArray(point) || typeof point[0] !== 'number' || typeof point[1] !== 'number') return;
+                minX = Math.min(minX, point[0]);
+                maxX = Math.max(maxX, point[0]);
+                minY = Math.min(minY, point[1]);
+                maxY = Math.max(maxY, point[1]);
+            };
+            const visitCoordinates = coordinates => {
+                if (!Array.isArray(coordinates)) return;
+                if (typeof coordinates[0] === 'number' && typeof coordinates[1] === 'number') {
+                    includePoint(coordinates);
+                    return;
+                }
+                coordinates.forEach(visitCoordinates);
+            };
+            (geo.features || []).forEach(feature => visitCoordinates(feature.geometry?.coordinates));
+            if (!Number.isFinite(minX)) {
+                (geo.features || []).forEach(feature => {
+                    const properties = feature.properties || {};
+                    includePoint(properties.centroid || properties.cp);
+                });
+            }
+            return Number.isFinite(minX) ? [(minX + maxX) / 2, (minY + maxY) / 2] : undefined;
+        };
+
         const mapUrl = route => {
             if (route.url) return route.url;
             if (route.level === 'province') return `/lib/echart/map/province/${PROVINCE_FILES[route.displayName]}.json`;
@@ -293,6 +332,8 @@ export default {
                     remoteValues = response && response.values ? response.values : [];
                 }
                 const values = regionValues(geo, remoteValues);
+                const isCountry = route.level === 'country';
+                const mapCenter = isCountry ? CHINA_MAP_VIEW.center : getGeoBoundsCenter(geo);
                 echarts.registerMap(route.mapName, geo);
                 const mapOption = {
                     animationDurationUpdate: 450,
@@ -305,9 +346,10 @@ export default {
                     },
                     series: [{
                         type: 'map', map: route.mapName, roam: true,
-                        zoom: route.level === 'country' ? 1.08 : .95,
-                        layoutCenter: ['50%', '51%'],
-                        layoutSize: route.level === 'country' ? '114%' : '96%',
+                        center: mapCenter,
+                        zoom: isCountry ? CHINA_MAP_VIEW.zoom : REGION_MAP_VIEW.zoom,
+                        layoutCenter: isCountry ? ['50%', '50%'] : REGION_MAP_VIEW.layoutCenter,
+                        layoutSize: isCountry ? '100%' : REGION_MAP_VIEW.layoutSize,
                         scaleLimit: { min: .8, max: 4 },
                         label: { show: true, color: '#f5fbff', fontSize: route.level === 'country' ? 10 : 12, textShadowColor: '#024d79', textShadowBlur: 3 },
                         itemStyle: { areaColor: '#08a9dd', borderColor: '#b8f4ff', borderWidth: 1.2, shadowColor: 'rgba(0,190,255,.65)', shadowBlur: 9 },
@@ -316,6 +358,11 @@ export default {
                     }]
                 };
                 mapChart.setOption(mapOption, true);
+                if (!isCountry) {
+                    const decodedGeo = echarts.getMap(route.mapName)?.geoJSON;
+                    const preciseCenter = getGeoBoundsCenter(decodedGeo || geo);
+                    if (preciseCenter) mapChart.setOption({ series: [{ center: preciseCenter }] });
+                }
             } catch (error) {
                 if (route.fallbackGeo) {
                     route.geo = route.fallbackGeo;
@@ -488,9 +535,9 @@ export default {
 .map-location button { padding: 0; border: 0; color: #55cfff; font: inherit; background: transparent; cursor: pointer; }
 .map-location button:disabled { color: #fff; cursor: default; }
 .map-location em { padding: 0 6px; color: #7194ae; font-style: normal; }
-.map-stage { position: relative; width: 100%; height: 100%; min-height: 0; display: flex; flex-direction: column; align-items: stretch; }
-.china-map { flex: 1; width: 100%; z-index: 1; }
-.map-pedestal { height: 78px; margin: -52px 6% 0; border-radius: 50%; background: repeating-radial-gradient(ellipse, rgba(24, 183, 238, .32) 0 2px, rgba(7, 55, 91, .12) 4px 11px, transparent 13px 20px); border-bottom: 2px solid rgba(29, 151, 207, .32); transform: perspective(120px) rotateX(42deg); }
+.map-stage { position: relative; width: 100%; height: 100%; min-height: 0; overflow: hidden; display: flex; flex-direction: column; align-items: stretch; }
+.china-map { position: relative; z-index: 1; flex: none; width: 100%; height: 100%; }
+.map-pedestal { position: absolute; right: 6%; bottom: 2px; left: 6%; z-index: 0; height: 78px; pointer-events: none; border-radius: 50%; background: repeating-radial-gradient(ellipse, rgba(24, 183, 238, .32) 0 2px, rgba(7, 55, 91, .12) 4px 11px, transparent 13px 20px); border-bottom: 2px solid rgba(29, 151, 207, .32); transform: perspective(120px) rotateX(42deg); }
 
 .trace-content { flex: 1; min-height: 0; padding: 12px 14px 10px; display: grid; grid-template-rows: 73px 73px minmax(0, 1fr) 73px minmax(0, 1fr); gap: 10px; }
 .trace-card { min-height: 0; padding: 7px 13px; display: flex; align-items: center; justify-content: space-between; border: 1px solid #48708d; border-radius: 7px; background: rgba(5, 20, 37, .88); box-shadow: inset 0 0 12px rgba(71, 152, 197, .1); }
