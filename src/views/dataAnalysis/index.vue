@@ -251,21 +251,21 @@ export default {
             initChart(batchRankRef.value, {
                 tooltip: { ...tooltip, trigger: 'axis', axisPointer: { type: 'shadow' } },
                 grid: { left: 8, right: 12, top: 10, bottom: 4, containLabel: true },
-                xAxis: { type: 'value', max: 180000, splitNumber: 6, axisLabel: { color: '#526379', fontSize: 9 }, splitLine: { lineStyle: { color: 'rgba(105,140,175,.22)' } } },
+                xAxis: { type: 'value', max: 180000, splitNumber: 6, axisLabel: { color: '#526379', fontSize: 9, formatter: value => String(value) }, splitLine: { lineStyle: { color: 'rgba(105,140,175,.22)' } } },
                 yAxis: { type: 'category', inverse: true, data: rank.map(item => item.name), axisLabel: axisText, axisTick: { show: false }, axisLine: { show: false } },
                 series: [
-                    { name: '生产批次', type: 'bar', stack: 'total', barWidth: 12, itemStyle: { color: '#269fdb' }, label: { show: true, position: 'insideRight', color: '#fff', fontSize: 8 }, data: rank.map(item => item.primary) },
-                    { name: '交易批次', type: 'bar', stack: 'total', barWidth: 12, itemStyle: { color: '#e24a78' }, label: { show: true, position: 'insideRight', color: '#fff', fontSize: 8 }, data: rank.map(item => item.secondary) }
+                    { name: '生产批次', type: 'bar', stack: 'total', barWidth: 12, itemStyle: { color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{ offset: 0, color: '#173b5f' }, { offset: 1, color: '#2ca3dc' }]) }, label: { show: true, position: 'insideRight', color: '#fff', fontSize: 7 }, data: rank.map(item => item.primary) },
+                    { name: '交易批次', type: 'bar', stack: 'total', barWidth: 12, itemStyle: { color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{ offset: 0, color: '#9a345f' }, { offset: 1, color: '#e24a78' }]) }, label: { show: true, position: 'insideRight', color: '#fff', fontSize: 7 }, data: rank.map(item => item.secondary) }
                 ]
             });
 
             const printRank = data.traceability.printRank;
             initChart(printRankRef.value, {
                 tooltip: { ...tooltip, trigger: 'axis', axisPointer: { type: 'shadow' } },
-                grid: { left: 8, right: 40, top: 8, bottom: 4, containLabel: true },
-                xAxis: { type: 'value', max: 100000, splitNumber: 5, axisLabel: { color: '#526379', fontSize: 9 }, splitLine: { lineStyle: { color: 'rgba(105,140,175,.22)' } } },
+                grid: { left: 8, right: 12, top: 8, bottom: 4, containLabel: true },
+                xAxis: { type: 'value', max: 180000, splitNumber: 6, axisLabel: { color: '#526379', fontSize: 9, formatter: value => String(value) }, splitLine: { lineStyle: { color: 'rgba(105,140,175,.22)' } } },
                 yAxis: { type: 'category', inverse: true, data: printRank.map(item => item.name), axisLabel: axisText, axisTick: { show: false }, axisLine: { show: false } },
-                series: [{ type: 'bar', barWidth: 12, data: printRank.map(item => item.value), itemStyle: { color: '#2bbac7', borderRadius: [0, 7, 7, 0] }, label: { show: true, position: 'insideRight', color: '#fff', fontSize: 8 } }]
+                series: [{ type: 'bar', barWidth: 12, data: printRank.map(item => item.value), itemStyle: { color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{ offset: 0, color: 'rgba(20,75,79,.45)' }, { offset: .58, color: '#188d96' }, { offset: 1, color: '#38bfcb' }]), borderRadius: [0, 7, 7, 0] }, label: { show: true, position: 'insideRight', color: '#fff', fontSize: 7 } }]
             });
 
             initChart(certificationRef.value, pieOption(data.certifications.industry, CHART_COLORS, ['48%', '70%']));
