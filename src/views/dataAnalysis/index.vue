@@ -135,12 +135,12 @@ const REGION_MAP_VIEW = {
     layoutSize: '90%'
 };
 const MAP_COLOR_PIECES = [
-    { lte: 20000, color: '#064579' },
-    { gt: 20000, lte: 45000, color: '#08669c' },
-    { gt: 45000, lte: 70000, color: '#0787bd' },
-    { gt: 70000, lte: 100000, color: '#08a8d4' },
-    { gt: 100000, lte: 140000, color: '#0bc6df' },
-    { gt: 140000, color: '#3cdeea' }
+    { lte: 20000, color: '#0aa6df' },
+    { gt: 20000, lte: 45000, color: '#0b96d7' },
+    { gt: 45000, lte: 70000, color: '#08799f' },
+    { gt: 70000, lte: 100000, color: '#0a8fce' },
+    { gt: 100000, lte: 140000, color: '#0aa2dd' },
+    { gt: 140000, color: '#0798d3' }
 ];
 const PROVINCE_FILES = {
     北京: 'beijing', 天津: 'tianjin', 河北: 'hebei', 山西: 'shanxi', 内蒙古: 'neimenggu',
