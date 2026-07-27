@@ -104,7 +104,14 @@
                 <div class="product-content">
                     <div class="product-top">
                         <div class="product-metric"><strong>{{ formatNumber(dashboard.products.varieties) }}</strong><span>追溯产品种类(种)</span></div>
-                        <div ref="productPieRef" class="product-pie chart"></div>
+                        <div class="product-distribution">
+                            <div ref="productPieRef" class="product-pie chart"></div>
+                            <ul class="product-legend">
+                                <li v-for="(item, index) in dashboard.products.distribution" :key="item.name">
+                                    <i :class="`product-legend-${index}`"></i><span>{{ item.name }}：{{ item.value }}种</span>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="product-bottom">
                         <div class="product-metric query-metric"><strong>{{ formatNumber(dashboard.products.queries) }}</strong><span>消费者查询总数(次)</span></div>
@@ -555,7 +562,7 @@ export default {
     background: #3289dc;
 }
 .panel-heading h2 { margin: 0; font-size: 21px; line-height: 1; letter-spacing: 0; text-shadow: 0 0 8px rgba(75, 176, 255, .45); }
-.panel-heading span { width: 26px; height: 1px; margin-left: auto; background: #ffeb54; }
+.panel-heading span { width: 26px; height: 1px; margin-left: auto; background: #ffeb54; display: none; }
 
 .chart { min-width: 0; min-height: 0; }
 .subject-overview { flex: 0 0 190px; padding: 25px 13px 2px; display: flex; align-items: center; gap: 8px; }
@@ -597,9 +604,11 @@ export default {
 .trace-card dl div { display: flex; flex-direction: column; }
 .trace-card dt { font-size: 18px; font-weight: 700; }
 .trace-card dd { margin: 2px 0 0; color: #bdc9d4; font-size: 14px; white-space: nowrap; }
+.yellow-card { border-color: rgba(220, 225, 133, .62); border-width: 0.5px; box-shadow: inset 0 0 18px rgba(239, 233, 75, .15), 0 0 0px rgba(235, 227, 74, .48), 0 0 15px rgba(224, 218, 64, .3); }
 .yellow-card strong { color: #f4ef38; }
+.blue-card { border-color: rgba(83, 175, 219, .64); border-width: 0.5px; box-shadow: inset 0 0 18px rgba(48, 173, 232, .16), 0 0 0px rgba(49, 174, 232, .5), 0 0 15px rgba(39, 159, 221, .32); }
 .blue-card strong { color: #24aeea; }
-.cyan-card { border-color: #168c9c; }
+.cyan-card { border-color: rgba(43, 220, 225, .66); border-width: 0.5px; box-shadow: inset 0 0 18px rgba(39, 224, 226, .16), 0 0 0px rgba(35, 221, 225, .52), 0 0 16px rgba(27, 202, 211, .34); }
 .cyan-card strong { color: #44e0e5; }
 .batch-chart, .print-chart { width: 100%; height: 100%; }
 
@@ -644,11 +653,20 @@ export default {
 .news-board li span { overflow: hidden; text-overflow: ellipsis; }
 
 .product-content { flex: 1; min-height: 0; padding: 10px 14px; display: grid; grid-template-rows: 1fr 1fr; gap: 5px; }
-.product-top, .product-bottom { min-height: 0; display: grid; grid-template-columns: 48% 52%; align-items: center; }
-.product-metric { min-width: 0; display: flex; flex-direction: column; align-items: center; text-align: center; }
-.product-metric strong { color: #2daef1; font: 700 30px/1 "Arial Narrow", Arial, sans-serif; }
-.product-metric span { margin-top: 6px; font-size: 17px; font-weight: 700; white-space: nowrap; }
+.product-top, .product-bottom { min-height: 0; display: grid; grid-template-columns: 46% 54%; align-items: center; }
+.product-metric { position: relative; min-width: 0; height: 100%; 
+    // padding-bottom: 6px;
+     display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+.product-metric::after { content: ''; position: absolute; right: 4%; bottom: 3px; left: 4%; height: 23px; clip-path: polygon(12% 0, 88% 0, 100% 100%, 0 100%); background: linear-gradient(90deg, transparent, rgba(47, 192, 230, .5), transparent) top center / 72% 1px no-repeat, repeating-linear-gradient(168deg, transparent 0 7px, rgba(31, 133, 169, .14) 8px 9px), linear-gradient(180deg, rgba(11, 58, 82, .12), rgba(16, 92, 119, .48)); border-bottom: 1px solid rgba(39, 143, 178, .35); box-shadow: inset 0 -7px 10px rgba(24, 115, 148, .13); }
+.product-metric strong { position: relative; z-index: 1; color: #2daef1; font: 700 30px/1 Arial, sans-serif; }
+.product-metric span { position: relative; z-index: 1; margin-top: 6px; font-size: 17px; font-weight: 700; white-space: nowrap; }
+.product-distribution { min-width: 0; height: 100%; display: grid; grid-template-columns: 58% 42%; align-items: center; }
 .product-pie, .query-chart { width: 100%; height: 100%; }
+.product-legend { min-width: 0; margin: 0; padding: 0; list-style: none; font-size: 12px; }
+.product-legend li { margin: 7px 0; display: flex; align-items: center; white-space: nowrap; }
+.product-legend i { width: 8px; height: 5px; margin-right: 5px; flex: 0 0 8px; background: #31d3ae; }
+.product-legend .product-legend-1 { background: #35b7f0; }
+.product-legend .product-legend-2 { background: #ffcc72; }
 .query-metric strong { color: #47dce5; font-size: 28px; }
 
 .data-error { padding: 8px 18px; color: #ffd0d0; background: rgba(130, 23, 39, .88); text-align: center; }
@@ -675,5 +693,7 @@ export default {
     .farming-total span { font-size: 16px; }
     .news-board li { font-size: 13px; }
     .product-metric strong, .query-metric strong { font-size: 24px; }
+    .product-legend { font-size: 10px; }
+    .product-legend li { margin: 5px 0; }
 }
 </style>
