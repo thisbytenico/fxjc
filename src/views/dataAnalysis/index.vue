@@ -29,20 +29,12 @@
             </section>
 
             <section class="map-panel">
-                <div class="map-stage">
-                    <div class="map-location">
-                        <span>当前位置：</span>
-                        <button
-                            v-for="(route, index) in mapRoutes"
-                            :key="`${route.adcode}-${index}`"
-                            type="button"
-                            :disabled="index === mapRoutes.length - 1"
-                            @click="goToMapRoute(index)"
-                        >{{ route.displayName }}<em v-if="index < mapRoutes.length - 1">/</em></button>
-                    </div>
-                    <div ref="mapRef" class="china-map chart" aria-label="全国主体分布地图，点击行政区可下钻"></div>
-                    <div class="map-pedestal" aria-hidden="true"></div>
-                </div>
+                <RegionDrilldownMap
+                    :data="dashboard.map.values"
+                    :load-region-data="getDataAnalysisRegion"
+                    :show-nine-dash-line="showChinaMapNineDashLine"
+                    @error="handleMapError"
+                />
             </section>
 
             <section class="screen-panel trace-panel">
@@ -126,41 +118,22 @@
 </template>
 
 <script>
-import { nextTick, onBeforeUnmount, onMounted, reactive, ref } from 'vue';
+import { nextTick, onBeforeUnmount, onMounted, ref } from 'vue';
 import * as echarts from 'echarts';
+import RegionDrilldownMap from '@/components/Business/RegionDrilldownMap.vue';
 import { getDataAnalysisDashboard, getDataAnalysisRegion } from '@/y_api/dataAnalysis';
 import { SHOW_CHINA_MAP_NINE_DASH_LINE } from '@/config/dataAnalysis';
 
 const CHART_COLORS = ['#31d3ae', '#f19a42', '#2faeea', '#f8ef51', '#51dce6'];
-const CHINA_MAP_VIEW = {
-    center: [104.3, 34.4],
-    zoom: 1.2
-};
-const REGION_MAP_VIEW = {
-    zoom: .9,
-    layoutCenter: ['50%', '46%'],
-    layoutSize: '90%'
-};
-const MAP_COLORS =['#0d2b5e', '#0e4a8e', '#1565c0', '#1976d2', '#42a5f5', '#64b5f6'];
-
-const PROVINCE_FILES = {
-    北京: 'beijing', 天津: 'tianjin', 河北: 'hebei', 山西: 'shanxi', 内蒙古: 'neimenggu',
-    辽宁: 'liaoning', 吉林: 'jilin', 黑龙江: 'heilongjiang', 上海: 'shanghai', 江苏: 'jiangsu',
-    浙江: 'zhejiang', 安徽: 'anhui', 福建: 'fujian', 江西: 'jiangxi', 山东: 'shandong',
-    河南: 'henan', 湖北: 'hubei', 湖南: 'hunan', 广东: 'guangdong', 广西: 'guangxi',
-    海南: 'hainan', 重庆: 'chongqing', 四川: 'sichuan', 贵州: 'guizhou', 云南: 'yunnan',
-    西藏: 'xizang', 陕西: 'shanxi1', 甘肃: 'gansu', 青海: 'qinghai', 宁夏: 'ningxia',
-    新疆: 'xinjiang', 香港: 'xianggang', 澳门: 'aomen'
-};
 
 export default {
     name: 'DataAnalysis',
+    components: { RegionDrilldownMap },
     setup() {
         const dashboard = ref(null);
         const loading = ref(true);
         const errorMessage = ref('');
         const subjectPieRef = ref(null);
-        const mapRef = ref(null);
         const batchRankRef = ref(null);
         const printRankRef = ref(null);
         const certificationRef = ref(null);
@@ -168,12 +141,6 @@ export default {
         const productPieRef = ref(null);
         const queryRankRef = ref(null);
         const chartInstances = [];
-        const mapRoutes = reactive([
-            { level: 'country', displayName: '全国', mapName: 'china', adcode: '100000', url: '/lib/echart/map/china.json' }
-        ]);
-        let mapChart = null;
-        let currentGeo = null;
-        let destroyed = false;
 
         const formatNumber = value => Number(value || 0).toLocaleString('en-US');
         const tooltip = {
@@ -289,160 +256,8 @@ export default {
             });
         };
 
-        const regionValues = (geo, suppliedValues = []) => {
-            const supplied = new Map(suppliedValues.map(item => [item.name, item.value]));
-            return (geo.features || []).map((feature, index) => {
-                const props = feature.properties || {};
-                const seed = Number(String(props.adcode || feature.id || index).slice(-5));
-                return { name: props.name, value: supplied.get(props.name) || 50 + ((seed * 37 + index * 7919) % 300) };
-            });
-        };
-
-        const getGeoBoundsCenter = geo => {
-            let minX = Infinity;
-            let maxX = -Infinity;
-            let minY = Infinity;
-            let maxY = -Infinity;
-            const includePoint = point => {
-                if (!Array.isArray(point) || typeof point[0] !== 'number' || typeof point[1] !== 'number') return;
-                minX = Math.min(minX, point[0]);
-                maxX = Math.max(maxX, point[0]);
-                minY = Math.min(minY, point[1]);
-                maxY = Math.max(maxY, point[1]);
-            };
-            const visitCoordinates = coordinates => {
-                if (!Array.isArray(coordinates)) return;
-                if (typeof coordinates[0] === 'number' && typeof coordinates[1] === 'number') {
-                    includePoint(coordinates);
-                    return;
-                }
-                coordinates.forEach(visitCoordinates);
-            };
-            (geo.features || []).forEach(feature => visitCoordinates(feature.geometry?.coordinates));
-            if (!Number.isFinite(minX)) {
-                (geo.features || []).forEach(feature => {
-                    const properties = feature.properties || {};
-                    includePoint(properties.centroid || properties.cp);
-                });
-            }
-            return Number.isFinite(minX) ? [(minX + maxX) / 2, (minY + maxY) / 2] : undefined;
-        };
-
-        const mapUrl = route => {
-            if (route.url) return route.url;
-            if (route.level === 'province') return `/lib/echart/map/province/${PROVINCE_FILES[route.displayName]}.json`;
-            if (route.level === 'city') return `/lib/echart/map/city/${route.adcode}.json`;
-            return '';
-        };
-
-        const renderMap = async route => {
-            try {
-                let geo = route.geo;
-                if (!geo) {
-                    const response = await fetch(mapUrl(route));
-                    if (!response.ok) throw new Error(`地图资源加载失败: ${response.status}`);
-                    geo = await response.json();
-                }
-                if (route.level === 'country' && !SHOW_CHINA_MAP_NINE_DASH_LINE) {
-                    geo = {
-                        ...geo,
-                        // ECharts will still add its complete South China Sea inset for maps named "china".
-                        features: (geo.features || []).filter(feature => {
-                            const properties = feature.properties || {};
-                            return properties.adchar !== 'JD' && properties.adcode !== '100000_JD';
-                        })
-                    };
-                }
-                if (destroyed || !mapChart) return;
-                currentGeo = geo;
-                let remoteValues = [];
-                if (route.level === 'country') {
-                    remoteValues = dashboard.value.map.values;
-                } else {
-                    const response = await getDataAnalysisRegion({ adcode: route.adcode, level: route.level });
-                    remoteValues = response && response.values ? response.values : [];
-                }
-                const values = regionValues(geo, remoteValues);
-                const maxValue = Math.max(...values.map(item => Number(item.value) || 0), 1);
-                const isCountry = route.level === 'country';
-                const mapCenter = isCountry ? CHINA_MAP_VIEW.center : getGeoBoundsCenter(geo);
-                echarts.registerMap(route.mapName, geo);
-                const mapOption = {
-                    animationDurationUpdate: 450,
-                    tooltip: { ...tooltip, formatter: params => `${params.name}<br/>主体数：${formatNumber(params.value)} 家` },
-                    visualMap: {
-                        type: 'continuous',
-                        show: false,
-                        min: 0,
-                        max: maxValue,
-                        dimension: 0,
-                        inRange: { color: MAP_COLORS }
-                    },
-                    series: [{
-                        type: 'map', map: route.mapName, roam: true,
-                        center: mapCenter,
-                        zoom: isCountry ? CHINA_MAP_VIEW.zoom : REGION_MAP_VIEW.zoom,
-                        layoutCenter: isCountry ? ['50%', '50%'] : REGION_MAP_VIEW.layoutCenter,
-                        layoutSize: isCountry ? '100%' : REGION_MAP_VIEW.layoutSize,
-                        scaleLimit: { min: .8, max: 4 },
-                        label: { show: true, color: '#f5fbff', fontSize: route.level === 'country' ? 10 : 12, textShadowColor: '#024d79', textShadowBlur: 3 },
-                        itemStyle: { areaColor: '#0d2b5e', 
-                        borderColor: 'rgba(0,180,255,.4)',//'rgba(190, 240, 255, 0.85)'
-                        borderWidth: .8 },
-                        emphasis: { label: { color: '#fff' }, itemStyle: { areaColor: '#00b4ff' } },
-                        select: { disabled: true }, data: values
-                    }]
-                };
-                mapChart.setOption(mapOption, true);
-                if (!isCountry) {
-                    const decodedGeo = echarts.getMap(route.mapName)?.geoJSON;
-                    const preciseCenter = getGeoBoundsCenter(decodedGeo || geo);
-                    if (preciseCenter) mapChart.setOption({ series: [{ center: preciseCenter }] });
-                }
-            } catch (error) {
-                if (route.fallbackGeo) {
-                    route.geo = route.fallbackGeo;
-                    delete route.url;
-                    renderMap(route);
-                    return;
-                }
-                errorMessage.value = error.message || '地图数据加载失败';
-            }
-        };
-
-        const drillMap = params => {
-            if (!params || !params.name || !currentGeo) return;
-            const current = mapRoutes[mapRoutes.length - 1];
-            if (current.level === 'district') return;
-            const feature = (currentGeo.features || []).find(item => (item.properties || {}).name === params.name);
-            if (!feature) return;
-            const props = feature.properties || {};
-            const adcode = String(props.adcode || feature.id || '');
-            if (current.level === 'country' && !PROVINCE_FILES[props.name]) return;
-            const nextLevel = current.level === 'country' ? 'province' : current.level === 'province' ? 'city' : 'district';
-            const singleGeo = { type: 'FeatureCollection', features: [feature] };
-            const route = {
-                level: nextLevel,
-                displayName: props.name,
-                mapName: `${nextLevel}-${adcode}`,
-                adcode,
-                fallbackGeo: singleGeo,
-                geo: nextLevel === 'district' ? singleGeo : undefined
-            };
-            mapRoutes.push(route);
-            renderMap(route);
-        };
-
-        const goToMapRoute = index => {
-            if (index >= mapRoutes.length - 1) return;
-            mapRoutes.splice(index + 1);
-            renderMap(mapRoutes[index]);
-        };
-
-        const initMap = () => {
-            mapChart = initChart(mapRef.value, {});
-            mapChart.on('click', drillMap);
-            renderMap(mapRoutes[0]);
+        const handleMapError = error => {
+            errorMessage.value = error.message || '地图数据加载失败';
         };
 
         onMounted(async () => {
@@ -450,7 +265,6 @@ export default {
                 dashboard.value = await getDataAnalysisDashboard();
                 await nextTick();
                 initCharts();
-                initMap();
                 window.addEventListener('resize', resizeCharts);
             } catch (error) {
                 errorMessage.value = error.message || '数据加载失败，请稍后重试';
@@ -460,15 +274,15 @@ export default {
         });
 
         onBeforeUnmount(() => {
-            destroyed = true;
             window.removeEventListener('resize', resizeCharts);
             chartInstances.forEach(chart => chart && !chart.isDisposed() && chart.dispose());
         });
 
         return {
-            dashboard, loading, errorMessage, formatNumber, mapRoutes, goToMapRoute,
-            subjectPieRef, mapRef, batchRankRef, printRankRef, certificationRef,
-            farmingRef, productPieRef, queryRankRef
+            dashboard, loading, errorMessage, formatNumber, getDataAnalysisRegion, handleMapError,
+            showChinaMapNineDashLine: SHOW_CHINA_MAP_NINE_DASH_LINE,
+            subjectPieRef, batchRankRef, printRankRef, certificationRef, farmingRef,
+            productPieRef, queryRankRef
         };
     }
 };
@@ -601,14 +415,6 @@ export default {
 .active-label b { color: #91aabe; font-weight: normal; }
 .progress { position: relative; z-index: 1; width: calc(100% - 16px); height: 8px; margin-top: 6px; padding: 2px 4px; background: rgba(6, 30, 48, .96); border: 1px solid rgba(48, 103, 138, .8); transform: skew(-8deg); }
 .progress i { display: block; height: 3px; box-shadow: 0 0 6px currentColor; }
-
-.map-location { position: absolute; top: 8px; left: 8px; z-index: 3; height: 32px; display: flex; align-items: center; color: #dfe9f2; font-size: 19px; }
-.map-location button { padding: 0; border: 0; color: #55cfff; font: inherit; background: transparent; cursor: pointer; }
-.map-location button:disabled { color: #fff; cursor: default; }
-.map-location em { padding: 0 6px; color: #7194ae; font-style: normal; }
-.map-stage { position: relative; width: 100%; height: 100%; min-height: 0; overflow: hidden; display: flex; flex-direction: column; align-items: stretch; }
-.china-map { position: relative; z-index: 1; flex: none; width: 100%; height: 100%; }
-.map-pedestal { position: absolute; right: 6%; bottom: 2px; left: 6%; z-index: 0; height: 78px; pointer-events: none; border-radius: 50%; background: repeating-radial-gradient(ellipse, rgba(24, 183, 238, .32) 0 2px, rgba(7, 55, 91, .12) 4px 11px, transparent 13px 20px); border-bottom: 2px solid rgba(29, 151, 207, .32); transform: perspective(120px) rotateX(42deg); }
 
 .trace-content { flex: 1; min-height: 0; padding: 12px 14px 10px; display: grid; grid-template-rows: 73px 73px minmax(0, 1fr) 73px minmax(0, 1fr); gap: 10px; }
 .trace-card { min-height: 0; padding: 7px 13px; display: flex; align-items: center; justify-content: space-between; border: 1px solid #48708d; border-radius: 7px; background: rgba(5, 20, 37, .88); box-shadow: inset 0 0 12px rgba(71, 152, 197, .1); }
