@@ -303,7 +303,7 @@ export default {
             initChart(compositionRef.value, {
                 tooltip: TOOLTIP,
                 legend: {
-                    top: 0,
+                    top: 5,
                     right: 5,
                     itemWidth: 12,
                     itemHeight: 9,
@@ -332,7 +332,7 @@ export default {
                     name: summary.name,
                     type: 'bar',
                     stack: 'total',
-                    barWidth: 13,
+                    barWidth: 10,
                     itemStyle: { color: stackColors[seriesIndex] },
                     data: data.taskComposition.map(item => item.values[seriesIndex])
                 }))
@@ -348,6 +348,7 @@ export default {
                 tooltip: { ...TOOLTIP, trigger: 'item' },
                 series: [{
                     type: 'pie',
+                    roseType: 'radius',
                     radius: ['31%', '65%'],
                     center: ['52%', '54%'],
                     startAngle: 90,
@@ -527,7 +528,7 @@ export default {
 .panel-heading :deep(i::before) { top: 0; background: #1d65ad; }
 .panel-heading :deep(i::after) { bottom: 0; }
 .panel-heading :deep(h2) { min-width: 0; margin: 0; font-size: 21px; line-height: 1; letter-spacing: 0; white-space: nowrap; text-shadow: 0 0 8px rgba(75, 176, 255, .45); }
-.panel-heading :deep(span) { width: 14px; height: 1px; margin-left: auto; background: #ffea4c; }
+.panel-heading :deep(span) { width: 14px; height: 1px; margin-left: auto; background: #ffea4c; display: none; }
 .panel-heading :deep(button) { margin-left: auto; padding: 0; border: 0; color: #f1f5f8; font: 14px/1 "Microsoft YaHei"; background: transparent; cursor: pointer; }
 
 .chart { min-width: 0; min-height: 0; }
@@ -544,9 +545,23 @@ export default {
     box-shadow: 0 0 13px rgba(40, 176, 238, .19);
 }
 
-.summary-metrics article { min-width: 0; display: flex; align-items: baseline; justify-content: space-between; gap: 7px; }
-.summary-metrics span { font-size: 16px; font-style: italic; font-weight: 700; white-space: nowrap; }
-.summary-metrics strong { font: 700 28px/1 Arial, sans-serif; white-space: nowrap; }
+.summary-metrics article { position: relative; z-index: 0; min-width: 0; padding: 0 4px 6px; display: flex; align-items: baseline; justify-content: space-between; gap: 7px; }
+.summary-metrics article::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: -2px;
+    left: 0;
+    z-index: -1;
+    height: 12px;
+    pointer-events: none;
+    background:
+        linear-gradient(90deg, rgba(35, 108, 153, .08), rgba(53, 129, 177, .28) 8%, rgba(116, 199, 245, .58) 50%, rgba(53, 129, 177, .28) 92%, rgba(35, 108, 153, .08)) center 66% / 100% 1px no-repeat,
+        linear-gradient(180deg, rgba(1, 13, 25, .72) 0 48%, rgba(3, 20, 36, .92) 52% 100%);
+    box-shadow: inset 0 -3px 5px rgba(0, 0, 0, .22);
+}
+.summary-metrics span { position: relative; z-index: 1; font-size: 16px; font-style: italic; font-weight: 700; white-space: nowrap; }
+.summary-metrics strong { position: relative; z-index: 1; font: italic 700 28px/1 Arial, sans-serif; white-space: nowrap; }
 .summary-metrics small { margin-left: 2px; font: 12px "Microsoft YaHei"; }
 .composition-chart { flex: 1; width: 100%; }
 
@@ -562,9 +577,9 @@ export default {
 .comparison-content :deep(.comparison-summary strong::after) {
     content: '';
     position: absolute;
-    right: 0;
+    right: -60px;
     bottom: 0;
-    left: 0;
+    left: -60px;
     z-index: -1;
     height: 28px;
     pointer-events: none;
@@ -583,7 +598,7 @@ export default {
 .quarter-panel :deep(.comparison-summary) { justify-content: center; }
 
 .donut-chart { flex: 1; width: 100%; }
-.institution-total { height: 47px; margin: 8px 12px 0; padding: 0 10px; flex: 0 0 47px; display: flex; align-items: center; justify-content: space-between; border: 1px solid #477895; border-radius: 7px; background: rgba(3, 17, 32, .88); }
+.institution-total { height: 47px; margin: 8px 12px 0; padding: 0 10px; flex: 0 0 47px; display: flex; align-items: center; justify-content: space-between; border: 1px solid #5689aa; border-radius: 7px; background: rgba(3, 17, 32, .88); box-shadow: 0 0 9px rgba(73, 168, 225, .38), inset 0 0 10px rgba(59, 144, 199, .14), inset 0 1px 0 rgba(170, 225, 255, .12); }
 .institution-total span { font-size: 17px; font-style: italic; font-weight: 700; white-space: nowrap; }
 .institution-total strong { color: #27baf3; font: 700 30px/1 Arial, sans-serif; white-space: nowrap; }
 .institution-total small { margin-left: 3px; color: #f3f8fd; font: 12px "Microsoft YaHei"; }
