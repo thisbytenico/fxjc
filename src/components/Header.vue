@@ -26,11 +26,15 @@ export default {
         const router = useRouter();
         const navItems = [
             { key: 'traceability', label: '追溯业务', path: '/dataAnalysis' },
-            { key: 'regulatory', label: '监管业务' },
+            { key: 'regulatory', label: '监管业务', path: '/regulatory' },
             { key: 'monitoring', label: '监测业务', path: '/monitoring' },
             { key: 'enforcement', label: '执法业务' }
         ];
-        const tabFromPath = path => path.startsWith('/monitoring') ? 'monitoring' : 'traceability';
+        const tabFromPath = path => {
+            if (path.startsWith('/regulatory')) return 'regulatory';
+            if (path.startsWith('/monitoring')) return 'monitoring';
+            return 'traceability';
+        };
         const activeTab = ref(tabFromPath(route.path));
         const handleTabClick = item => {
             activeTab.value = item.key;

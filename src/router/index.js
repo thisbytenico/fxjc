@@ -38,6 +38,12 @@ const router = createRouter({
       component: () => import('../views/dataAnalysis/index.vue')
     },
     {
+      path: '/regulatory',
+      name: 'regulatory',
+      meta:{breadcrumbsName:'监管业务'},
+      component: () => import('../views/regulatory/index.vue')
+    },
+    {
       path: '/assets',
       name: 'assets',
       // meta:{breadcrumbsName:'资产管理1'},

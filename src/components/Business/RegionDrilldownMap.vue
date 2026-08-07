@@ -363,6 +363,7 @@ export default {
 .map-chart { position: relative; z-index: 1; width: 100%; height: 100%; }
 
 .map-pedestal {
+    display: none;
     position: absolute;
     right: 6%;
     bottom: 2px;

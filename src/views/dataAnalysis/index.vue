@@ -300,11 +300,9 @@ export default {
     color: #f4f9ff;
     font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
     background-color: #06162a;
-    background-image:
-        radial-gradient(circle at 52% 30%, rgba(25, 109, 166, .28), transparent 35%),
-        radial-gradient(circle, rgba(116, 193, 241, .35) 1px, transparent 1.5px),
-        linear-gradient(rgba(4, 21, 41, .5), rgba(4, 18, 35, .92));
-    background-size: auto, 54px 54px, auto;
+    background-image: url(@/assets/images/bg.jpg);
+    background-size: contain;
+    background-position: center;
 }
 
 .dashboard-grid {
