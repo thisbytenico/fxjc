@@ -49,11 +49,11 @@ const mockDashboard = {
     newInstitutions: {
         total: 627828,
         levels: [
-            { name: '部级', value: 1230 },
-            { name: '省级', value: 2169 },
-            { name: '区/县', value: 861 },
-            { name: '市级', value: 1185 },
-            { name: '乡镇', value: 1156 }
+            { name: '部级', value: 188348 },
+            { name: '省级', value: 157206 },
+            { name: '区/县', value: 62534 },
+            { name: '市级', value: 125566 },
+            { name: '乡镇', value: 94174 }
         ]
     },
     institutionRank: [

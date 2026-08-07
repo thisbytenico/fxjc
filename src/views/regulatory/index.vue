@@ -365,6 +365,7 @@ export default {
                 tooltip: { ...TOOLTIP, trigger: 'item' },
                 series: [{
                     type: 'pie',
+                    roseType: 'radius',
                     radius: ['29%', '67%'],
                     center: ['50%', '53%'],
                     avoidLabelOverlap: true,
