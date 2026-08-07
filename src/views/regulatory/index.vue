@@ -339,8 +339,8 @@ export default {
             });
 
             initChart(regionRankRef.value, rankOption(data.regionTaskRank, '#27baf7', 90000));
-            initChart(institutionRankRef.value, rankOption(data.institutionRank, '#18d7a3'));
-            initChart(baseRankRef.value, rankOption(data.basePatrolRank, '#27baf7'));
+            initChart(institutionRankRef.value, rankOption(data.institutionRank, '#18d7a3', 90000));
+            initChart(baseRankRef.value, rankOption(data.basePatrolRank, '#27baf7', 90000));
 
             const passColors = ['#24d0a7', '#36aae7', '#fa9845'];
             initChart(passRateRef.value, {
@@ -557,11 +557,25 @@ export default {
 .rank-chart { flex: 1; width: 100%; }
 
 .comparison-content { flex: 1; min-height: 0; padding: 8px 12px 8px; display: flex; flex-direction: column; }
-.comparison-content :deep(.comparison-summary) { height: 44px; flex: 0 0 44px; display: flex; align-items: flex-start; justify-content: space-between; }
-.comparison-content :deep(.comparison-summary strong) { min-width: 0; display: flex; align-items: baseline; font-weight: normal; }
-.comparison-content :deep(.comparison-summary em) { font-size: 18px; font-weight: 700; white-space: nowrap; }
-.comparison-content :deep(.comparison-summary b) { margin-left: 20px; color: #28baf4; font: 700 31px/1 Arial, sans-serif; font-style: italic; }
-.comparison-content :deep(.comparison-summary small) { font-size: 14px; }
+.comparison-content :deep(.comparison-summary) { height: 54px; flex: 0 0 54px; display: flex; align-items: flex-start; justify-content: space-between; }
+.comparison-content :deep(.comparison-summary strong) { position: relative; z-index: 0; min-width: 0; padding: 0 8px 20px; display: inline-flex; align-items: flex-end; font-weight: normal; white-space: nowrap; }
+.comparison-content :deep(.comparison-summary strong::after) {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    height: 28px;
+    pointer-events: none;
+    background:
+        linear-gradient(90deg, transparent, rgba(35, 108, 153, .18) 18%, rgba(104, 190, 239, .58) 50%, rgba(35, 108, 153, .18) 82%, transparent) center / 100% 1px no-repeat,
+        linear-gradient(180deg, rgba(1, 13, 25, .88) 0 48%, rgba(3, 20, 36, .98) 52% 100%);
+    box-shadow: inset 0 1px 4px rgba(0, 0, 0, .28), inset 0 -3px 5px rgba(0, 0, 0, .24);
+}
+.comparison-content :deep(.comparison-summary em) { font-size: 18px; font-weight: 700; line-height: 27px; white-space: nowrap; }
+.comparison-content :deep(.comparison-summary b) { margin-left: 16px; color: #28baf4; font: italic 700 31px/31px Arial, sans-serif; letter-spacing: 0; text-shadow: 1px 2px 2px rgba(0, 0, 0, .7), 0 0 5px rgba(40, 186, 244, .22); }
+.comparison-content :deep(.comparison-summary small) { margin-left: 1px; font-size: 14px; line-height: 1; }
 .comparison-content :deep(.comparison-summary .filter-select) { position: relative; flex: 0 0 101px; height: 30px; margin-left: 8px; display: inline-flex; margin-top: 2px; }
 .comparison-content :deep(.comparison-summary .filter-select::after) { content: ''; position: absolute; top: 8px; right: 10px; width: 8px; height: 8px; border-right: 1px solid #a7eaff; border-bottom: 1px solid #a7eaff; transform: rotate(45deg); pointer-events: none; }
 .comparison-content :deep(.comparison-summary .filter-select select) { width: 100%; height: 100%; padding: 0 29px 0 12px; border: 1px solid #245f87; border-radius: 3px; outline: 0; color: #edf7ff; font-size: 13px; appearance: none; background: rgba(4, 24, 43, .93); }
@@ -617,9 +631,11 @@ export default {
     .panel-tools { height: 36px; flex-basis: 36px; padding: 4px 10px 2px; }
     .filter-select { width: 90px; height: 27px; }
     .comparison-content { padding: 5px 7px; }
-    .comparison-content :deep(.comparison-summary) { height: 36px; flex-basis: 36px; }
-    .comparison-content :deep(.comparison-summary em) { font-size: 13px; }
-    .comparison-content :deep(.comparison-summary b) { margin-left: 10px; font-size: 25px; }
+    .comparison-content :deep(.comparison-summary) { height: 44px; flex-basis: 44px; }
+    .comparison-content :deep(.comparison-summary strong) { padding-right: 6px; padding-bottom: 15px; padding-left: 6px; }
+    .comparison-content :deep(.comparison-summary strong::after) { height: 15px; }
+    .comparison-content :deep(.comparison-summary em) { font-size: 13px; line-height: 20px; }
+    .comparison-content :deep(.comparison-summary b) { margin-left: 10px; font-size: 25px; line-height: 24px; }
     .comparison-content :deep(.comparison-summary .filter-select) { flex-basis: 90px; }
     .institution-total { height: 41px; margin: 5px 8px 0; flex-basis: 41px; }
     .institution-total span { font-size: 13px; }
