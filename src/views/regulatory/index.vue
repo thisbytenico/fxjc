@@ -574,7 +574,33 @@ export default {
 .institution-total strong { color: #27baf3; font: 700 30px/1 Arial, sans-serif; white-space: nowrap; }
 .institution-total small { margin-left: 3px; color: #f3f8fd; font: 12px "Microsoft YaHei"; }
 .institution-chart { flex: 1; width: 100%; }
-.regulator-rank-panel h3 { height: 47px; margin: 0; padding: 13px 4px 4px; flex: 0 0 47px; font-size: 18px; text-align: center; white-space: nowrap; }
+.regulator-rank-panel h3 {
+    position: relative;
+    z-index: 0;
+    height: 54px;
+    margin: 0;
+    padding: 9px 4px 23px;
+    flex: 0 0 54px;
+    font-size: 18px;
+    font-style: italic;
+    text-align: center;
+    white-space: nowrap;
+    text-shadow: 1px 2px 2px rgba(0, 0, 0, .95), 0 0 4px rgba(190, 226, 248, .24);
+}
+.regulator-rank-panel h3::after {
+    content: '';
+    position: absolute;
+    right: 7%;
+    bottom: 0;
+    left: 7%;
+    z-index: -1;
+    height: 28px;
+    pointer-events: none;
+    background:
+        linear-gradient(90deg, transparent, rgba(35, 108, 153, .18) 18%, rgba(104, 190, 239, .58) 50%, rgba(35, 108, 153, .18) 82%, transparent) center / 100% 1px no-repeat,
+        linear-gradient(180deg, rgba(1, 13, 25, .88) 0 48%, rgba(3, 20, 36, .98) 52% 100%);
+    box-shadow: inset 0 1px 4px rgba(0, 0, 0, .28), inset 0 -3px 5px rgba(0, 0, 0, .24);
+}
 
 .data-error { position: absolute; top: 0; right: 0; left: 0; z-index: 5; padding: 7px 18px; color: #ffd0d0; background: rgba(130, 23, 39, .9); text-align: center; }
 .loading-state { position: relative; z-index: 2; min-height: 100%; display: flex; align-items: center; justify-content: center; color: #5adcea; font-size: 20px; }
@@ -598,6 +624,7 @@ export default {
     .institution-total { height: 41px; margin: 5px 8px 0; flex-basis: 41px; }
     .institution-total span { font-size: 13px; }
     .institution-total strong { font-size: 23px; }
-    .regulator-rank-panel h3 { height: 37px; padding-top: 9px; flex-basis: 37px; font-size: 14px; }
+    .regulator-rank-panel h3 { height: 44px; padding: 7px 4px 17px; flex-basis: 44px; font-size: 14px; }
+    .regulator-rank-panel h3::after { height: 15px; }
 }
 </style>
