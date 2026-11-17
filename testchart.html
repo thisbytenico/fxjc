@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ECharts6 Y轴断层跳跃刻度柱状图（多断层自动检测）</title>
+  <!-- ECharts 6.0+ 原生支持 yAxis.breaks 断轴 -->
+  <script src="https://cdn.jsdelivr.net/npm/echarts@6.0.0/dist/echarts.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #f5f7fa;
+      font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+    .card {
+      background: #fff;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+    h3 {
+      margin: 0 0 4px;
+      font-size: 16px;
+      color: #303133;
+    }
+    p {
+      margin: 0 0 12px;
+      font-size: 13px;
+      color: #909399;
+    }
+    .chart {
+      width: 100%;
+      height: 440px;
+    }
+    .log {
+      font-size: 13px;
+      color: #606266;
+      background: #f8f9fb;
+      border-radius: 6px;
+      padding: 10px 14px;
+      margin-top: 12px;
+      line-height: 1.9;
+    }
+    code {
+      background: #eef1f6;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 12px;
+      color: #c7254e;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h3>问题：数据存在多个断层（普通线性轴）</h3>
+    <p>70~95、1200、60000+ 三个量级，小值柱子完全贴地不可见。</p>
+    <div id="chartNormal" class="chart"></div>
+  </div>
+
+  <div class="card">
+    <h3>方案：yAxis.breaks 多断层跳跃刻度（自动检测全部断口）</h3>
+    <p>自动识别 <code>95 → 1200</code> 与 <code>1200 → 60000</code> 两处断层；边界贴数据压缩可见值域 + <code>barMinHeight</code> 保底，小值柱子清晰可见。</p>
+    <div id="chartBreak" class="chart"></div>
+    <div class="log" id="breakLog"></div>
+  </div>
+
+  <script>
+    /* ==================== 数据：存在多个断层 ==================== */
+    const categories = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+    const rawValues  = [80, 95, 70, 1200, 88, 60000, 62000];
+
+    /* =========================================================
+     * 自动计算多断口 breaks（聚类分组算法）
+     * 输出格式与 yAxis.breaks 对齐：[{ start, end, gap }, ...]
+     *
+     * 思路：
+     *   1. 排序后扫描相邻值，同时满足两个条件的间隙判定为"断层"：
+     *      ① 比值突变：后值/前值 >= ratioThreshold（默认 10 倍）
+     *      ② 局部差值：差值 >= minGapRatio × 后值（相对局部判断，
+     *         而非全局最大值——否则像 95→1200 这种小量级断层会被淹没）
+     *   2. 断层边界即分组边界，把数据切成若干"量级组"
+     *      → 组与组之间天然互不重叠，多断口不会冲突
+     *   3. 若断口数超过 maxBreaks，优先保留突变最剧烈的边界
+     *      （移除比值最小的边界，避免图表被断口切碎）
+     *   4. 断口边界按密集档位（1/1.5/2/2.5/3/4/5/6/8/10×10^n）取整，
+     *      边界尽量贴近数据 → 可见值域最小化 → 各段像素分配更均匀
+     *   5. gap 总预算约 24%，按断口数均分，避免断口占满图表
+     *
+     * 注意：breaks 的像素分配按"可见值域跨度"线性分配，
+     * 小值柱子仍可能过矮，需配合 series.barMinHeight 保底视觉高度
+     * ========================================================= */
+    function niceRound(v, direction) {
+      if (v <= 0) return 0;
+      const exp = Math.floor(Math.log10(v));
+      const base = Math.pow(10, exp);
+      const n = v / base;
+      // 密集档位：断口边界贴数据，减少被浪费的可见值域
+      const steps = [1, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10];
+      if (direction === 'ceil') {
+        // 断口下界（该值 = 最大小值，柱顶可正好抵在断口底）
+        const s = steps.find(x => x >= n - 1e-9);
+        return (s !== undefined ? s : 10) * base;
+      } else {
+        // 断口上界：若数据值本身落在档位上，回退 2%，
+        // 保证最小大值的柱子在断口上方仍有正的视觉长度
+        const desc = [...steps].reverse();
+        const s = desc.find(x => x <= n + 1e-9);
+        const res = (s !== undefined ? s : 1) * base;
+        return res === v ? v * 0.98 : res;
+      }
+    }
+
+    function findBreaks(values, options = {}) {
+      const {
+        ratioThreshold = 10, // 相邻值比值达到该倍数视为突变
+        minGapRatio = 0.2,   // 差值需达到后值的该比例（局部条件）
+        maxBreaks = 3,       // 最多允许的断口数
+        gapBudget = 24       // 所有断口总 gap 预算（%）
+      } = options;
+
+      const sorted = [...values].filter(v => v > 0).sort((a, b) => a - b);
+      if (sorted.length < 2) return [];
+
+      /* --- 1. 找出所有突变边界 --- */
+      let boundaries = [];
+      for (let i = 1; i < sorted.length; i++) {
+        const prev = sorted[i - 1], curr = sorted[i];
+        const ratio = curr / prev;
+        if (ratio >= ratioThreshold && (curr - prev) >= minGapRatio * curr) {
+          boundaries.push({ index: i, prev, curr, ratio });
+        }
+      }
+      if (!boundaries.length) return [];
+
+      /* --- 2. 断口超限时，移除突变最弱的边界 --- */
+      while (boundaries.length > maxBreaks) {
+        let minIdx = 0;
+        boundaries.forEach((b, i) => { if (b.ratio < boundaries[minIdx].ratio) minIdx = i; });
+        boundaries.splice(minIdx, 1);
+      }
+
+      /* --- 3. 按边界分组：组与组之间各生成一个断口 --- */
+      const groups = [];
+      let start = 0;
+      for (const b of boundaries) {
+        groups.push(sorted.slice(start, b.index));
+        start = b.index;
+      }
+      groups.push(sorted.slice(start));
+
+      const breaks = [];
+      for (let i = 1; i < groups.length; i++) {
+        const lowerMax = Math.max(...groups[i - 1]); // 前一量级组的最大值
+        const upperMin = Math.min(...groups[i]);     // 后一量级组的最小值
+        const s = niceRound(lowerMax, 'ceil');       // 断口下界：略高于最大小值
+        const e = niceRound(upperMin, 'floor');      // 断口上界：略低于最小大值
+        if (e > s) {
+          breaks.push({
+            start: s,
+            end: e,
+            origin: { lowerVal: lowerMax, upperVal: upperMin, ratio: upperMin / lowerMax }
+          });
+        }
+      }
+      if (!breaks.length) return [];
+
+      /* --- 4. gap 按断口数均分（总预算控制） --- */
+      const gapPct = Math.max(5, Math.floor(gapBudget / breaks.length));
+      return breaks.map(b => ({ ...b, gap: gapPct + '%' }));
+    }
+
+    /* ==================== 普通图（对照组） ==================== */
+    const chartNormal = echarts.init(document.getElementById('chartNormal'));
+    chartNormal.setOption({
+      tooltip: { trigger: 'axis' },
+      grid: { left: 80, right: 30, top: 50, bottom: 40 },
+      xAxis: { type: 'category', data: categories },
+      yAxis: { type: 'value' },
+      series: [{
+        name: '数值',
+        type: 'bar',
+        data: rawValues,
+        barWidth: '40%',
+        itemStyle: { color: '#5b8ff9', borderRadius: [4, 4, 0, 0] },
+        label: { show: true, position: 'top' }
+      }]
+    });
+
+    /* ==================== 断轴图（原生 breaks，多断层自动注入） ==================== */
+    const brks = findBreaks(rawValues);
+    const breakLog = document.getElementById('breakLog');
+
+    const option = {
+      title: {
+        text: 'ECharts6 Y轴断层跳跃刻度柱状图',
+        left: 'center'
+      },
+      tooltip: {
+        trigger: 'axis'
+      },
+      xAxis: {
+        type: 'category',
+        data: categories
+      },
+      yAxis: {
+        type: 'value',
+        // 断轴配置：由 findBreaks 自动检测全部断层生成，无需手工指定
+        breaks: brks.length ? brks : undefined,
+        breakArea: {
+          show: true,
+          zigzagAmplitude: 8 // 折断锯齿大小
+        }
+      },
+      series: [
+        {
+          name: '数值',
+          type: 'bar',
+          data: rawValues,
+          // 保底视觉高度：breaks 按可见值域跨度线性分配像素，
+          // 小值柱子分到的像素极少，barMinHeight 保证至少 12px 可见
+          barMinHeight: 12,
+          label: {
+            show: true
+          }
+        }
+      ]
+    };
+
+    const chartBreak = echarts.init(document.getElementById('chartBreak'));
+    chartBreak.setOption(option);
+
+    if (brks.length) {
+      breakLog.innerHTML =
+        `检测到 <b>${brks.length}</b> 个断层：<br>` +
+        brks.map(b =>
+          `&nbsp;&nbsp;值 <code>${b.origin.lowerVal}</code> → <code>${b.origin.upperVal}</code>` +
+          `（比值 ${b.origin.ratio.toFixed(1)} 倍）→ 断口 <code>[${b.start}, ${b.end}]</code>`
+        ).join('<br>') +
+        `<br>注入的 breaks = <code>` +
+        JSON.stringify(brks.map(({ start, end, gap }) => ({ start, end, gap }))) +
+        `</code>`;
+    } else {
+      breakLog.innerHTML = '数据差异不大，未检测到断层，breaks 未启用（普通线性轴渲染）。';
+    }
+
+    window.addEventListener('resize', () => {
+      chartNormal.resize();
+      chartBreak.resize();
+    });
+  </script>
+</body>
+</html>

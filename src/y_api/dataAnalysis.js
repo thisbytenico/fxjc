@@ -33,7 +33,7 @@ const mockDashboard = {
         productionRank: [
             { name: '四川省', primary: 82662, secondary: 26620 },
             { name: '山东省', primary: 72822, secondary: 36480 },
-            { name: '河北省', primary: 67829, secondary: 7829 }
+            { name: '河北省', primary: 67829, secondary: 27829 }
         ],
         printed: { label: '打印追溯标识', value: 451571, lastYear: 2278, growth: 3 },
         printRank: [

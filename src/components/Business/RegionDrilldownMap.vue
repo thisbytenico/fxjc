@@ -346,7 +346,7 @@ export default {
     display: flex;
     align-items: center;
     color: #dfe9f2;
-    font-size: 19px;
+    font-size: 16px;
 }
 
 .map-location button {

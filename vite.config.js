@@ -54,6 +54,7 @@ export default ({ mode }) => defineConfig({
     }
   },
   server: {
+    host: '0.0.0.0',
     proxy: {
       '/api': {
         target: 'http://10.0.52.114',//'http://172.16.7.89:8002/',//
