@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 export default {
@@ -24,12 +24,16 @@ export default {
     setup() {
         const route = useRoute();
         const router = useRouter();
-        const navItems = [
-            { key: 'traceability', label: '追溯业务', path: '/dataAnalysis' },
-            { key: 'regulatory', label: '监管业务', path: '/regulatory' },
-            { key: 'monitoring', label: '监测业务', path: '/monitoring' },
-            { key: 'enforcement', label: '执法业务' }
-        ];
+        const isRegulatoryDashboard = computed(() => route.name === 'regulatory');
+        const navItems = computed(() => {
+            const monitoring = { key: 'monitoring', label: '监测业务', path: '/monitoring' };
+            const enforcement = { key: 'enforcement', label: '执法业务' };
+            return [
+                { key: 'traceability', label: '追溯业务', path: '/dataAnalysis' },
+                { key: 'regulatory', label: '监管业务', path: '/regulatory' },
+                ...(isRegulatoryDashboard.value ? [enforcement, monitoring] : [monitoring, enforcement])
+            ];
+        });
         const tabFromPath = path => {
             if (path.startsWith('/regulatory')) return 'regulatory';
             if (path.startsWith('/monitoring')) return 'monitoring';
@@ -52,53 +56,59 @@ export default {
 
 <style lang="less" scoped>
 .platform-header {
+    position: relative;
+    z-index: 2;
+    isolation: isolate;
     width: 100%;
     height: 74px;
     min-width: 1200px;
     flex: 0 0 74px;
-    padding: 0 30px;
+    padding: 6px 30px 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 28px;
     color: #fff;
     font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
-    border-bottom: 2px solid rgba(75, 178, 240, .55);
-    background-color: #092347;
-    background-image:
-        linear-gradient(135deg, transparent 0 78%, rgba(42, 125, 202, .28) 78% 87%, transparent 87%),
-        linear-gradient(180deg, rgba(15, 56, 103, .72), rgba(7, 31, 62, .96));
-    box-shadow: inset 0 -8px 18px rgba(37, 111, 177, .32), 0 2px 10px rgba(27, 128, 201, .35);
+    background-color: #0e192a;
     box-sizing: border-box;
+}
+
+.platform-header::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 -11px;
+    z-index: -1;
+    pointer-events: none;
+    background: url('@/assets/images/bg-dh.png') center top / 100% 100% no-repeat;
 }
 
 .platform-title { min-width: 0; flex: 1; }
 .platform-title h1 {
     margin: 0;
-    font-size: 29px;
+    font-size: clamp(24px, 1.615vw, 31px);
     line-height: 1.15;
     letter-spacing: 0;
     font-weight: 700;
     white-space: nowrap;
-    text-shadow: 0 0 9px rgba(107, 189, 255, .55);
+    text-shadow: 0 0 5px rgba(107, 189, 255, .35);
 }
 .platform-title span { font: inherit; }
 
 .business-nav {
     flex: 0 0 auto;
-    margin-right: clamp(98px, calc((100vw - 1200px) * .273), 197px);
+    margin-right: clamp(86px, calc(86px + (100vw - 1560px) * .27), 183px);
     display: flex;
     align-items: center;
-    gap: 36px;
-    transform: translateY(4px);
+    gap: 38px;
 }
 .business-nav button {
-    width: 162px;
-    height: 42px;
+    width: 165px;
+    height: 46px;
     padding: 0 10px;
     border: 0;
     color: #f7fbff;
-    font: 700 23px/1 "Microsoft YaHei", sans-serif;
+    font: 700 24px/1 "Microsoft YaHei", sans-serif;
     letter-spacing: 0;
     cursor: pointer;
     position: relative;
@@ -117,9 +127,10 @@ export default {
 }
 
 @media (max-width: 1560px) {
-    .platform-header { height: 66px; flex-basis: 66px; padding: 0 20px; gap: 16px; }
+    .platform-header { height: 66px; flex-basis: 66px; padding: 4px 20px 0; gap: 16px; }
+    .platform-header::before { bottom: -10px; }
     .platform-title h1 { font-size: 22px; }
-    .business-nav { margin-right: clamp(0px, calc((100vw - 1200px) * .24), 86px); gap: 12px; transform: translateY(2px); }
+    .business-nav { margin-right: clamp(0px, calc((100vw - 1200px) * .24), 86px); gap: 12px; }
     .business-nav button { width: 132px; height: 39px; font-size: 19px; }
 }
 </style>

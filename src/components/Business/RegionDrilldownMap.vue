@@ -53,7 +53,8 @@ export default {
         valueUnit: { type: String, default: '家' },
         ariaLabel: { type: String, default: '全国主体分布地图，点击行政区可下钻' },
         showNineDashLine: { type: Boolean, default: false },
-        showPedestal: { type: Boolean, default: true }
+        showPedestal: { type: Boolean, default: true },
+        appearance: { type: Object, default: () => ({}) }
     },
     emits: ['error', 'region-click', 'route-change'],
     setup(props, { emit, expose }) {
@@ -154,6 +155,7 @@ export default {
             const values = normalizeValues(geo, suppliedValues);
             const maxValue = Math.max(...values.map(item => Number(item.value) || 0), 1);
             const isCountry = route.level === 'country';
+            const { countryZoom = 1.2, countryLayoutCenter = ['50%', '50%'], borderColor = 'rgba(0,180,255,.4)', borderWidth = .8, countryFontSize = 10 } = props.appearance;
             return {
                 animationDurationUpdate: 450,
                 tooltip: {
@@ -176,21 +178,21 @@ export default {
                     map: route.mapName,
                     roam: true,
                     center: isCountry ? [104.3, 34.4] : getGeoBoundsCenter(geo),
-                    zoom: isCountry ? 1.2 : .9,
-                    layoutCenter: isCountry ? ['50%', '50%'] : ['50%', '46%'],
+                    zoom: isCountry ? countryZoom : .9,
+                    layoutCenter: isCountry ? countryLayoutCenter : ['50%', '46%'],
                     layoutSize: isCountry ? '100%' : '90%',
                     scaleLimit: { min: .8, max: 4 },
                     label: {
                         show: true,
                         color: '#f5fbff',
-                        fontSize: isCountry ? 10 : 12,
+                        fontSize: isCountry ? countryFontSize : 12,
                         textShadowColor: '#024d79',
                         textShadowBlur: 3
                     },
                     itemStyle: {
                         areaColor: '#0d2b5e',
-                        borderColor: 'rgba(0,180,255,.4)',
-                        borderWidth: .8
+                        borderColor,
+                        borderWidth
                     },
                     emphasis: { label: { color: '#fff' }, itemStyle: { areaColor: '#00b4ff' } },
                     select: { disabled: true },

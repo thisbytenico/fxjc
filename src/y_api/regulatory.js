@@ -10,6 +10,35 @@ const REGION_NAMES = [
 ];
 
 const mockDashboard = {
+    overview: {
+        metrics: { institutions: 1235, newInstitutions: 88, tasks: 888, basePatrols: 666 },
+        taskBreakdown: [
+            { name: '例行监测', value: 466201 },
+            { name: '专项监测', value: 150874 },
+            { name: '监督抽查', value: 36468 },
+            { name: '复检任务', value: 5600 }
+        ],
+        regionTaskRank: [
+            { name: '甘肃', value: 180000 },
+            { name: '河北', value: 145000 },
+            { name: '四川', value: 120000 },
+            { name: '新疆', value: 72822 },
+            { name: '云南', value: 67829 }
+        ],
+        basePatrolRank: [
+            { name: '甘肃', value: 180000 },
+            { name: '河北', value: 147000 },
+            { name: '四川', value: 120000 },
+            { name: '新疆', value: 70000 },
+            { name: '云南', value: 65000 }
+        ],
+        taskComparisons: [
+            { name: '例行监测', current: [100000, 62000], previous: [96000, 93000] },
+            { name: '专项监测', current: [51000, 37000], previous: [44000, 54000] },
+            { name: '监督抽查', current: [14000, 11000], previous: [15000, 14000] },
+            { name: '复检任务', current: [3000, 2000], previous: [3000, 3000] }
+        ]
+    },
     subjectSummary: [
         { name: '例行监测', value: 6278, unit: '次', color: '#25baf3' },
         { name: '专项监测', value: 9384, unit: '次', color: '#30dec9' },

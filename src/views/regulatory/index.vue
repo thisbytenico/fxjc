@@ -1,416 +1,332 @@
 <template>
     <div class="regulatory-screen">
-        <div v-if="errorMessage" class="data-error" role="alert">{{ errorMessage }}</div>
+        <p v-if="errorMessage" class="dashboard-error" role="alert">{{ errorMessage }}</p>
 
         <main v-if="dashboard" class="regulatory-grid">
-            <section class="screen-panel summary-panel">
-                <PanelHeading title="主体情况分析" />
-                <div class="summary-metrics">
-                    <article v-for="item in dashboard.subjectSummary" :key="item.name">
-                        <span>{{ item.name }}</span>
-                        <strong :style="{ color: item.color }">{{ formatNumber(item.value) }}<small>{{ item.unit }}</small></strong>
-                    </article>
-                </div>
-                <div ref="compositionRef" class="chart composition-chart"></div>
-            </section>
+            <div class="side-column monitoring-column">
+                <section class="screen-panel">
+                    <header class="panel-heading"><h2>监测任务情况</h2></header>
+                    <div class="comparison-summary task-total">
+                        <p>监测任务总数
+                            <strong>{{ formatMetric(metrics.tasks) }}<small v-if="metrics.tasks != null">次</small></strong>
+                        </p>
+                    </div>
+                    <div class="task-overview">
+                        <div class="task-dial">
+                            <div ref="taskPieRef" class="chart task-pie" role="img" aria-label="监测任务构成"></div>
+                        </div>
+                        <ul class="task-legend">
+                            <li v-for="(item, index) in taskBreakdown" :key="item.name" :style="{ '--series-color': taskColors[index] }">
+                                <i aria-hidden="true"></i><span>{{ item.name }}</span><strong>{{ item.value }}</strong>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
 
-            <section class="map-panel">
+                <section class="screen-panel">
+                    <header class="panel-heading"><h2>监测任务区域排行</h2></header>
+                    <div class="panel-controls">
+                        <label class="filter-select">
+                            <select v-model="selectedRegion" aria-label="筛选监测任务地区">
+                                <option value="">全部</option>
+                                <option v-for="item in regionTaskRank" :key="item.name" :value="item.name">{{ item.name }}</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div ref="regionRankRef" class="chart" role="img" aria-label="监测任务区域排行"></div>
+                </section>
+
+                <section class="screen-panel">
+                    <header class="panel-heading"><h2>监测任务数据对比</h2></header>
+                    <div class="comparison-summary comparison-summary--tasks">
+                        <p>监测任务同期对比{{ growthDirection(taskComparison.growth) }}
+                            <strong>{{ growthValue(taskComparison.growth) }}<small v-if="taskComparison.growth != null">%</small></strong>
+                        </p>
+                        <label class="filter-select">
+                            <select v-model="selectedTask" aria-label="筛选对比任务类别">
+                                <option value="">全部</option>
+                                <option v-for="item in taskComparisons" :key="item.name" :value="item.name">{{ item.name }}</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div ref="taskComparisonRef" class="chart" role="img" aria-label="两年监测任务数据对比"></div>
+                </section>
+            </div>
+
+            <section class="map-panel" aria-label="监管业务地图">
                 <RegionDrilldownMap
                     :data="dashboard.map.values"
                     :load-region-data="getRegulatoryRegion"
                     :show-nine-dash-line="showNineDashLine"
+                    :colors="mapColors"
+                    :appearance="mapAppearance"
                     value-label="监管任务数"
                     value-unit="次"
                     aria-label="全国监管任务分布地图，点击行政区可下钻"
                     @error="handleMapError"
                 />
+                <dl class="map-metrics">
+                    <div v-for="metric in mapMetrics" :key="metric.label" :style="{ '--metric-color': metric.color }">
+                        <dt><img :src="metric.icon" alt="" />{{ metric.label }}</dt>
+                        <dd>{{ formatMetric(metric.value) }}<small v-if="metric.value != null">{{ metric.unit }}</small></dd>
+                    </div>
+                </dl>
             </section>
 
-            <section class="screen-panel quarter-panel">
-                <PanelHeading title="监测任务数据对比" detail />
-                <ComparisonChart
-                    ref="quarterComponentRef"
-                    :data="dashboard.quarterlyComparison"
-                    caption="季度巡查同期对比增加"
-                    current-label="2025"
-                    previous-label="2026"
-                />
-            </section>
+            <div class="side-column patrol-column">
+                <section class="screen-panel">
+                    <header class="panel-heading"><h2>基地巡查区域排行</h2></header>
+                    <div class="comparison-summary comparison-summary--patrol">
+                        <p>基地巡查总数
+                            <strong>{{ formatMetric(metrics.basePatrols) }}<small v-if="metrics.basePatrols != null">次</small></strong>
+                        </p>
+                    </div>
+                    <div ref="baseRankRef" class="chart" role="img" aria-label="基地巡查区域排行"></div>
+                </section>
 
-            <section class="screen-panel region-rank-panel">
-                <PanelHeading title="监测区域任务排名" />
-                <div class="panel-tools"><FilterSelect /></div>
-                <div ref="regionRankRef" class="chart rank-chart"></div>
-            </section>
-
-            <section class="screen-panel pass-panel">
-                <PanelHeading title="基地巡查合格率" />
-                <div ref="passRateRef" class="chart donut-chart"></div>
-            </section>
-
-            <section class="screen-panel annual-panel">
-                <PanelHeading title="监测任务数据对比" />
-                <ComparisonChart
-                    ref="annualComponentRef"
-                    :data="dashboard.annualComparison"
-                    caption="监测任务同期对比增加"
-                    current-label="2025"
-                    previous-label="2026"
-                    tone="annual"
-                    filterable
-                />
-            </section>
-
-            <section class="screen-panel institution-panel">
-                <PanelHeading title="监测任务数据对比" />
-                <div class="institution-total">
-                    <span>本年度新增监管机构</span>
-                    <strong>{{ formatNumber(dashboard.newInstitutions.total) }}<small>家</small></strong>
-                </div>
-                <div ref="institutionRef" class="chart institution-chart"></div>
-            </section>
-
-            <section class="screen-panel regulator-rank-panel">
-                <PanelHeading title="监测任务数据对比" />
-                <h3>各地域监管机构分布前五位排行</h3>
-                <div ref="institutionRankRef" class="chart rank-chart"></div>
-            </section>
-
-            <section class="screen-panel base-rank-panel">
-                <PanelHeading title="基地巡查区域排行" />
-                <div class="panel-tools"><FilterSelect /></div>
-                <div ref="baseRankRef" class="chart rank-chart"></div>
-            </section>
+                <section class="screen-panel">
+                    <header class="panel-heading"><h2>基地巡查数据对比</h2></header>
+                    <div class="comparison-summary comparison-summary--patrol comparison-summary--growth">
+                        <p>季度巡查同期对比{{ growthDirection(dashboard.quarterlyComparison.growth) }}
+                            <strong>{{ growthValue(dashboard.quarterlyComparison.growth) }}<small v-if="dashboard.quarterlyComparison.growth != null">%</small></strong>
+                        </p>
+                    </div>
+                    <div ref="baseComparisonRef" class="chart" role="img" aria-label="两年基地巡查数据对比"></div>
+                </section>
+            </div>
         </main>
 
-        <div v-else class="loading-state">数据加载中...</div>
+        <p v-else-if="!errorMessage" class="loading-state" role="status">数据加载中…</p>
     </div>
 </template>
 
 <script>
-import { defineComponent, h, nextTick, onBeforeUnmount, onMounted, ref } from 'vue';
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import * as echarts from 'echarts';
 import RegionDrilldownMap from '@/components/Business/RegionDrilldownMap.vue';
 import { getRegulatoryDashboard, getRegulatoryRegion } from '@/y_api/regulatory';
 import { SHOW_REGULATORY_MAP_NINE_DASH_LINE } from '@/config/regulatory';
+import institutionIcon from '@/assets/images/regulatory/icon-g1.png';
+import newInstitutionIcon from '@/assets/images/regulatory/icon-g2.png';
 
-const AXIS_LABEL = { color: '#dce7f2', fontSize: 13 };
-const MUTED_AXIS_LABEL = { color: '#60738a', fontSize: 10 };
-const GRID_LINE = { color: 'rgba(105, 139, 173, .25)' };
+const TASK_COLORS = ['#008fdd', '#fff567', '#16f7db', '#28c8f1'];
+const MAP_COLORS = ['#074365', '#00608d', '#007eb9', '#009cd7', '#02b7ec'];
+const MAP_APPEARANCE = {
+    countryZoom: 1.12,
+    countryLayoutCenter: ['48%', '50%'],
+    countryFontSize: 13,
+    borderColor: 'rgba(134, 219, 255, .82)',
+    borderWidth: 1.2
+};
+const AXIS_TEXT = { color: '#e6eff8', fontSize: 14 };
+const TICK_TEXT = { color: '#8797a9', fontSize: 11, hideOverlap: true };
+const GRID_LINE = { color: 'rgba(119, 145, 170, .24)' };
 const TOOLTIP = {
     trigger: 'axis',
-    backgroundColor: 'rgba(3, 20, 39, .95)',
-    borderColor: '#35c9ee',
+    backgroundColor: 'rgba(8, 24, 40, .96)',
+    borderColor: '#247ba4',
     textStyle: { color: '#fff', fontSize: 12 }
 };
+const TASK_BAR_COLORS = [['#5feaf5', '#135269', '#0e1a2a'], ['#fff68a', '#6c6b28', '#171c26']];
+const PATROL_BAR_COLORS = [['#13d7a5', '#075141', '#0d1a24'], ['#ff9b49', '#883d08', '#221c20']];
+const BLUE_RANK_COLORS = ['#274661', '#31a2df'];
+const GREEN_RANK_COLORS = ['#104438', '#0dbd91'];
+const YEARS = ['2025', '2026'];
 
-const COMPARISON_PALETTES = {
-    quarter: {
-        current: ['#14d092', '#087653', 'rgba(5, 38, 46, .06)'],
-        previous: ['#fa9542', '#91410a', 'rgba(53, 32, 15, .06)']
+const gradient = (colors, vertical = false) => new echarts.graphic.LinearGradient(
+    0, 0, vertical ? 0 : 1, vertical ? 1 : 0,
+    colors.map((color, index) => ({ color, offset: index / (colors.length - 1) }))
+);
+
+const taskPieOption = items => ({
+    color: TASK_COLORS,
+    tooltip: { ...TOOLTIP, trigger: 'item', formatter: '{b}：{c}' },
+    series: [{
+        type: 'pie',
+        // The dial artwork's ring is centered at (97.5, 94) in the 189 × 184 image.
+        center: ['51.6%', '51.1%'],
+        radius: ['51%', '61%'],
+        startAngle: 90,
+        label: { show: false },
+        labelLine: { show: false },
+        itemStyle: { borderColor: '#10273b', borderWidth: 1 },
+        stillShowZeroSum: false,
+        emptyCircleStyle: { color: '#25465e' },
+        data: items
+    }]
+});
+
+const rankOption = (items, colors, barWidth, axisMax) => ({
+    tooltip: { ...TOOLTIP, axisPointer: { type: 'shadow' } },
+    grid: { left: 23, right: 36, top: 6, bottom: 14, containLabel: true },
+    xAxis: {
+        type: 'value',
+        max: axisMax,
+        splitNumber: 6,
+        axisLabel: { ...TICK_TEXT, formatter: value => String(value) },
+        axisLine: { show: true, lineStyle: GRID_LINE },
+        axisTick: { show: false },
+        splitLine: { lineStyle: GRID_LINE }
     },
-    annual: {
-        current: ['#65eef1', '#178c9d', 'rgba(8, 45, 62, .06)'],
-        previous: ['#f5eb49', '#908318', 'rgba(54, 52, 17, .06)']
-    }
-};
-
-const PanelHeading = defineComponent({
-    name: 'PanelHeading',
-    props: { title: String, detail: Boolean },
-    setup(props) {
-        return () => h('header', { class: 'panel-heading' }, [
-            h('i'),
-            h('h2', props.title),
-            props.detail ? h('button', { type: 'button' }, '明细') : h('span')
-        ]);
-    }
+    yAxis: {
+        type: 'category',
+        inverse: true,
+        data: items.map(item => item.name),
+        axisLabel: AXIS_TEXT,
+        axisTick: { show: false },
+        axisLine: { show: true, lineStyle: GRID_LINE }
+    },
+    series: [{
+        type: 'bar',
+        barMaxWidth: barWidth,
+        data: items.map(item => item.value),
+        label: { show: true, position: 'insideRight', distance: 3, color: '#fff', fontSize: 10, fontWeight: 600 },
+        itemStyle: { color: gradient(colors) }
+    }]
 });
 
-const FilterSelect = defineComponent({
-    name: 'FilterSelect',
-    setup() {
-        return () => h('label', { class: 'filter-select' }, [
-            h('select', { 'aria-label': '筛选范围' }, [
-                h('option', { value: 'all' }, '全部'),
-                h('option', { value: 'province' }, '省级'),
-                h('option', { value: 'city' }, '市级')
-            ])
-        ]);
-    }
-});
+const rankMaximum = items => Math.ceil(Math.max(180000, ...items.map(item => item.value)) / 30000) * 30000;
 
-const comparisonOption = (data, currentLabel, previousLabel, palette) => ({
+const comparisonOption = (data, colors) => ({
     tooltip: TOOLTIP,
     legend: {
-        top: 2,
-        right: 8,
+        data: YEARS,
+        right: 18,
+        top: 4,
+        icon: 'rect',
         itemWidth: 12,
         itemHeight: 8,
-        textStyle: { color: '#d7e2eb', fontSize: 10 },
-        data: [currentLabel, previousLabel]
+        textStyle: { color: '#e6eff8', fontSize: 11 }
     },
-    grid: { left: 11, right: 10, top: 26, bottom: 7, containLabel: true },
+    grid: { left: 11, right: 20, top: 27, bottom: 14, containLabel: true },
     xAxis: {
         type: 'category',
         data: data.categories,
-        axisLabel: AXIS_LABEL,
+        axisLabel: AXIS_TEXT,
         axisTick: { show: false },
-        axisLine: { lineStyle: { color: '#536579' } },
+        axisLine: { lineStyle: GRID_LINE },
         splitLine: { show: true, lineStyle: GRID_LINE }
     },
     yAxis: {
         type: 'value',
-        max: 180000,
-        interval: 30000,
-        axisLabel: MUTED_AXIS_LABEL,
+        min: 0,
+        splitNumber: 6,
+        axisLabel: { ...TICK_TEXT, formatter: value => String(value) },
+        axisLine: { show: true, lineStyle: GRID_LINE },
         axisTick: { show: false },
-        axisLine: { show: true, lineStyle: { color: '#536579' } },
         splitLine: { show: false }
     },
-    series: [
-        {
-            name: currentLabel,
-            type: 'bar',
-            barWidth: 12,
-            barGap: '95%',
-            data: data.current,
-            itemStyle: {
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                    { offset: 0, color: palette.current[0] },
-                    { offset: .58, color: palette.current[1] },
-                    { offset: 1, color: palette.current[2] }
-                ])
-            }
-        },
-        {
-            name: previousLabel,
-            type: 'bar',
-            barWidth: 12,
-            data: data.previous,
-            itemStyle: {
-                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                    { offset: 0, color: palette.previous[0] },
-                    { offset: .56, color: palette.previous[1] },
-                    { offset: 1, color: palette.previous[2] }
-                ])
-            }
-        }
-    ]
+    series: [data.current, data.previous].map((values, index) => ({
+        name: YEARS[index],
+        type: 'bar',
+        data: values,
+        barMaxWidth: 12,
+        barGap: '125%',
+        itemStyle: { color: gradient(colors[index], true) }
+    }))
 });
 
-const ComparisonChart = defineComponent({
-    name: 'ComparisonChart',
-    components: { FilterSelect },
-    props: {
-        data: { type: Object, required: true },
-        caption: { type: String, required: true },
-        currentLabel: { type: String, required: true },
-        previousLabel: { type: String, required: true },
-        tone: { type: String, default: 'quarter' },
-        filterable: Boolean
-    },
-    setup(props, { expose }) {
-        const chartRef = ref(null);
-        let chart = null;
-        const resize = () => chart && !chart.isDisposed() && chart.resize();
-        onMounted(() => {
-            chart = echarts.init(chartRef.value);
-            const palette = COMPARISON_PALETTES[props.tone] || COMPARISON_PALETTES.quarter;
-            chart.setOption(comparisonOption(props.data, props.currentLabel, props.previousLabel, palette));
-        });
-        onBeforeUnmount(() => chart && !chart.isDisposed() && chart.dispose());
-        expose({ resize });
-        return () => h('div', { class: 'comparison-content' }, [
-            h('div', { class: 'comparison-summary' }, [
-                h('strong', [
-                    h('em', props.caption),
-                    h('b', [String(props.data.growth), h('small', '%')])
-                ]),
-                props.filterable ? h(FilterSelect) : null
-            ]),
-            h('div', { ref: chartRef, class: 'chart comparison-chart' })
-        ]);
-    }
-});
+const formatMetric = value => value == null ? '—' : String(value);
+const growthDirection = value => value == null ? '' : value < 0 ? '减少' : '增加';
+const growthValue = value => value == null ? '—' : Number(Math.abs(value).toFixed(1));
 
 export default {
     name: 'RegulatoryDashboard',
-    components: { ComparisonChart, FilterSelect, PanelHeading, RegionDrilldownMap },
+    components: { RegionDrilldownMap },
     setup() {
         const dashboard = ref(null);
         const errorMessage = ref('');
-        const compositionRef = ref(null);
+        const selectedRegion = ref('');
+        const selectedTask = ref('');
+        const taskPieRef = ref(null);
         const regionRankRef = ref(null);
-        const passRateRef = ref(null);
-        const institutionRef = ref(null);
-        const institutionRankRef = ref(null);
+        const taskComparisonRef = ref(null);
         const baseRankRef = ref(null);
-        const quarterComponentRef = ref(null);
-        const annualComponentRef = ref(null);
-        const charts = [];
+        const baseComparisonRef = ref(null);
 
-        const formatNumber = value => Number(value || 0).toLocaleString('en-US');
-        const initChart = (element, option) => {
-            if (!element) return;
-            const chart = echarts.init(element);
-            chart.setOption(option);
-            charts.push(chart);
-        };
-        const resizeCharts = () => {
-            charts.forEach(chart => chart && !chart.isDisposed() && chart.resize());
-            quarterComponentRef.value?.resize();
-            annualComponentRef.value?.resize();
-        };
+        const overview = computed(() => dashboard.value?.overview);
+        const metrics = computed(() => overview.value?.metrics ?? {});
+        const taskBreakdown = computed(() => overview.value?.taskBreakdown ?? dashboard.value?.subjectSummary ?? []);
+        const regionTaskRank = computed(() => overview.value?.regionTaskRank ?? dashboard.value?.regionTaskRank ?? []);
+        const basePatrolRank = computed(() => overview.value?.basePatrolRank ?? dashboard.value?.basePatrolRank ?? []);
+        const taskComparisons = computed(() => overview.value?.taskComparisons ?? []);
+        const mapMetrics = computed(() => [
+            { label: '监管机构数量', value: metrics.value.institutions, unit: '家', color: '#2cacf0', icon: institutionIcon },
+            { label: '本年度新增', value: metrics.value.newInstitutions ?? dashboard.value?.newInstitutions?.total, unit: '家', color: '#fff66e', icon: newInstitutionIcon }
+        ]);
+        const visibleTaskRank = computed(() => selectedRegion.value
+            ? regionTaskRank.value.filter(item => item.name === selectedRegion.value)
+            : regionTaskRank.value);
+        const taskComparison = computed(() => {
+            const comparison = dashboard.value?.annualComparison;
+            const task = taskComparisons.value.find(item => item.name === selectedTask.value);
+            if (!task) return comparison;
 
-        const rankOption = (items, color, maxValue = 180000) => ({
-            tooltip: TOOLTIP,
-            grid: { left: 16, right: 28, top: 8, bottom: 12, containLabel: true },
-            xAxis: {
-                type: 'value',
-                max: maxValue,
-                interval: 30000,
-                axisLabel: MUTED_AXIS_LABEL,
-                axisTick: { show: false },
-                axisLine: { show: false },
-                splitLine: { lineStyle: GRID_LINE }
-            },
-            yAxis: {
-                type: 'category',
-                inverse: true,
-                data: items.map(item => item.name),
-                axisLabel: { ...AXIS_LABEL, fontSize: 16, margin: 12 },
-                axisTick: { show: false },
-                axisLine: { show: false }
-            },
-            series: [{
-                type: 'bar',
-                barWidth: 12,
-                data: items.map(item => item.value),
-                label: { show: true, position: 'insideRight', color: '#fff', fontSize: 8, fontWeight: 'bold' },
-                itemStyle: {
-                    color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
-                        { offset: 0, color: 'rgba(36, 74, 112, .75)' },
-                        { offset: 1, color }
-                    ])
-                }
-            }]
+            const total2025 = task.current.reduce((sum, value) => sum + value, 0);
+            const total2026 = task.previous.reduce((sum, value) => sum + value, 0);
+            const growth = total2025 ? (total2026 - total2025) / total2025 * 100 : null;
+            return { ...comparison, ...task, growth };
         });
 
-        const initCharts = () => {
-            const data = dashboard.value;
-            const stackColors = ['#25baf3', '#42dfdf', '#20bd55', '#f59446'];
-            initChart(compositionRef.value, {
-                tooltip: TOOLTIP,
-                legend: {
-                    top: 5,
-                    right: 5,
-                    itemWidth: 12,
-                    itemHeight: 9,
-                    textStyle: { color: '#d9e6f1', fontSize: 10 },
-                    data: data.subjectSummary.map(item => item.name)
-                },
-                grid: { left: 16, right: 28, top: 28, bottom: 12, containLabel: true },
-                xAxis: {
-                    type: 'value',
-                    max: 180000,
-                    interval: 30000,
-                    axisLabel: MUTED_AXIS_LABEL,
-                    axisTick: { show: false },
-                    axisLine: { show: false },
-                    splitLine: { lineStyle: GRID_LINE }
-                },
-                yAxis: {
-                    type: 'category',
-                    inverse: true,
-                    data: data.taskComposition.map(item => item.name),
-                    axisLabel: { ...AXIS_LABEL, fontSize: 15 },
-                    axisTick: { show: false },
-                    axisLine: { show: false }
-                },
-                series: data.subjectSummary.map((summary, seriesIndex) => ({
-                    name: summary.name,
-                    type: 'bar',
-                    stack: 'total',
-                    barWidth: 10,
-                    itemStyle: { color: stackColors[seriesIndex] },
-                    data: data.taskComposition.map(item => item.values[seriesIndex])
-                }))
-            });
-
-            initChart(regionRankRef.value, rankOption(data.regionTaskRank, '#27baf7', 90000));
-            initChart(institutionRankRef.value, rankOption(data.institutionRank, '#18d7a3', 90000));
-            initChart(baseRankRef.value, rankOption(data.basePatrolRank, '#27baf7', 90000));
-
-            const passColors = ['#24d0a7', '#36aae7', '#fa9845'];
-            initChart(passRateRef.value, {
-                color: passColors,
-                tooltip: { ...TOOLTIP, trigger: 'item' },
-                series: [{
-                    type: 'pie',
-                    roseType: 'radius',
-                    radius: ['31%', '65%'],
-                    center: ['52%', '54%'],
-                    startAngle: 90,
-                    minAngle: 12,
-                    avoidLabelOverlap: true,
-                    label: { color: '#edf5fc', fontSize: 13, fontWeight: 'bold', formatter: '{b}{c}%' },
-                    labelLine: { length: 18, length2: 12, lineStyle: { width: 1 } },
-                    data: data.basePassRate
-                }]
-            });
-
-            const levelColors = ['#25cda6', '#2ba6e8', '#ffed4f', '#a865df', '#4bd2d8'];
-            initChart(institutionRef.value, {
-                color: levelColors,
-                tooltip: { ...TOOLTIP, trigger: 'item' },
-                series: [{
-                    type: 'pie',
-                    roseType: 'radius',
-                    radius: ['29%', '67%'],
-                    center: ['50%', '53%'],
-                    avoidLabelOverlap: true,
-                    label: { color: '#dcecf8', fontSize: 11, formatter: '{b}:{c}' },
-                    labelLine: { length: 12, length2: 12 },
-                    data: data.newInstitutions.levels
-                }]
-            });
+        const charts = new Map();
+        let observer;
+        let destroyed = false;
+        const resizeCharts = () => charts.forEach(chart => chart.resize());
+        const initChart = (element, option) => {
+            const chart = echarts.init(element);
+            chart.setOption(option);
+            charts.set(element, chart);
+            observer?.observe(element);
         };
+
+        watch(visibleTaskRank, items => {
+            charts.get(regionRankRef.value)?.setOption(rankOption(items, BLUE_RANK_COLORS, 12, rankMaximum(regionTaskRank.value)));
+        });
+        watch(taskComparison, data => {
+            charts.get(taskComparisonRef.value)?.setOption(comparisonOption(data, TASK_BAR_COLORS));
+        });
 
         const handleMapError = error => {
             errorMessage.value = error.message || '地图数据加载失败';
         };
-
         onMounted(async () => {
             try {
-                dashboard.value = await getRegulatoryDashboard();
+                const data = await getRegulatoryDashboard();
+                if (destroyed) return;
+                dashboard.value = data;
                 await nextTick();
-                initCharts();
-                window.addEventListener('resize', resizeCharts);
+                if (destroyed) return;
+
+                if (typeof ResizeObserver === 'undefined') {
+                    window.addEventListener('resize', resizeCharts);
+                } else {
+                    observer = new ResizeObserver(entries => {
+                        entries.forEach(({ target }) => charts.get(target)?.resize());
+                    });
+                }
+                initChart(taskPieRef.value, taskPieOption(taskBreakdown.value));
+                initChart(regionRankRef.value, rankOption(visibleTaskRank.value, BLUE_RANK_COLORS, 12, rankMaximum(regionTaskRank.value)));
+                initChart(taskComparisonRef.value, comparisonOption(taskComparison.value, TASK_BAR_COLORS));
+                initChart(baseRankRef.value, rankOption(basePatrolRank.value, GREEN_RANK_COLORS, 16, rankMaximum(basePatrolRank.value)));
+                initChart(baseComparisonRef.value, comparisonOption(data.quarterlyComparison, PATROL_BAR_COLORS));
             } catch (error) {
-                errorMessage.value = error.message || '数据加载失败，请稍后重试';
+                if (!destroyed) errorMessage.value = error.message || '监管业务数据加载失败';
             }
         });
-
         onBeforeUnmount(() => {
+            destroyed = true;
+            observer?.disconnect();
             window.removeEventListener('resize', resizeCharts);
-            charts.forEach(chart => chart && !chart.isDisposed() && chart.dispose());
+            charts.forEach(chart => chart.dispose());
+            charts.clear();
         });
 
         return {
-            annualComponentRef,
-            baseRankRef,
-            compositionRef,
-            dashboard,
-            errorMessage,
-            formatNumber,
-            getRegulatoryRegion,
-            handleMapError,
-            institutionRankRef,
-            institutionRef,
-            passRateRef,
-            quarterComponentRef,
-            regionRankRef,
+            dashboard, errorMessage, metrics, taskBreakdown, regionTaskRank, taskComparisons, mapMetrics,
+            selectedRegion, selectedTask, taskComparison,
+            taskPieRef, regionRankRef, taskComparisonRef, baseRankRef, baseComparisonRef,
+            getRegulatoryRegion, handleMapError, formatMetric, growthDirection, growthValue,
+            taskColors: TASK_COLORS, mapColors: MAP_COLORS, mapAppearance: MAP_APPEARANCE,
             showNineDashLine: SHOW_REGULATORY_MAP_NINE_DASH_LINE
         };
     }
@@ -426,236 +342,214 @@ export default {
     height: 100%;
     min-width: 1200px;
     min-height: 0;
-    overflow: hidden;
-    color: #f3f8fd;
+    overflow: auto;
+    color: #f4f8fc;
     font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
-    background-color: #06182d;
-    // background-image:
-    //     radial-gradient(circle at 50% 34%, rgba(17, 101, 160, .28), transparent 38%),
-    //     radial-gradient(circle, rgba(123, 196, 239, .30) 1px, transparent 1.6px),
-    //     linear-gradient(180deg, rgba(4, 22, 43, .66), rgba(4, 18, 35, .94));
-    // background-size: auto, 49px 49px, auto;
-    background-image: url(@/assets/images/bg.jpg);
-    background-size: contain;
-    background-position: center;
-}
-
-.regulatory-screen::after {
-    content: '';
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 0;
-    height: 43%;
-    opacity: .33;
-    pointer-events: none;
-    background-image:
-        linear-gradient(rgba(42, 143, 210, .45) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(42, 143, 210, .35) 1px, transparent 1px);
-    background-size: 52px 32px;
-    transform-origin: bottom;
-    transform: perspective(330px) rotateX(55deg) scale(1.5);
+    background: #0e192a url(@/assets/images/regulatory/bg2-jgyw.png) center bottom / cover no-repeat;
 }
 
 .regulatory-grid {
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    height: 100%;
-    min-height: 0;
-    padding: 18px 20px 22px;
     display: grid;
-    grid-template-columns: minmax(278px, 1.08fr) minmax(250px, 1fr) minmax(250px, 1fr) minmax(278px, 1.08fr);
-    grid-template-rows: minmax(0, 1.17fr) minmax(0, 1fr) minmax(0, 1fr);
-    grid-template-areas:
-        "summary map map quarter"
-        "region map map pass"
-        "annual institution regulator base";
-    gap: 16px 18px;
+    grid-template-columns: minmax(275px, 1fr) minmax(530px, 1.92fr) minmax(275px, 1fr);
+    gap: clamp(14px, 1.48vw, 28px);
+    height: 100%;
+    min-height: 620px;
+    padding: clamp(18px, 3.05vh, 33px) clamp(14px, 1.48vw, 28px) clamp(20px, 4.1vh, 45px);
 }
 
+.side-column {
+    display: grid;
+    min-width: 0;
+    min-height: 0;
+    gap: clamp(14px, 2.7vh, 29px);
+}
+.monitoring-column { grid-template-rows: minmax(0, 1.17fr) repeat(2, minmax(0, 1fr)); }
+.patrol-column { grid-template-rows: repeat(2, minmax(0, 1fr)); }
 .screen-panel {
+    display: flex;
+    flex-direction: column;
     min-width: 0;
     min-height: 0;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    border: 1px solid rgba(35, 132, 197, .65);
-    background: rgba(5, 22, 42, .79);
-    box-shadow: inset 0 0 24px rgba(11, 85, 137, .10);
+    border: 1px solid #254761;
+    background: #0e192aeb;
 }
-
-.summary-panel { grid-area: summary; }
-.map-panel { grid-area: map; min-width: 0; min-height: 0; }
-.quarter-panel { grid-area: quarter; }
-.region-rank-panel { grid-area: region; }
-.pass-panel { grid-area: pass; }
-.annual-panel { grid-area: annual; }
-.institution-panel { grid-area: institution; }
-.regulator-rank-panel { grid-area: regulator; }
-.base-rank-panel { grid-area: base; }
 
 .panel-heading {
-    height: 34px;
-    flex: 0 0 34px;
-    padding: 0 7px;
+    position: relative;
     display: flex;
     align-items: center;
-    gap: 8px;
-    background: repeating-linear-gradient(45deg, rgba(20, 57, 92, .82) 0 18px, rgba(9, 37, 67, .82) 18px 36px);
-    border-bottom: 1px solid rgba(36, 104, 159, .42);
+    flex: 0 0 34px;
+    padding: 0 9px;
+    gap: 11px;
+    background: repeating-linear-gradient(44deg, #102033 0 24px, #162b46 24px 42px);
+    border-bottom: 1px solid #1b324a;
 }
-
-.panel-heading :deep(i) {
-    position: relative;
-    width: 18px;
-    height: 18px;
-    flex: 0 0 18px;
+.panel-heading::before {
+    content: '';
+    flex: 0 0 11px;
+    height: 19px;
+    background: linear-gradient(#4786cb 50%, #3069a8 50%);
+    clip-path: polygon(50% 0, 100% 26%, 53% 50%, 100% 74%, 50% 100%, 0 74%, 47% 50%, 0 26%);
 }
-
-.panel-heading :deep(i::before),
-.panel-heading :deep(i::after) {
+.panel-heading::after {
     content: '';
     position: absolute;
-    left: 4px;
-    width: 10px;
-    height: 10px;
-    clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
-    background: #2e83d2;
+    right: 1px;
+    bottom: -1px;
+    width: 11px;
+    height: 2px;
+    background: #e4ce91;
+    transform: skewX(-30deg);
+    display: none;
 }
+.panel-heading h2 { margin: 0; font-size: clamp(17px, 1.14vw, 22px); line-height: 1.1; }
+.chart { flex: 1; min-width: 0; min-height: 0; width: 100%; }
 
-.panel-heading :deep(i::before) { top: 0; background: #1d65ad; }
-.panel-heading :deep(i::after) { bottom: 0; }
-.panel-heading :deep(h2) { min-width: 0; margin: 0; font-size: 21px; line-height: 1; letter-spacing: 0; white-space: nowrap; text-shadow: 0 0 8px rgba(75, 176, 255, .45); }
-.panel-heading :deep(span) { width: 14px; height: 1px; margin-left: auto; background: #ffea4c; display: none; }
-.panel-heading :deep(button) { margin-left: auto; padding: 0; border: 0; color: #f1f5f8; font: 14px/1 "Microsoft YaHei"; background: transparent; cursor: pointer; }
-
-.chart { min-width: 0; min-height: 0; }
-.summary-metrics {
-    flex: 0 0 86px;
-    margin: 15px 12px 0;
-    padding: 7px 10px;
+.task-overview {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6px 20px;
-    border: 1px solid #477895;
-    border-radius: 7px;
-    background: rgba(3, 17, 32, .9);
-    box-shadow: 0 0 13px rgba(40, 176, 238, .19);
+    grid-template-columns: minmax(0, min(49%, 189px)) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(12px, 1.4vw, 28px);
+    flex: 1;
+    min-height: 0;
+    padding: 0 clamp(14px, 2vw, 39px) 14px 19px;
+}
+.task-dial {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    container-type: size;
+}
+.task-pie {
+    width: 100%;
+    width: min(100cqw, calc(100cqh * 189 / 184));
+    aspect-ratio: 189 / 184;
+    background: url(@/assets/images/regulatory/bg-bingtu.png) center / 100% 100% no-repeat;
+}
+.task-legend { display: grid; gap: clamp(7px, 1.3vh, 15px); margin: 0; padding: 0; list-style: none; }
+.task-legend li { display: grid; grid-template-columns: 11px auto 1fr; align-items: center; gap: 8px; white-space: nowrap; font-size: clamp(12px, .94vw, 18px); }
+.task-legend i { width: 11px; height: 11px; background: var(--series-color); }
+.task-legend strong { color: var(--series-color); font-weight: 400; text-align: right; }
+
+.panel-controls { display: flex; justify-content: flex-end; padding: 6px 16px 3px; }
+.filter-select { position: relative; display: block; flex: 0 0 auto; width: clamp(74px, 5.3vw, 102px); }
+.filter-select::after {
+    content: '';
+    position: absolute;
+    top: 9px;
+    right: 13px;
+    width: 8px;
+    height: 8px;
+    border-right: 1px solid #93c6df;
+    border-bottom: 1px solid #93c6df;
+    transform: rotate(45deg);
+    pointer-events: none;
+}
+.filter-select select {
+    width: 100%;
+    height: 30px;
+    padding: 0 24px 0 10px;
+    border: 1px solid #266087;
+    border-radius: 4px;
+    color: #f0f7fd;
+    background: #091b2d;
+    box-shadow: inset 0 0 5px #2277a582;
+    appearance: none;
+    font: inherit;
+    font-size: 13px;
+    cursor: pointer;
 }
 
-.summary-metrics article { position: relative; z-index: 0; min-width: 0; padding: 0 4px 6px; display: flex; align-items: baseline; justify-content: space-between; gap: 7px; }
-.summary-metrics article::after {
+.map-panel { position: relative; min-width: 0; min-height: 0; }
+.map-panel :deep(.map-location) { top: -4px; left: 5px; font-size: clamp(16px, 1.05vw, 20px); }
+.map-panel :deep(.map-chart) { position: absolute; bottom: 0; height: 73%; }
+.map-metrics {
+    position: absolute;
+    z-index: 2;
+    top: 6.4%;
+    left: calc(50% + 10px);
+    width: min(94%, 560px);
+    transform: translateX(-50%);
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin: 0;
+}
+.map-metrics > div {
+    min-width: 0;
+    aspect-ratio: 280 / 122;
+    display: grid;
+    align-content: center;
+    gap: 3px;
+    text-align: center;
+    background: url(@/assets/images/regulatory/bg-jgsl.png) center / contain no-repeat;
+}
+.map-metrics dt {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    font-size: clamp(12px, 1.05vw, 20px);
+    font-weight: 700;
+    font-style: italic;
+    white-space: nowrap;
+}
+.map-metrics dt img { width: clamp(12px, 1.05vw, 20px); height: auto; }
+.map-metrics dd { margin: 0; color: var(--metric-color); font: italic 800 clamp(22px, 1.7vw, 33px)/1 Arial, sans-serif; }
+.map-metrics small { margin-left: 1px; font-size: .43em; }
+
+.comparison-summary {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    padding: 0 16px;
+    gap: 8px;
+}
+.comparison-summary p {
+    position: relative;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    width: fit-content;
+    margin: 0;
+    padding: 0 5px 9px;
+    gap: clamp(4px, 1vw, 20px);
+    white-space: nowrap;
+    font-size: clamp(12px, 1.04vw, 20px);
+    font-weight: 700;
+    font-style: italic;
+}
+.comparison-summary p::after {
     content: '';
     position: absolute;
     right: 0;
-    bottom: -2px;
+    bottom: 0;
     left: 0;
-    z-index: -1;
-    height: 12px;
-    pointer-events: none;
-    background:
-        linear-gradient(90deg, rgba(35, 108, 153, .08), rgba(53, 129, 177, .28) 8%, rgba(116, 199, 245, .58) 50%, rgba(53, 129, 177, .28) 92%, rgba(35, 108, 153, .08)) center 66% / 100% 1px no-repeat,
-        linear-gradient(180deg, rgba(1, 13, 25, .72) 0 48%, rgba(3, 20, 36, .92) 52% 100%);
-    box-shadow: inset 0 -3px 5px rgba(0, 0, 0, .22);
+    height: 9px;
+    background: linear-gradient(180deg, #15324d55, #071523 40%, #0b1828 72%, #060f1d);
+    box-shadow: 0 0 7px #0f233b7d;
 }
-.summary-metrics span { position: relative; z-index: 1; font-size: 16px; font-style: italic; font-weight: 700; white-space: nowrap; }
-.summary-metrics strong { position: relative; z-index: 1; font: italic 700 28px/1 Arial, sans-serif; white-space: nowrap; }
-.summary-metrics small { margin-left: 2px; font: 12px "Microsoft YaHei"; }
-.composition-chart { flex: 1; width: 100%; }
+.comparison-summary strong { color: var(--value-color); font: italic 800 clamp(20px, 1.63vw, 31px)/1 Arial, sans-serif; }
+.comparison-summary small { margin-left: 1px; font-size: .54em; }
+.task-total { justify-content: center; min-height: clamp(49px, 6.2vh, 67px); --value-color: #2aacee; }
+.task-total p { width: min(100%, 280px); padding-inline: 10px 0; }
+.comparison-summary--tasks { justify-content: space-between; min-height: 47px; --value-color: #fff779; }
+.comparison-summary--tasks p { padding-left: 0; }
+.comparison-summary--patrol { justify-content: center; min-height: clamp(54px, 7.8vh, 84px); --value-color: #1cd4a1; }
+.comparison-summary--patrol p { padding-right: 12px; padding-bottom: 13px; padding-left: 12px; gap: clamp(18px, 2.2vw, 44px); }
+.comparison-summary--growth { --value-color: #2aacee; }
 
-.panel-tools { height: 43px; flex: 0 0 43px; padding: 8px 16px 4px; display: flex; justify-content: flex-end; }
-.filter-select { position: relative; display: inline-flex; width: 101px; height: 30px; margin-top: 2px;}
-.filter-select::after { content: ''; position: absolute; top: 8px; right: 10px; width: 8px; height: 8px; border-right: 1px solid #a7eaff; border-bottom: 1px solid #a7eaff; transform: rotate(45deg); pointer-events: none; }
-.filter-select :deep(select) { width: 100%; height: 100%; padding: 0 29px 0 12px; border: 1px solid #245f87; border-radius: 3px; outline: 0; color: #edf7ff; font-size: 13px; appearance: none; background: rgba(4, 24, 43, .93); box-shadow: inset 0 0 8px rgba(43, 156, 213, .16), 0 0 5px rgba(25, 143, 204, .2); cursor: pointer; }
-.rank-chart { flex: 1; width: 100%; }
+.dashboard-error, .loading-state { margin: 0; color: #b5e2f6; text-align: center; }
+.loading-state { padding: 24px; }
+.dashboard-error { position: absolute; top: 5px; left: 50%; z-index: 4; transform: translateX(-50%); padding: 4px 12px; background: #4e2438; color: #ffd9da; }
 
-.comparison-content { flex: 1; min-height: 0; padding: 8px 12px 8px; display: flex; flex-direction: column; }
-.comparison-content :deep(.comparison-summary) { height: 54px; flex: 0 0 54px; display: flex; align-items: flex-start; justify-content: space-between; }
-.comparison-content :deep(.comparison-summary strong) { position: relative; z-index: 0; min-width: 0; padding: 0 8px 20px; display: inline-flex; align-items: flex-end; font-weight: normal; white-space: nowrap; }
-.comparison-content :deep(.comparison-summary strong::after) {
-    content: '';
-    position: absolute;
-    right: -60px;
-    bottom: 0;
-    left: -60px;
-    z-index: -1;
-    height: 28px;
-    pointer-events: none;
-    background:
-        linear-gradient(90deg, transparent, rgba(35, 108, 153, .18) 18%, rgba(104, 190, 239, .58) 50%, rgba(35, 108, 153, .18) 82%, transparent) center / 100% 1px no-repeat,
-        linear-gradient(180deg, rgba(1, 13, 25, .88) 0 48%, rgba(3, 20, 36, .98) 52% 100%);
-    box-shadow: inset 0 1px 4px rgba(0, 0, 0, .28), inset 0 -3px 5px rgba(0, 0, 0, .24);
-}
-.comparison-content :deep(.comparison-summary em) { font-size: 18px; font-weight: 700; line-height: 27px; white-space: nowrap; }
-.comparison-content :deep(.comparison-summary b) { margin-left: 16px; color: #28baf4; font: italic 700 31px/31px Arial, sans-serif; letter-spacing: 0; text-shadow: 1px 2px 2px rgba(0, 0, 0, .7), 0 0 5px rgba(40, 186, 244, .22); }
-.comparison-content :deep(.comparison-summary small) { margin-left: 1px; font-size: 14px; line-height: 1; }
-.comparison-content :deep(.comparison-summary .filter-select) { position: relative; flex: 0 0 101px; height: 30px; margin-left: 8px; display: inline-flex; margin-top: 2px; }
-.comparison-content :deep(.comparison-summary .filter-select::after) { content: ''; position: absolute; top: 8px; right: 10px; width: 8px; height: 8px; border-right: 1px solid #a7eaff; border-bottom: 1px solid #a7eaff; transform: rotate(45deg); pointer-events: none; }
-.comparison-content :deep(.comparison-summary .filter-select select) { width: 100%; height: 100%; padding: 0 29px 0 12px; border: 1px solid #245f87; border-radius: 3px; outline: 0; color: #edf7ff; font-size: 13px; appearance: none; background: rgba(4, 24, 43, .93); }
-.comparison-content :deep(.comparison-chart) { flex: 1; width: 100%; }
-.quarter-panel :deep(.comparison-summary) { justify-content: center; }
-
-.donut-chart { flex: 1; width: 100%; }
-.institution-total { height: 47px; margin: 8px 12px 0; padding: 0 10px; flex: 0 0 47px; display: flex; align-items: center; justify-content: space-between; border: 1px solid #5689aa; border-radius: 7px; background: rgba(3, 17, 32, .88); box-shadow: 0 0 9px rgba(73, 168, 225, .38), inset 0 0 10px rgba(59, 144, 199, .14), inset 0 1px 0 rgba(170, 225, 255, .12); }
-.institution-total span { font-size: 17px; font-style: italic; font-weight: 700; white-space: nowrap; }
-.institution-total strong { color: #27baf3; font: 700 30px/1 Arial, sans-serif; white-space: nowrap; }
-.institution-total small { margin-left: 3px; color: #f3f8fd; font: 12px "Microsoft YaHei"; }
-.institution-chart { flex: 1; width: 100%; }
-.regulator-rank-panel h3 {
-    position: relative;
-    z-index: 0;
-    height: 54px;
-    margin: 0;
-    padding: 9px 4px 23px;
-    flex: 0 0 54px;
-    font-size: 18px;
-    font-style: italic;
-    text-align: center;
-    white-space: nowrap;
-    text-shadow: 1px 2px 2px rgba(0, 0, 0, .95), 0 0 4px rgba(190, 226, 248, .24);
-}
-.regulator-rank-panel h3::after {
-    content: '';
-    position: absolute;
-    right: 7%;
-    bottom: 0;
-    left: 7%;
-    z-index: -1;
-    height: 28px;
-    pointer-events: none;
-    background:
-        linear-gradient(90deg, transparent, rgba(35, 108, 153, .18) 18%, rgba(104, 190, 239, .58) 50%, rgba(35, 108, 153, .18) 82%, transparent) center / 100% 1px no-repeat,
-        linear-gradient(180deg, rgba(1, 13, 25, .88) 0 48%, rgba(3, 20, 36, .98) 52% 100%);
-    box-shadow: inset 0 1px 4px rgba(0, 0, 0, .28), inset 0 -3px 5px rgba(0, 0, 0, .24);
-}
-
-.data-error { position: absolute; top: 0; right: 0; left: 0; z-index: 5; padding: 7px 18px; color: #ffd0d0; background: rgba(130, 23, 39, .9); text-align: center; }
-.loading-state { position: relative; z-index: 2; min-height: 100%; display: flex; align-items: center; justify-content: center; color: #5adcea; font-size: 20px; }
-
-@media (max-width: 1600px) {
-    .regulatory-grid { padding: 10px 10px 12px; grid-template-columns: minmax(270px, 1.08fr) minmax(250px, 1fr) minmax(250px, 1fr) minmax(270px, 1.08fr); gap: 10px; }
-    .panel-heading { height: 31px; flex-basis: 31px; }
-    .panel-heading :deep(h2) { font-size: 17px; }
-    .panel-heading :deep(button) { font-size: 12px; }
-    .summary-metrics { flex-basis: 70px; margin: 8px 8px 0; padding: 5px 7px; gap: 3px 10px; }
-    .summary-metrics span { font-size: 12px; }
-    .summary-metrics strong { font-size: 22px; }
-    .summary-metrics small { font-size: 10px; }
-    .panel-tools { height: 36px; flex-basis: 36px; padding: 4px 10px 2px; }
-    .filter-select { width: 90px; height: 27px; }
-    .comparison-content { padding: 5px 7px; }
-    .comparison-content :deep(.comparison-summary) { height: 44px; flex-basis: 44px; }
-    .comparison-content :deep(.comparison-summary strong) { padding-right: 6px; padding-bottom: 15px; padding-left: 6px; }
-    .comparison-content :deep(.comparison-summary strong::after) { height: 15px; }
-    .comparison-content :deep(.comparison-summary em) { font-size: 13px; line-height: 20px; }
-    .comparison-content :deep(.comparison-summary b) { margin-left: 10px; font-size: 25px; line-height: 24px; }
-    .comparison-content :deep(.comparison-summary .filter-select) { flex-basis: 90px; }
-    .institution-total { height: 41px; margin: 5px 8px 0; flex-basis: 41px; }
-    .institution-total span { font-size: 13px; }
-    .institution-total strong { font-size: 23px; }
-    .regulator-rank-panel h3 { height: 44px; padding: 7px 4px 17px; flex-basis: 44px; font-size: 14px; }
-    .regulator-rank-panel h3::after { height: 15px; }
+@media screen and (max-width: 1450px) {
+    .task-overview { padding-right: 12px; gap: 10px; }
+    .task-legend li { grid-template-columns: 8px auto 1fr; gap: 5px; }
+    .task-legend i { height: 8px; width: 8px; }
+    .comparison-summary { padding-right: 10px; padding-left: 10px; }
 }
 </style>
