@@ -339,7 +339,6 @@ export default {
 
 .map-location {
     position: absolute;
-    top: 8px;
     left: 8px;
     z-index: 3;
     min-height: 32px;
