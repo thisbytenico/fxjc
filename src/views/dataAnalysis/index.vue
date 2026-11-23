@@ -66,7 +66,7 @@
                 <div class="certification-content">
                     <div class="certification-metric">
                         <strong>{{ certifications ? formatNumber(certifications.total) : '—' }}</strong>
-                        <span>认证主体(家) <small>活跃度 <b>{{ certifications ? `${certifications.activeRate}%` : '—' }}</b></small></span>
+                        <span>认证主体(家) <small>活跃度 <b>{{ formatActivityRate(certifications?.activeRate) }}</b></small></span>
                     </div>
                     <div class="certification-chart-row">
                         <div ref="certificationRef" class="certification-chart chart"></div>
@@ -200,12 +200,37 @@ export default {
             }]
         });
 
-        watch(subjectIndustry, data => {
-            subjectPieChart?.setOption({ series: [{ data: data ?? [] }] });
-        });
-        watch(certifications, data => {
-            certificationChart?.setOption({ series: [{ data: data?.industry ?? [] }] });
-        });
+        const regionalPieOption = (data, colors, radius, seriesOptions = {}) => {
+            const isEmpty = data != null && data.every(item => item.value === 0);
+            const option = pieOption(isEmpty ? [] : data ?? [], colors, radius);
+            const series = option.series[0];
+            Object.assign(series, seriesOptions, {
+                showEmptyCircle: isEmpty,
+                stillShowZeroSum: false,
+                emptyCircleStyle: { color: '#36526a' }
+            });
+            const [left, top] = series.center;
+            option.graphic = [{
+                id: 'empty-pie-label',
+                type: 'group',
+                bounding: 'raw',
+                left,
+                top,
+                children: [{
+                    type: 'text',
+                    silent: true,
+                    ignore: !isEmpty,
+                    style: {
+                        text: '暂无数据',
+                        fill: '#bdc9d4',
+                        fontSize: 11,
+                        align: 'center',
+                        verticalAlign: 'middle'
+                    }
+                }]
+            }];
+            return option;
+        };
 
         const loadRegionAnalysis = (routes) => {
             const regionKey = routes.filter(route => route.level !== 'country').map(route => route.adcode).join('/');
@@ -259,19 +284,26 @@ export default {
                 labelLinePoints: [layout.anchor, [lineEndX + 8, layout.y], [lineEndX, layout.y]]
             };
         };
-        const initCharts = () => {
-            const data = dashboard.value;
-            const subjectPieOption = pieOption(subjectIndustry.value ?? [], ['#2bd1ab', '#f09a42', '#2aa9e6'], ['45%', '67%']);
-            Object.assign(subjectPieOption.series[0], {
+        const subjectPieOption = data => regionalPieOption(
+            data,
+            ['#2bd1ab', '#f09a42', '#2aa9e6'],
+            ['45%', '67%'],
+            {
                 center: ['67%', '52%'],
                 avoidLabelOverlap: false,
-                showEmptyCircle: false,
-                stillShowZeroSum: false,
                 label: { show: true, color: '#ecf7ff', fontSize: 11, formatter: '{b}:{c}' },
                 labelLine: { length: 8, length2: 6, lineStyle: { color: '#d9f8ff' } },
                 labelLayout: subjectPieLabelLayout
-            });
-            subjectPieChart = initChart(subjectPieRef.value, subjectPieOption);
+            }
+        );
+        const certificationPieOption = data => regionalPieOption(data?.industry, CHART_COLORS, ['48%', '70%']);
+
+        watch(subjectIndustry, data => subjectPieChart?.setOption(subjectPieOption(data)));
+        watch(certifications, data => certificationChart?.setOption(certificationPieOption(data)));
+
+        const initCharts = () => {
+            const data = dashboard.value;
+            subjectPieChart = initChart(subjectPieRef.value, subjectPieOption(subjectIndustry.value));
 
             const rank = data.traceability.productionRank;
             const traceCategoryLabel = { ...axisText, fontSize: 13, interval: 0, hideOverlap: true };
@@ -335,10 +367,7 @@ export default {
                 series: [{ type: 'bar', barWidth: 12, data: printRank.map(item => item.value), itemStyle: { color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{ offset: 0, color: 'rgba(20,75,79,.45)' }, { offset: .58, color: '#188d96' }, { offset: 1, color: '#38bfcb' }]), borderRadius: [0, 7, 7, 0] }, label: traceValueLabel }]
             });
 
-            const certificationOption = pieOption(certifications.value?.industry ?? [], CHART_COLORS, ['48%', '70%']);
-            certificationOption.series[0].showEmptyCircle = false;
-            certificationOption.series[0].stillShowZeroSum = false;
-            certificationChart = initChart(certificationRef.value, certificationOption);
+            certificationChart = initChart(certificationRef.value, certificationPieOption(certifications.value));
             initChart(productPieRef.value, pieOption(data.products.distribution, ['#31d3ae', '#35b7f0', '#ffcc72'], ['49%', '72%']));
 
             initChart(farmingRef.value, {
