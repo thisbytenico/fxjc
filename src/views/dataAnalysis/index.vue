@@ -216,24 +216,65 @@ export default {
             });
 
             const rank = data.traceability.productionRank;
+            const traceCategoryLabel = { ...axisText, fontSize: 13, interval: 0, hideOverlap: true };
+            const traceAxisLabel = { color: '#526379', fontSize: 10, margin: 4, showMaxLabel: true, hideOverlap: true, formatter: value => String(value) };
+            const traceValueLabel = { show: true, position: 'insideRight', color: '#fff', fontSize: 10 };
             initChart(batchRankRef.value, {
                 tooltip: { ...tooltip, trigger: 'axis', axisPointer: { type: 'shadow' } },
-                grid: { left: 8, right: 12, top: 10, bottom: 4, containLabel: true },
-                xAxis: { type: 'value', max: 180000, splitNumber: 6, axisLabel: { color: '#526379', fontSize: 9, formatter: value => String(value) }, splitLine: { lineStyle: { color: 'rgba(105,140,175,.22)' } } },
-                yAxis: { type: 'category', inverse: true, data: rank.map(item => item.name), axisLabel: axisText, axisTick: { show: false }, axisLine: { show: false } },
+                legend: {
+                    data: ['生产批次', '交易批次'],
+                    top: 0,
+                    right: 4,
+                    padding: 0,
+                    icon: 'rect',
+                    itemWidth: 16,
+                    itemHeight: 10,
+                    itemGap: 12,
+                    selectedMode: false,
+                    textStyle: { color: '#f4f9ff', fontSize: 12 }
+                },
+                grid: { left: 8, right: 18, top: 18, bottom: 4, containLabel: true },
+                xAxis: { type: 'value', max: 180000, splitNumber: 6, axisLabel: traceAxisLabel, splitLine: { lineStyle: { color: 'rgba(105,140,175,.22)' } } },
+                yAxis: { type: 'category', inverse: true, data: rank.map(item => item.name), axisLabel: traceCategoryLabel, axisTick: { show: false }, axisLine: { show: false } },
                 series: [
-                    { name: '生产批次', type: 'bar', stack: 'total', barWidth: 12, itemStyle: { color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{ offset: 0, color: '#173b5f' }, { offset: 1, color: '#2ca3dc' }]) }, label: { show: true, position: 'insideRight', color: '#fff', fontSize: 7 }, data: rank.map(item => item.primary) },
-                    { name: '交易批次', type: 'bar', stack: 'total', barWidth: 12, itemStyle: { color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{ offset: 0, color: '#9a345f' }, { offset: 1, color: '#e24a78' }]) }, label: { show: true, position: 'insideRight', color: '#fff', fontSize: 7 }, data: rank.map(item => item.secondary) }
+                    {
+                        name: '交易批次',
+                        type: 'bar',
+                        stack: 'total',
+                        barMaxWidth: 12,
+                        itemStyle: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+                                { offset: 0, color: '#294c70' },
+                                { offset: 1, color: '#2ca3dc' }
+                            ])
+                        },
+                        label: traceValueLabel,
+                        data: rank.map(item => item.secondary)
+                    },
+                    {
+                        name: '生产批次',
+                        type: 'bar',
+                        stack: 'total',
+                        barMaxWidth: 12,
+                        itemStyle: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+                                { offset: 0, color: '#8b640c' },
+                                { offset: 1, color: '#d0be25' }
+                            ])
+                        },
+                        label: traceValueLabel,
+                        data: rank.map(item => item.primary)
+                    }
                 ]
             });
 
             const printRank = data.traceability.printRank;
             initChart(printRankRef.value, {
                 tooltip: { ...tooltip, trigger: 'axis', axisPointer: { type: 'shadow' } },
-                grid: { left: 8, right: 12, top: 8, bottom: 4, containLabel: true },
-                xAxis: { type: 'value', max: 180000, splitNumber: 6, axisLabel: { color: '#526379', fontSize: 9, formatter: value => String(value) }, splitLine: { lineStyle: { color: 'rgba(105,140,175,.22)' } } },
-                yAxis: { type: 'category', inverse: true, data: printRank.map(item => item.name), axisLabel: axisText, axisTick: { show: false }, axisLine: { show: false } },
-                series: [{ type: 'bar', barWidth: 12, data: printRank.map(item => item.value), itemStyle: { color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{ offset: 0, color: 'rgba(20,75,79,.45)' }, { offset: .58, color: '#188d96' }, { offset: 1, color: '#38bfcb' }]), borderRadius: [0, 7, 7, 0] }, label: { show: true, position: 'insideRight', color: '#fff', fontSize: 7 } }]
+                grid: { left: 8, right: 18, top: 8, bottom: 4, containLabel: true },
+                xAxis: { type: 'value', max: 180000, splitNumber: 6, axisLabel: traceAxisLabel, splitLine: { lineStyle: { color: 'rgba(105,140,175,.22)' } } },
+                yAxis: { type: 'category', inverse: true, data: printRank.map(item => item.name), axisLabel: traceCategoryLabel, axisTick: { show: false }, axisLine: { show: false } },
+                series: [{ type: 'bar', barWidth: 12, data: printRank.map(item => item.value), itemStyle: { color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{ offset: 0, color: 'rgba(20,75,79,.45)' }, { offset: .58, color: '#188d96' }, { offset: 1, color: '#38bfcb' }]), borderRadius: [0, 7, 7, 0] }, label: traceValueLabel }]
             });
 
             initChart(certificationRef.value, pieOption(data.certifications.industry, CHART_COLORS, ['48%', '70%']));
@@ -414,15 +455,15 @@ export default {
 .progress { position: relative; z-index: 1; width: calc(100% - 16px); height: 8px; margin-top: 6px; padding: 2px 4px; background: rgba(6, 30, 48, .96); border: 1px solid rgba(48, 103, 138, .8); transform: skew(-8deg); }
 .progress i { display: block; height: 3px; box-shadow: 0 0 6px currentColor; }
 
-.trace-content { flex: 1; min-height: 0; padding: 12px 14px 10px; display: grid; grid-template-rows: 73px 73px minmax(0, 1fr) 73px minmax(0, 1fr); gap: 10px; }
-.trace-card { min-height: 0; padding: 7px 13px; display: flex; align-items: center; justify-content: space-between; border: 1px solid #48708d; border-radius: 7px; background: rgba(5, 20, 37, .88); box-shadow: inset 0 0 12px rgba(71, 152, 197, .1); }
-.trace-card h3 { margin: 0; font-size: 18px; font-style: italic; line-height: 1; }
-.trace-card strong { display: block; margin-top: 4px; font: 700 30px/.95 "Arial Narrow", Arial, sans-serif; letter-spacing: 0; }
-.trace-card strong small { margin-left: 5px; font: 14px "Microsoft YaHei"; }
+.trace-content { flex: 1; min-height: 0; padding: 12px 14px 10px; display: grid; grid-template-rows: 64px 64px minmax(0, 1fr) 64px minmax(0, 1fr); gap: 10px; }
+.trace-card { min-height: 0; padding: 5px 13px; display: flex; align-items: center; justify-content: space-between; border: 1px solid #48708d; border-radius: 7px; background: rgba(5, 20, 37, .88); box-shadow: inset 0 0 12px rgba(71, 152, 197, .1); }
+.trace-card h3 { margin: 0; font-size: 16px; font-style: italic; line-height: 1; }
+.trace-card strong { display: block; margin-top: 4px; font: 700 27px/.95 "Arial Narrow", Arial, sans-serif; letter-spacing: 0; }
+.trace-card strong small { margin-left: 5px; font: 12px "Microsoft YaHei"; }
 .trace-card dl { margin: 0; display: flex; gap: 22px; text-align: center; }
 .trace-card dl div { display: flex; flex-direction: column; }
-.trace-card dt { font-size: 18px; font-weight: 700; }
-.trace-card dd { margin: 2px 0 0; color: #bdc9d4; font-size: 14px; white-space: nowrap; }
+.trace-card dt { font-size: 16px; font-weight: 700; }
+.trace-card dd { margin: 2px 0 0; color: #bdc9d4; font-size: 12px; white-space: nowrap; }
 .yellow-card { border-color: rgba(220, 225, 133, .62); border-width: 0.5px; box-shadow: inset 0 0 18px rgba(239, 233, 75, .15), 0 0 0px rgba(235, 227, 74, .48), 0 0 15px rgba(224, 218, 64, .3); }
 .yellow-card strong { color: #f4ef38; }
 .blue-card { border-color: rgba(83, 175, 219, .64); border-width: 0.5px; box-shadow: inset 0 0 18px rgba(48, 173, 232, .16), 0 0 0px rgba(49, 174, 232, .5), 0 0 15px rgba(39, 159, 221, .32); }
@@ -430,9 +471,15 @@ export default {
 .cyan-card { border-color: rgba(43, 220, 225, .66); border-width: 0.5px; box-shadow: inset 0 0 18px rgba(39, 224, 226, .16), 0 0 0px rgba(35, 221, 225, .52), 0 0 16px rgba(27, 202, 211, .34); }
 .cyan-card strong { color: #44e0e5; }
 .batch-chart, .print-chart { width: 100%; height: 100%; }
-
+.batch-chart{
+    // margin-top: 10px;
+    padding-top:6px
+}
 .certification-content { flex: 1; min-height: 0; padding: 19px 30px 12px; display: flex; flex-direction: column; }
-.certification-metric { width: 58%; padding: 8px 10px; display: flex; flex-direction: column; border: 1px solid rgba(192, 132, 72, .74); border-radius: 6px; background: rgba(8, 20, 34, .86); box-shadow: 0 0 14px rgba(232, 142, 61, .2); }
+.certification-metric { width: 54%; padding: 8px 10px; display: flex; flex-direction: column; border: 1px solid rgba(192, 132, 72, .74); border-radius: 6px; background: rgba(8, 20, 34, .86); box-shadow: 0 0 14px rgba(232, 142, 61, .2); }
+@media (max-width: 1600px) {
+    .certification-metric { width:64%; }
+}
 .certification-metric strong { color: #f0924e; font: 700 28px/1 "Arial Narrow", Arial, sans-serif; }
 .certification-metric span { margin-top: 3px; font-size: 16px; }
 .certification-metric small { font-size: 12px; }
@@ -473,15 +520,13 @@ export default {
 
 .product-content { flex: 1; min-height: 0; padding: 10px 14px; display: grid; grid-template-rows: 1fr 1fr; gap: 5px; }
 .product-top, .product-bottom { min-height: 0; display: grid; grid-template-columns: 46% 54%; align-items: center; }
-.product-metric { position: relative; min-width: 0; height: 100%; 
-    // padding-bottom: 6px;
-     display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-.product-metric::after { content: ''; position: absolute; right: 4%; bottom: 3px; left: 4%; height: 23px; clip-path: polygon(12% 0, 88% 0, 100% 100%, 0 100%); background: linear-gradient(90deg, transparent, rgba(47, 192, 230, .5), transparent) top center / 72% 1px no-repeat, repeating-linear-gradient(168deg, transparent 0 7px, rgba(31, 133, 169, .14) 8px 9px), linear-gradient(180deg, rgba(11, 58, 82, .12), rgba(16, 92, 119, .48)); border-bottom: 1px solid rgba(39, 143, 178, .35); box-shadow: inset 0 -7px 10px rgba(24, 115, 148, .13); }
+.product-metric { position: relative; min-width: 0; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; text-align: center; }
+.product-metric::after { content: ''; flex: 0 0 23px; width: 92%; margin-bottom: 3px; clip-path: polygon(12% 0, 88% 0, 100% 100%, 0 100%); background: linear-gradient(90deg, transparent, rgba(47, 192, 230, .5), transparent) top center / 72% 1px no-repeat, repeating-linear-gradient(168deg, transparent 0 7px, rgba(31, 133, 169, .14) 8px 9px), linear-gradient(180deg, rgba(11, 58, 82, .12), rgba(16, 92, 119, .48)); border-bottom: 1px solid rgba(39, 143, 178, .35); box-shadow: inset 0 -7px 10px rgba(24, 115, 148, .13); }
 .product-metric strong { position: relative; z-index: 1; color: #2daef1; font: 700 30px/1 Arial, sans-serif; }
-.product-metric span { position: relative; z-index: 1; margin-top: 6px; font-size: 17px; font-weight: 700; white-space: nowrap; }
-.product-distribution { min-width: 0; height: 100%; display: grid; grid-template-columns: 58% 42%; align-items: center; }
+.product-metric span { position: relative; z-index: 1; margin-top: 6px; font-size: 17px; font-weight: 700; line-height: 1.1; white-space: nowrap; }
+.product-distribution { min-width: 0; margin-left: -10px; height: 100%; display: grid; grid-template-columns: 58% 42%; align-items: center; }
 .product-pie, .query-chart { width: 100%; height: 100%; }
-.product-legend { min-width: 0; margin: 0; padding: 0; list-style: none; font-size: 12px; }
+.product-legend { min-width: 0; margin: 0; margin-left: -8px; padding: 0; list-style: none; font-size: 12px; }
 .product-legend li { margin: 7px 0; display: flex; align-items: center; white-space: nowrap; }
 .product-legend i { width: 8px; height: 5px; margin-right: 5px; flex: 0 0 8px; background: #31d3ae; }
 .product-legend .product-legend-1 { background: #35b7f0; }
@@ -505,10 +550,10 @@ export default {
     .active-label { margin-top: 5px; font-size: 12px; }
     .active-label::before { top: 0; height: 32px; }
     .progress { margin-top: 3px; }
-    .trace-content { padding: 8px 10px 7px; grid-template-rows: 65px 65px minmax(58px, 1fr) 65px minmax(58px, 1fr); gap: 6px; }
+    .trace-content { padding: 8px 10px 7px; grid-template-rows: 56px 56px minmax(58px, 1fr) 56px minmax(58px, 0.8fr); gap: 6px; }
     .trace-card { padding-left: 9px; padding-right: 9px; }
-    .trace-card h3, .trace-card dt { font-size: 15px; }
-    .trace-card strong { font-size: 25px; }
+    .trace-card h3, .trace-card dt { font-size: 14px; }
+    .trace-card strong { font-size: 23px; }
     .trace-card dl { gap: 10px; }
     .certification-content { padding: 10px 16px 6px; }
     .certification-metric { padding-top: 5px; padding-bottom: 5px; }
@@ -522,5 +567,15 @@ export default {
     .product-metric strong, .query-metric strong { font-size: 24px; }
     .product-legend { font-size: 10px; }
     .product-legend li { margin: 5px 0; }
+}
+
+@media screen and (min-width: 1920px) {
+    .trace-content {
+        --trace-card-height: clamp(68px, 7.1vh, 76px);
+        grid-template-rows: repeat(2, var(--trace-card-height)) minmax(0, 1fr) var(--trace-card-height) minmax(0, 1fr);
+    }
+    .trace-card h3, .trace-card dt { font-size: 18px; }
+    .trace-card strong { font-size: 32px; }
+    .trace-card strong small, .trace-card dd { font-size: 14px; }
 }
 </style>
