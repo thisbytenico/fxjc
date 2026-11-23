@@ -134,10 +134,10 @@ export const getDataAnalysisSubjectIndustry = async (routes) => {
 export const getDataAnalysisSubjectBusiness = async (routes) => {
     const data = await getRegionalAnalysis(DATA_ANALYSIS_API.mainBusiness, routes, '主体业务数据加载失败');
     return [
-        { name: '屠宰主体', value: Number(data.slaughter ?? 0), activeRate: toPercent(data.activeSlaughterRatio), color: '#28b8ff' },
-        { name: '加工主体', value: Number(data.process ?? 0), activeRate: toPercent(data.activeProcessRatio), color: '#f7ef3b' },
-        { name: '储存主体', value: Number(data.storage ?? 0), activeRate: toPercent(data.activeStorageRatio), color: '#4adce6' },
-        { name: '运输主体', value: Number(data.transport ?? 0), activeRate: toPercent(data.activeTransportRatio), color: '#21dbb0' }
+        { name: '屠宰主体', value: Number(data.activeSlaughter ?? 0), activeRate: toPercent(data.activeSlaughterRatio), color: '#28b8ff' },
+        { name: '加工主体', value: Number(data.activeProcess ?? 0), activeRate: toPercent(data.activeProcessRatio), color: '#f7ef3b' },
+        { name: '储存主体', value: Number(data.activeStorage ?? 0), activeRate: toPercent(data.activeStorageRatio), color: '#4adce6' },
+        { name: '运输主体', value: Number(data.activeTransport ?? 0), activeRate: toPercent(data.activeTransportRatio), color: '#21dbb0' }
     ];
 };
 

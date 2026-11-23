@@ -75,8 +75,8 @@
                                 <i :class="`legend-${index}`"></i><span>{{ item.name }}：</span><b>{{ item.value }}</b>
                             </li>
                         </ul>
-                        <p v-if="!certifications" class="certification-status" role="status">
-                            {{ certificationError || '认证主体数据加载中…' }}
+                        <p v-if="certificationError" class="certification-status" role="status">
+                            {{ certificationError }}
                         </p>
                     </div>
                 </div>
@@ -150,6 +150,7 @@ export default {
         const errorMessage = ref('');
         const subjectInfo = ref(null);
         const subjectIndustry = ref(null);
+        const subjectIndustryFailed = ref(false);
         const subjectBusiness = ref(null);
         const subjectError = ref('');
         const certifications = ref(null);
@@ -202,12 +203,14 @@ export default {
             }]
         });
 
-        const regionalPieOption = (data, colors, radius, seriesOptions = {}) => {
+        const regionalPieOption = (data, failed, colors, radius, seriesOptions = {}) => {
+            const isLoading = data == null && !failed;
             const isEmpty = data != null && data.every(item => item.value === 0);
+            const showPlaceholder = isLoading || isEmpty;
             const option = pieOption(isEmpty ? [] : data ?? [], colors, radius);
             const series = option.series[0];
             Object.assign(series, seriesOptions, {
-                showEmptyCircle: isEmpty,
+                showEmptyCircle: showPlaceholder,
                 stillShowZeroSum: false,
                 emptyCircleStyle: { color: '#36526a' }
             });
@@ -221,9 +224,9 @@ export default {
                 children: [{
                     type: 'text',
                     silent: true,
-                    ignore: !isEmpty,
+                    ignore: !showPlaceholder,
                     style: {
-                        text: '暂无数据',
+                        text: isLoading ? '加载中…' : '暂无数据',
                         fill: '#bdc9d4',
                         fontSize: 11,
                         align: 'center',
@@ -240,6 +243,7 @@ export default {
             analysisRegionKey = regionKey;
             const requestId = ++analysisRequestId;
             subjectError.value = '';
+            subjectIndustryFailed.value = false;
             certificationError.value = '';
 
             const load = async (request, target, onError) => {
@@ -252,11 +256,15 @@ export default {
                 }
             };
             const showSubjectError = () => { subjectError.value = '部分主体数据加载失败'; };
+            const showIndustryError = () => {
+                subjectIndustryFailed.value = true;
+                showSubjectError();
+            };
             const showCertificationError = error => { certificationError.value = error.message || '认证主体数据加载失败'; };
 
             return Promise.all([
                 load(getDataAnalysisSubjectInfo, subjectInfo, showSubjectError),
-                load(getDataAnalysisSubjectIndustry, subjectIndustry, showSubjectError),
+                load(getDataAnalysisSubjectIndustry, subjectIndustry, showIndustryError),
                 load(getDataAnalysisSubjectBusiness, subjectBusiness, showSubjectError),
                 load(getDataAnalysisCertifications, certifications, showCertificationError)
             ]);
@@ -286,8 +294,9 @@ export default {
                 labelLinePoints: [layout.anchor, [lineEndX + 8, layout.y], [lineEndX, layout.y]]
             };
         };
-        const subjectPieOption = data => regionalPieOption(
-            data,
+        const subjectPieOption = () => regionalPieOption(
+            subjectIndustry.value,
+            subjectIndustryFailed.value,
             ['#2bd1ab', '#f09a42', '#2aa9e6'],
             ['45%', '67%'],
             {
@@ -298,15 +307,17 @@ export default {
                 labelLayout: subjectPieLabelLayout
             }
         );
-        const certificationPieOption = data => regionalPieOption(data?.industry, CHART_COLORS, ['48%', '70%']);
+        const certificationPieOption = () => regionalPieOption(
+            certifications.value?.industry, Boolean(certificationError.value), CHART_COLORS, ['48%', '70%']
+        );
 
-        watch(subjectIndustry, data => subjectPieChart?.setOption(subjectPieOption(data)));
-        watch(certifications, data => certificationChart?.setOption(certificationPieOption(data)));
+        watch([subjectIndustry, subjectIndustryFailed], () => subjectPieChart?.setOption(subjectPieOption()));
+        watch([certifications, certificationError], () => certificationChart?.setOption(certificationPieOption()));
 
         const initCharts = () => {
             const data = dashboard.value;
             const subjectPieElement = subjectPieRef.value;
-            subjectPieChart = initChart(subjectPieElement, subjectPieOption(subjectIndustry.value));
+            subjectPieChart = initChart(subjectPieElement, subjectPieOption());
             if (subjectPieChart && typeof ResizeObserver !== 'undefined') {
                 subjectPieResizeObserver = new ResizeObserver(() => {
                     const { clientWidth, clientHeight } = subjectPieElement;
@@ -379,7 +390,7 @@ export default {
                 series: [{ type: 'bar', barWidth: 12, data: printRank.map(item => item.value), itemStyle: { color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{ offset: 0, color: 'rgba(20,75,79,.45)' }, { offset: .58, color: '#188d96' }, { offset: 1, color: '#38bfcb' }]), borderRadius: [0, 7, 7, 0] }, label: traceValueLabel }]
             });
 
-            certificationChart = initChart(certificationRef.value, certificationPieOption(certifications.value));
+            certificationChart = initChart(certificationRef.value, certificationPieOption());
             initChart(productPieRef.value, pieOption(data.products.distribution, ['#31d3ae', '#35b7f0', '#ffcc72'], ['49%', '72%']));
 
             initChart(farmingRef.value, {
@@ -530,7 +541,7 @@ export default {
 .metric-box { padding: 7px 10px 8px; display: flex; flex-direction: column; border: 1px solid #47789b; border-radius: 7px; background: rgba(3, 17, 32, .9); box-shadow: 0 0 13px rgba(40, 176, 238, .22); }
 .metric-box strong { font-family: Arial, sans-serif; font-size: 34px; font-weight: 700; line-height: .95; letter-spacing: 0; }
 .metric-box > span { margin-top: 4px; font-size: 16px; white-space: nowrap; }
-.metric-box small { font-size: 12px; font-weight: normal; display: inline-flex; align-items: center; gap: 4px; }
+.metric-box small { font-size: 13px; font-weight: normal; display: inline-flex; align-items: center; gap: 4px; }
 @media (max-width: 1600px) {
     .metric-box small { font-size: 10px; gap:2px;}
 }

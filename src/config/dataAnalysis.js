@@ -7,8 +7,8 @@ export const SHOW_CHINA_MAP_NINE_DASH_LINE = false;
 export const DATA_ANALYSIS_API = {
     dashboard: '/api/data-analysis/dashboard',
     region: '/api/data-analysis/region',
-    mainInfo: '/analyze/mainInfo',
-    mainIndustry: '/analyze/mainIndustry',
-    mainBusiness: '/analyze/mainBusiness',
-    certifications: '/analyze/certMainInfo'
+    mainInfo: '/sys/analyze/mainInfo',
+    mainIndustry: '/sys/analyze/mainIndustry',
+    mainBusiness: '/sys/analyze/mainBusiness',
+    certifications: '/sys/analyze/certMainInfo'
 };
