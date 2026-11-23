@@ -139,6 +139,7 @@ import {
 import { SHOW_CHINA_MAP_NINE_DASH_LINE } from '@/config/dataAnalysis';
 
 const CHART_COLORS = ['#31d3ae', '#f19a42', '#2faeea', '#f8ef51', '#51dce6'];
+const SUBJECT_PIE_CENTER = ['62%', '52%'];
 
 export default {
     name: 'DataAnalysis',
@@ -162,6 +163,7 @@ export default {
         const queryRankRef = ref(null);
         const chartInstances = [];
         let subjectPieChart = null;
+        let subjectPieResizeObserver = null;
         let certificationChart = null;
         let analysisRegionKey;
         let analysisRequestId = 0;
@@ -267,8 +269,8 @@ export default {
             const width = subjectPieRef.value?.clientWidth || 220;
             const height = subjectPieRef.value?.clientHeight || 190;
             const radius = Math.min(width, height) * .67 / 2;
-            const centerX = width * .67;
-            const centerY = height * .52;
+            const centerX = width * parseFloat(SUBJECT_PIE_CENTER[0]) / 100;
+            const centerY = height * parseFloat(SUBJECT_PIE_CENTER[1]) / 100;
             const layouts = [
                 { x: width * .14, y: height * .88, anchor: [centerX - radius * .35, centerY + radius * .92] },
                 { x: 0, y: height * .58, anchor: [centerX - radius * .96, centerY + radius * .18] },
@@ -289,7 +291,7 @@ export default {
             ['#2bd1ab', '#f09a42', '#2aa9e6'],
             ['45%', '67%'],
             {
-                center: ['67%', '52%'],
+                center: SUBJECT_PIE_CENTER,
                 avoidLabelOverlap: false,
                 label: { show: true, color: '#ecf7ff', fontSize: 11, formatter: '{b}:{c}' },
                 labelLine: { length: 8, length2: 6, lineStyle: { color: '#d9f8ff' } },
@@ -303,7 +305,17 @@ export default {
 
         const initCharts = () => {
             const data = dashboard.value;
-            subjectPieChart = initChart(subjectPieRef.value, subjectPieOption(subjectIndustry.value));
+            const subjectPieElement = subjectPieRef.value;
+            subjectPieChart = initChart(subjectPieElement, subjectPieOption(subjectIndustry.value));
+            if (subjectPieChart && typeof ResizeObserver !== 'undefined') {
+                subjectPieResizeObserver = new ResizeObserver(() => {
+                    const { clientWidth, clientHeight } = subjectPieElement;
+                    if (clientWidth !== subjectPieChart.getWidth() || clientHeight !== subjectPieChart.getHeight()) {
+                        subjectPieChart.resize();
+                    }
+                });
+                subjectPieResizeObserver.observe(subjectPieElement);
+            }
 
             const rank = data.traceability.productionRank;
             const traceCategoryLabel = { ...axisText, fontSize: 13, interval: 0, hideOverlap: true };
@@ -407,6 +419,7 @@ export default {
 
         onBeforeUnmount(() => {
             analysisRequestId += 1;
+            subjectPieResizeObserver?.disconnect();
             window.removeEventListener('resize', resizeCharts);
             chartInstances.forEach(chart => chart && !chart.isDisposed() && chart.dispose());
         });
@@ -517,12 +530,15 @@ export default {
 .metric-box { padding: 7px 10px 8px; display: flex; flex-direction: column; border: 1px solid #47789b; border-radius: 7px; background: rgba(3, 17, 32, .9); box-shadow: 0 0 13px rgba(40, 176, 238, .22); }
 .metric-box strong { font-family: Arial, sans-serif; font-size: 34px; font-weight: 700; line-height: .95; letter-spacing: 0; }
 .metric-box > span { margin-top: 4px; font-size: 16px; white-space: nowrap; }
-.metric-box small { font-size: 10px; font-weight: normal; }
+.metric-box small { font-size: 12px; font-weight: normal; display: inline-flex; align-items: center; gap: 4px; }
+@media (max-width: 1600px) {
+    .metric-box small { font-size: 10px; gap:2px;}
+}
 .metric-box small b { color: #ff385e; }
 .blue-box strong { color: #2dbcf7; }
 .cyan-box { border-color: #168999; }
 .cyan-box strong { color: #48e0e4; }
-.subject-pie { flex: 1; width: auto; height: 100%; }
+.subject-pie { flex: 1 1 0; width: 0; height: 100%; }
 
 .subject-category-grid { flex: 1; min-height: 0; padding: 10px 34px 20px; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 16px 40px; }
 .subject-category { width: 100%; max-width: 156px; min-width: 0; justify-self: center; display: flex; flex-direction: column; align-items: center; justify-content: center; }
@@ -572,12 +588,13 @@ export default {
 }
 .certification-content { flex: 1; min-height: 0; padding: 19px 30px 12px; display: flex; flex-direction: column; }
 .certification-metric { width: 54%; padding: 8px 10px; display: flex; flex-direction: column; border: 1px solid rgba(192, 132, 72, .74); border-radius: 6px; background: rgba(8, 20, 34, .86); box-shadow: 0 0 14px rgba(232, 142, 61, .2); }
-@media (max-width: 1600px) {
-    .certification-metric { width:64%; }
-}
+
 .certification-metric strong { color: #f0924e; font: 700 28px/1 "Arial Narrow", Arial, sans-serif; }
 .certification-metric span { margin-top: 3px; font-size: 16px; }
-.certification-metric small { font-size: 12px; }
+.certification-metric small { font-size: 14px; }
+@media (max-width: 1600px) {
+    .certification-metric { width:66%; }
+}
 .certification-metric b { color: #ff385e; }
 .certification-chart-row { position: relative; flex: 1; min-height: 0; display: flex; align-items: center; }
 .certification-chart { width: 48%; height: 100%; }
@@ -636,7 +653,7 @@ export default {
     .dashboard-grid { padding: 10px 10px 12px; gap: 10px; grid-template-columns: minmax(270px, 24%) minmax(540px, 1fr) minmax(270px, 24%); }
     .panel-heading h2 { font-size: 18px; }
     .subject-overview { padding-left: 9px; padding-right: 9px; gap: 5px; }
-    .subject-totals { width: 46%; flex-basis: 46%; }
+    .subject-totals { width: 48%; flex-basis: 48%; flex:0 0 48%;}
     .metric-box { padding-left: 7px; padding-right: 7px; }
     .metric-box strong, .subject-category > strong { font-size: 26px; }
     .metric-box > span, .subject-category > span, .product-metric span { font-size: 13px; }
