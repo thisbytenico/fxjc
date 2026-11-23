@@ -56,6 +56,11 @@ export default ({ mode }) => defineConfig({
   server: {
     host: '0.0.0.0',
     proxy: {
+      '^/(?:api/)?analyze/': {
+        target: 'http://172.16.7.251:8882',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/api\//, '/')
+      },
       '/api': {
         target: 'http://10.0.52.114',//'http://172.16.7.89:8002/',//
         changeOrigin: true,

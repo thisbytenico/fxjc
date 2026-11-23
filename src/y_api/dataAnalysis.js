@@ -1,4 +1,4 @@
-import ajax from '@/utils/ajax';
+import ajax, { http } from '@/utils/ajax';
 import { DATA_ANALYSIS_API, USE_DATA_ANALYSIS_MOCK } from '@/config/dataAnalysis';
 
 const MOCK_MAP_REGION_NAMES = [
@@ -9,24 +9,13 @@ const MOCK_MAP_REGION_NAMES = [
     '香港', '澳门'
 ];
 
+const ANALYSIS_REGION_PARAMS = {
+    province: 'provinceCode',
+    city: 'cityCode',
+    district: 'countyCode'
+};
+
 const mockDashboard = {
-    subjects: {
-        total: 627828,
-        activeRate: 93,
-        recentActive: 9384,
-        industry: [
-            { name: '种植业', value: 313914 },
-            { name: '畜牧业', value: 125566 },
-            { name: '渔业', value: 94174 },
-            { name: '其他行业', value: 94174 }
-        ],
-        categories: [
-            { name: '屠宰主体', value: 2835, activeRate: 90.9, color: '#28b8ff' },
-            { name: '加工主体', value: 333921, activeRate: 92.9, color: '#f7ef3b' },
-            { name: '储存主体', value: 1366, activeRate: 88.9, color: '#4adce6' },
-            { name: '运输主体', value: 1571, activeRate: 97.9, color: '#21dbb0' }
-        ]
-    },
     traceability: {
         production: { label: '生产批次', value: 547249, lastYear: 2278, growth: 3 },
         transaction: { label: '交易批次', value: 547249, lastYear: 1250, growth: 3 },
@@ -40,17 +29,6 @@ const mockDashboard = {
             { name: '四川省', value: 82662 },
             { name: '山东省', value: 72822 },
             { name: '河北省', value: 67829 }
-        ]
-    },
-    certifications: {
-        total: 333921,
-        activeRate: 97.9,
-        industry: [
-            { name: '绿色食品', value: 9608 },
-            { name: '有机食品', value: 7787 },
-            { name: '农产品地理', value: 9608 },
-            { name: '良好农产品', value: 1152 },
-            { name: '名特优新农产品', value: 878 }
         ]
     },
     farming: {
@@ -116,4 +94,64 @@ export const getDataAnalysisRegion = ({ adcode, level }) => {
         loading: false,
         showMsg: false
     });
+};
+
+const getRegionalAnalysis = async (url, routes, errorMessage) => {
+    const params = {};
+    for (const { level, adcode } of routes) {
+        const param = ANALYSIS_REGION_PARAMS[level];
+        if (param && adcode) params[param] = String(adcode);
+    }
+
+    const response = await http.get(url, { params });
+    const data = response?.data;
+    if (Number(response?.code) !== 200 || !data || typeof data !== 'object') {
+        throw new Error(response?.msg || errorMessage);
+    }
+    return data;
+};
+
+const toPercent = ratio => ratio == null ? null : Number(ratio) * 100;
+
+export const getDataAnalysisSubjectInfo = async (routes) => {
+    const data = await getRegionalAnalysis(DATA_ANALYSIS_API.mainInfo, routes, '主体概况加载失败');
+    return {
+        total: Number(data.all ?? 0),
+        recentActive: Number(data.week ?? 0),
+        activeRate: toPercent(data.active)
+    };
+};
+
+export const getDataAnalysisSubjectIndustry = async (routes) => {
+    const data = await getRegionalAnalysis(DATA_ANALYSIS_API.mainIndustry, routes, '主体行业数据加载失败');
+    return [
+        { name: '种植业', value: Number(data.planting ?? 0) },
+        { name: '畜牧业', value: Number(data.husbandry ?? 0) },
+        { name: '渔业', value: Number(data.fishery ?? 0) }
+    ];
+};
+
+export const getDataAnalysisSubjectBusiness = async (routes) => {
+    const data = await getRegionalAnalysis(DATA_ANALYSIS_API.mainBusiness, routes, '主体业务数据加载失败');
+    return [
+        { name: '屠宰主体', value: Number(data.slaughter ?? 0), activeRate: toPercent(data.activeSlaughterRatio), color: '#28b8ff' },
+        { name: '加工主体', value: Number(data.process ?? 0), activeRate: toPercent(data.activeProcessRatio), color: '#f7ef3b' },
+        { name: '储存主体', value: Number(data.storage ?? 0), activeRate: toPercent(data.activeStorageRatio), color: '#4adce6' },
+        { name: '运输主体', value: Number(data.transport ?? 0), activeRate: toPercent(data.activeTransportRatio), color: '#21dbb0' }
+    ];
+};
+
+export const getDataAnalysisCertifications = async (routes) => {
+    const data = await getRegionalAnalysis(DATA_ANALYSIS_API.certifications, routes, '认证主体数据加载失败');
+    return {
+        total: Number(data.allCertMain ?? 0),
+        activeRate: Number((Number(data.activeCert ?? 0) * 100).toFixed(2)),
+        industry: [
+            { name: '绿色食品', value: Number(data.nssp ?? 0) },
+            { name: '有机食品', value: Number(data.yjsp ?? 0) },
+            { name: '农产品地理', value: Number(data.ncpdlbs ?? 0) },
+            { name: '良好农业', value: Number(data.lhnygf ?? 0) },
+            { name: '名特优新', value: Number(data.mytxncp ?? 0) }
+        ]
+    };
 };

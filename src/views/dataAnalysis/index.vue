@@ -8,24 +8,27 @@
                 <div class="subject-overview">
                     <div class="subject-totals">
                         <div class="metric-box blue-box">
-                            <strong>{{ formatNumber(dashboard.subjects.total) }}</strong>
-                            <span>主体总数(家) <small>活跃度 <b>{{ dashboard.subjects.activeRate }}%</b></small></span>
+                            <strong>{{ subjectInfo ? formatNumber(subjectInfo.total) : '—' }}</strong>
+                            <span>主体总数(家) <small>活跃度 <b>{{ formatActivityRate(subjectInfo?.activeRate, 4) }}</b></small></span>
                         </div>
                         <div class="metric-box cyan-box">
-                            <strong>{{ formatNumber(dashboard.subjects.recentActive) }}</strong>
+                            <strong>{{ subjectInfo ? formatNumber(subjectInfo.recentActive) : '—' }}</strong>
                             <span>近7天活跃主体数(家)</span>
                         </div>
                     </div>
                     <div ref="subjectPieRef" class="subject-pie chart"></div>
                 </div>
                 <div class="subject-category-grid">
-                    <article v-for="item in dashboard.subjects.categories" :key="item.name" class="subject-category">
+                    <article v-for="item in subjectBusiness" :key="item.name" class="subject-category">
                         <strong :style="{ color: item.color }">{{ formatNumber(item.value) }}</strong>
                         <span>{{ item.name }}(家)</span>
-                        <div class="active-label"><span>活跃度</span><b>{{ item.activeRate }}%</b></div>
-                        <div class="progress"><i :style="{ width: `${item.activeRate}%`, background: item.color }"></i></div>
+                        <div class="active-label"><span>活跃度</span><b>{{ formatActivityRate(item.activeRate) }}</b></div>
+                        <div class="progress"><i :style="{ width: `${item.activeRate ?? 0}%`, background: item.color }"></i></div>
                     </article>
                 </div>
+                <p v-if="subjectError || (!subjectInfo && !subjectIndustry && !subjectBusiness)" class="subject-status" role="status">
+                    {{ subjectError || '主体数据加载中…' }}
+                </p>
             </section>
 
             <section class="map-panel">
@@ -33,6 +36,7 @@
                     :data="dashboard.map.values"
                     :load-region-data="getDataAnalysisRegion"
                     :show-nine-dash-line="showChinaMapNineDashLine"
+                    @route-change="handleMapRouteChange"
                     @error="handleMapError"
                 />
             </section>
@@ -61,16 +65,19 @@
                 <header class="panel-heading"><i></i><h2>认证主体总数</h2><span></span></header>
                 <div class="certification-content">
                     <div class="certification-metric">
-                        <strong>{{ formatNumber(dashboard.certifications.total) }}</strong>
-                        <span>认证主体(家) <small>活跃度 <b>{{ dashboard.certifications.activeRate }}%</b></small></span>
+                        <strong>{{ certifications ? formatNumber(certifications.total) : '—' }}</strong>
+                        <span>认证主体(家) <small>活跃度 <b>{{ certifications ? `${certifications.activeRate}%` : '—' }}</b></small></span>
                     </div>
                     <div class="certification-chart-row">
                         <div ref="certificationRef" class="certification-chart chart"></div>
                         <ul class="legend-list">
-                            <li v-for="(item, index) in dashboard.certifications.industry" :key="item.name">
+                            <li v-for="(item, index) in certifications?.industry" :key="item.name">
                                 <i :class="`legend-${index}`"></i><span>{{ item.name }}：</span><b>{{ item.value }}</b>
                             </li>
                         </ul>
+                        <p v-if="!certifications" class="certification-status" role="status">
+                            {{ certificationError || '认证主体数据加载中…' }}
+                        </p>
                     </div>
                 </div>
             </section>
@@ -118,10 +125,17 @@
 </template>
 
 <script>
-import { nextTick, onBeforeUnmount, onMounted, ref } from 'vue';
+import { nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import * as echarts from 'echarts';
 import RegionDrilldownMap from '@/components/Business/RegionDrilldownMap.vue';
-import { getDataAnalysisDashboard, getDataAnalysisRegion } from '@/y_api/dataAnalysis';
+import {
+    getDataAnalysisCertifications,
+    getDataAnalysisDashboard,
+    getDataAnalysisRegion,
+    getDataAnalysisSubjectBusiness,
+    getDataAnalysisSubjectIndustry,
+    getDataAnalysisSubjectInfo
+} from '@/y_api/dataAnalysis';
 import { SHOW_CHINA_MAP_NINE_DASH_LINE } from '@/config/dataAnalysis';
 
 const CHART_COLORS = ['#31d3ae', '#f19a42', '#2faeea', '#f8ef51', '#51dce6'];
@@ -133,6 +147,12 @@ export default {
         const dashboard = ref(null);
         const loading = ref(true);
         const errorMessage = ref('');
+        const subjectInfo = ref(null);
+        const subjectIndustry = ref(null);
+        const subjectBusiness = ref(null);
+        const subjectError = ref('');
+        const certifications = ref(null);
+        const certificationError = ref('');
         const subjectPieRef = ref(null);
         const batchRankRef = ref(null);
         const printRankRef = ref(null);
@@ -141,8 +161,16 @@ export default {
         const productPieRef = ref(null);
         const queryRankRef = ref(null);
         const chartInstances = [];
+        let subjectPieChart = null;
+        let certificationChart = null;
+        let analysisRegionKey;
+        let analysisRequestId = 0;
 
         const formatNumber = value => Number(value || 0).toLocaleString('en-US');
+        const formatActivityRate = (value, maximumFractionDigits = 2) => {
+            if (!Number.isFinite(value)) return '—';
+            return `${value.toLocaleString('en-US', { maximumFractionDigits })}%`;
+        };
         const tooltip = {
             trigger: 'item',
             backgroundColor: 'rgba(3, 20, 39, .94)',
@@ -172,6 +200,43 @@ export default {
             }]
         });
 
+        watch(subjectIndustry, data => {
+            subjectPieChart?.setOption({ series: [{ data: data ?? [] }] });
+        });
+        watch(certifications, data => {
+            certificationChart?.setOption({ series: [{ data: data?.industry ?? [] }] });
+        });
+
+        const loadRegionAnalysis = (routes) => {
+            const regionKey = routes.filter(route => route.level !== 'country').map(route => route.adcode).join('/');
+            if (regionKey === analysisRegionKey) return;
+            analysisRegionKey = regionKey;
+            const requestId = ++analysisRequestId;
+            subjectError.value = '';
+            certificationError.value = '';
+
+            const load = async (request, target, onError) => {
+                target.value = null;
+                try {
+                    const data = await request(routes);
+                    if (requestId === analysisRequestId) target.value = data;
+                } catch (error) {
+                    if (requestId === analysisRequestId) onError(error);
+                }
+            };
+            const showSubjectError = () => { subjectError.value = '部分主体数据加载失败'; };
+            const showCertificationError = error => { certificationError.value = error.message || '认证主体数据加载失败'; };
+
+            return Promise.all([
+                load(getDataAnalysisSubjectInfo, subjectInfo, showSubjectError),
+                load(getDataAnalysisSubjectIndustry, subjectIndustry, showSubjectError),
+                load(getDataAnalysisSubjectBusiness, subjectBusiness, showSubjectError),
+                load(getDataAnalysisCertifications, certifications, showCertificationError)
+            ]);
+        };
+
+        const handleMapRouteChange = ({ routes }) => loadRegionAnalysis(routes);
+
         const axisText = { color: '#d8e5f2', fontSize: 12 };
         const subjectPieLabelLayout = params => {
             const width = subjectPieRef.value?.clientWidth || 220;
@@ -182,8 +247,7 @@ export default {
             const layouts = [
                 { x: width * .14, y: height * .88, anchor: [centerX - radius * .35, centerY + radius * .92] },
                 { x: 0, y: height * .58, anchor: [centerX - radius * .96, centerY + radius * .18] },
-                { x: 0, y: height * .34, anchor: [centerX - radius * .78, centerY - radius * .55] },
-                { x: 0, y: height * .12, anchor: [centerX - radius * .16, centerY - radius * .98] }
+                { x: 0, y: height * .34, anchor: [centerX - radius * .78, centerY - radius * .55] }
             ];
             const layout = layouts[params.dataIndex] || layouts[0];
             const lineEndX = layout.x + params.labelRect.width + 3;
@@ -197,23 +261,17 @@ export default {
         };
         const initCharts = () => {
             const data = dashboard.value;
-            initChart(subjectPieRef.value, {
-                ...pieOption(data.subjects.industry, ['#2bd1ab', '#f09a42', '#2aa9e6', '#fff14f'], ['45%', '67%']),
-                series: [{
-                    ...pieOption(data.subjects.industry, [], ['45%', '67%']).series[0],
-                    center: ['67%', '52%'],
-                    avoidLabelOverlap: false,
-                    label: {
-                        show: true,
-                        color: '#ecf7ff',
-                        fontSize: 11,
-                        formatter: '{b}:{c}'
-                    },
-                    labelLine: { length: 8, length2: 6, lineStyle: { color: '#d9f8ff' } },
-                    labelLayout: subjectPieLabelLayout,
-                    data: data.subjects.industry
-                }]
+            const subjectPieOption = pieOption(subjectIndustry.value ?? [], ['#2bd1ab', '#f09a42', '#2aa9e6'], ['45%', '67%']);
+            Object.assign(subjectPieOption.series[0], {
+                center: ['67%', '52%'],
+                avoidLabelOverlap: false,
+                showEmptyCircle: false,
+                stillShowZeroSum: false,
+                label: { show: true, color: '#ecf7ff', fontSize: 11, formatter: '{b}:{c}' },
+                labelLine: { length: 8, length2: 6, lineStyle: { color: '#d9f8ff' } },
+                labelLayout: subjectPieLabelLayout
             });
+            subjectPieChart = initChart(subjectPieRef.value, subjectPieOption);
 
             const rank = data.traceability.productionRank;
             const traceCategoryLabel = { ...axisText, fontSize: 13, interval: 0, hideOverlap: true };
@@ -277,7 +335,10 @@ export default {
                 series: [{ type: 'bar', barWidth: 12, data: printRank.map(item => item.value), itemStyle: { color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{ offset: 0, color: 'rgba(20,75,79,.45)' }, { offset: .58, color: '#188d96' }, { offset: 1, color: '#38bfcb' }]), borderRadius: [0, 7, 7, 0] }, label: traceValueLabel }]
             });
 
-            initChart(certificationRef.value, pieOption(data.certifications.industry, CHART_COLORS, ['48%', '70%']));
+            const certificationOption = pieOption(certifications.value?.industry ?? [], CHART_COLORS, ['48%', '70%']);
+            certificationOption.series[0].showEmptyCircle = false;
+            certificationOption.series[0].stillShowZeroSum = false;
+            certificationChart = initChart(certificationRef.value, certificationOption);
             initChart(productPieRef.value, pieOption(data.products.distribution, ['#31d3ae', '#35b7f0', '#ffcc72'], ['49%', '72%']));
 
             initChart(farmingRef.value, {
@@ -302,6 +363,7 @@ export default {
         };
 
         onMounted(async () => {
+            loadRegionAnalysis([]);
             try {
                 dashboard.value = await getDataAnalysisDashboard();
                 await nextTick();
@@ -315,12 +377,15 @@ export default {
         });
 
         onBeforeUnmount(() => {
+            analysisRequestId += 1;
             window.removeEventListener('resize', resizeCharts);
             chartInstances.forEach(chart => chart && !chart.isDisposed() && chart.dispose());
         });
 
         return {
             dashboard, loading, errorMessage, formatNumber, getDataAnalysisRegion, handleMapError,
+            subjectInfo, subjectIndustry, subjectBusiness, subjectError, formatActivityRate,
+            certifications, certificationError, handleMapRouteChange,
             showChinaMapNineDashLine: SHOW_CHINA_MAP_NINE_DASH_LINE,
             subjectPieRef, batchRankRef, printRankRef, certificationRef, farmingRef,
             productPieRef, queryRankRef
@@ -371,7 +436,8 @@ export default {
     box-shadow: inset 0 0 26px rgba(11, 85, 137, .12);
 }
 
-.subject-panel { grid-area: subject; }
+.subject-panel { position: relative; grid-area: subject; }
+.subject-status { position: absolute; top: 40px; right: 13px; margin: 0; color: #bdc9d4; font-size: 12px; }
 .map-panel { grid-area: map; min-width: 0; min-height: 0; display: flex; flex-direction: column; }
 .trace-panel { grid-area: trace; }
 .certification-panel { grid-area: cert; }
@@ -422,7 +488,7 @@ export default {
 .metric-box { padding: 7px 10px 8px; display: flex; flex-direction: column; border: 1px solid #47789b; border-radius: 7px; background: rgba(3, 17, 32, .9); box-shadow: 0 0 13px rgba(40, 176, 238, .22); }
 .metric-box strong { font-family: Arial, sans-serif; font-size: 34px; font-weight: 700; line-height: .95; letter-spacing: 0; }
 .metric-box > span { margin-top: 4px; font-size: 16px; white-space: nowrap; }
-.metric-box small { font-size: 12px; font-weight: normal; }
+.metric-box small { font-size: 10px; font-weight: normal; }
 .metric-box small b { color: #ff385e; }
 .blue-box strong { color: #2dbcf7; }
 .cyan-box { border-color: #168999; }
@@ -484,8 +550,9 @@ export default {
 .certification-metric span { margin-top: 3px; font-size: 16px; }
 .certification-metric small { font-size: 12px; }
 .certification-metric b { color: #ff385e; }
-.certification-chart-row { flex: 1; min-height: 0; display: flex; align-items: center; }
+.certification-chart-row { position: relative; flex: 1; min-height: 0; display: flex; align-items: center; }
 .certification-chart { width: 48%; height: 100%; }
+.certification-status { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; color: #bdc9d4; font-size: 13px; }
 .legend-list { flex: 1; margin: 0; padding: 0; list-style: none; font-size: 14px; }
 .legend-list li { margin: 7px 0; display: flex; align-items: center; white-space: nowrap; }
 .legend-list i { width: 9px; height: 9px; margin-right: 6px; background: #31d3ae; }
