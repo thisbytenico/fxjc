@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { computed, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 export default {
@@ -24,16 +24,12 @@ export default {
     setup() {
         const route = useRoute();
         const router = useRouter();
-        const isRegulatoryDashboard = computed(() => route.name === 'regulatory');
-        const navItems = computed(() => {
-            const monitoring = { key: 'monitoring', label: '监测业务', path: '/monitoring' };
-            const enforcement = { key: 'enforcement', label: '执法业务' };
-            return [
-                { key: 'traceability', label: '追溯业务', path: '/dataAnalysis' },
-                { key: 'regulatory', label: '监管业务', path: '/regulatory' },
-                ...(isRegulatoryDashboard.value ? [enforcement, monitoring] : [monitoring, enforcement])
-            ];
-        });
+        const navItems = [
+            { key: 'traceability', label: '追溯业务', path: '/dataAnalysis' },
+            { key: 'regulatory', label: '监管业务', path: '/regulatory' },
+            { key: 'monitoring', label: '监测业务', path: '/monitoring' },
+            { key: 'enforcement', label: '执法业务' }
+        ];
         const tabFromPath = path => {
             if (path.startsWith('/regulatory')) return 'regulatory';
             if (path.startsWith('/monitoring')) return 'monitoring';

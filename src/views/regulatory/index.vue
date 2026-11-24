@@ -529,7 +529,7 @@ export default {
     bottom: 0;
     left: 0;
     height: 12px;
-    background-image: url(@/assets/images/regulatory/line.png);
+    background-image: url(@/assets/images/line.png);
     background-repeat: no-repeat;
     background-size: contain;
     box-shadow: 0 0 7px #0f233b7d;
