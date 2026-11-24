@@ -20,6 +20,7 @@
 <script>
 import { nextTick, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue';
 import * as echarts from 'echarts';
+import { BUSINESS_MAP_ASSET_BASE } from '@/config/businessMap';
 
 const PROVINCE_FILES = {
     北京: 'beijing', 天津: 'tianjin', 河北: 'hebei', 山西: 'shanxi', 内蒙古: 'neimenggu',
@@ -47,7 +48,7 @@ export default {
             default: 'district',
             validator: value => LEVEL_ORDER.includes(value)
         },
-        mapAssetBase: { type: String, default: '/lib/echart/map' },
+        mapAssetBase: { type: String, default: BUSINESS_MAP_ASSET_BASE },
         breadcrumbLabel: { type: String, default: '当前位置：' },
         valueLabel: { type: String, default: '主体数' },
         valueUnit: { type: String, default: '家' },

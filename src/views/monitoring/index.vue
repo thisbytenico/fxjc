@@ -371,6 +371,7 @@
 <script>
 import { onMounted, nextTick } from 'vue';
 import * as echarts from 'echarts';
+import { BUSINESS_MAP_ASSET_BASE } from '@/config/businessMap';
 
 export default {
     name: 'DataAnalysis',
@@ -446,18 +447,15 @@ export default {
 
         const getMapUrlByRoute = (route) => {
             if (route.level === 'country') {
-                return '/lib/echart/map/china.json';
+                return `${BUSINESS_MAP_ASSET_BASE}/china.json`;
             }
             if (route.level === 'province') {
                 const provinceFile = provinces[route.mapName];
-                return provinceFile ? `/lib/echart/map/province/${provinceFile}.json` : '';
+                return provinceFile ? `${BUSINESS_MAP_ASSET_BASE}/province/${provinceFile}.json` : '';
             }
             if (route.level === 'city') {
-                return route.adcode ? `/lib/echart/map/city/${route.adcode}.json` : '';
+                return route.adcode ? `${BUSINESS_MAP_ASSET_BASE}/city/${route.adcode}.json` : '';
             }
-            // if (route.level === 'district') {
-            //     return route.adcode ? `/lib/echart/map/city/${route.adcode}.json` : '';
-            // }
             return '';
         };
 

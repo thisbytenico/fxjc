@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>中国地图 · 配色调色盘</title>
   <!-- 使用项目本地 echarts，避免 CDN 不可达导致页面白屏 -->
-  <script src="/lib/echart/echarts.min.js"></script>
+  <script src="./lib/echart/echarts.min.js"></script>
   <style>
     * { box-sizing: border-box; }
     html, body { height: 100%; }
@@ -334,9 +334,9 @@
 
     // 加载前先确认 echarts 就绪，失败时给出明确提示
     if (typeof echarts === 'undefined') {
-      $('loading').textContent = 'echarts.min.js 加载失败，请检查 /lib/echart/echarts.min.js';
+      $('loading').textContent = 'echarts.min.js 加载失败，请检查 ./lib/echart/echarts.min.js';
     } else {
-      fetch('/lib/echart/map/china.json')
+      fetch('./lib/echart/map/china.json')
         .then(r => {
           if (!r.ok) throw new Error(`china.json HTTP ${r.status}`);
           return r.json();
