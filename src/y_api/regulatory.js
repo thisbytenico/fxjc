@@ -33,10 +33,54 @@ const mockDashboard = {
             { name: '云南', value: 65000 }
         ],
         taskComparisons: [
-            { name: '例行监测', current: [100000, 62000], previous: [96000, 93000] },
-            { name: '专项监测', current: [51000, 37000], previous: [44000, 54000] },
-            { name: '监督抽查', current: [14000, 11000], previous: [15000, 14000] },
-            { name: '复检任务', current: [3000, 2000], previous: [3000, 3000] }
+            {
+                name: '例行监测',
+                current: [100000, 62000],
+                previous: [96000, 93000],
+                regionTaskRank: [
+                    { name: '甘肃', value: 112000 },
+                    { name: '河北', value: 80000 },
+                    { name: '四川', value: 78000 },
+                    { name: '云南', value: 48000 },
+                    { name: '新疆', value: 43000 }
+                ]
+            },
+            {
+                name: '专项监测',
+                current: [51000, 37000],
+                previous: [44000, 54000],
+                regionTaskRank: [
+                    { name: '甘肃', value: 54000 },
+                    { name: '河北', value: 52000 },
+                    { name: '四川', value: 28000 },
+                    { name: '新疆', value: 22000 },
+                    { name: '云南', value: 15000 }
+                ]
+            },
+            {
+                name: '监督抽查',
+                current: [14000, 11000],
+                previous: [15000, 14000],
+                regionTaskRank: [
+                    { name: '甘肃', value: 12000 },
+                    { name: '河北', value: 11000 },
+                    { name: '四川', value: 11000 },
+                    { name: '新疆', value: 6822 },
+                    { name: '云南', value: 3829 }
+                ]
+            },
+            {
+                name: '复检任务',
+                current: [3000, 2000],
+                previous: [3000, 3000],
+                regionTaskRank: [
+                    { name: '四川', value: 3000 },
+                    { name: '甘肃', value: 2000 },
+                    { name: '河北', value: 2000 },
+                    { name: '新疆', value: 1000 },
+                    { name: '云南', value: 1000 }
+                ]
+            }
         ]
     },
     subjectSummary: [

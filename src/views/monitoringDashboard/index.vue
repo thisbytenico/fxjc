@@ -119,8 +119,9 @@ import { SHOW_MONITORING_MAP_NINE_DASH_LINE } from '@/config/monitoringDashboard
 
 const MAP_COLORS = ['#075071', '#007aa8', '#0099ce', '#00afe5', '#21c6f4'];
 const MAP_APPEARANCE = {
-    countryZoom: 1.26,
-    countryLayoutCenter: ['50%', '52%'],
+    countryZoom: 1.32,
+    countryLayoutCenter: ['50%', '53%'],
+    countryAspectScale: .8,
     countryFontSize: 12,
     borderColor: 'rgba(177, 233, 255, .9)',
     borderWidth: 1.2

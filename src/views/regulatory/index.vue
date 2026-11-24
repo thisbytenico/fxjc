@@ -27,9 +27,9 @@
                     <header class="panel-heading"><h2>监测任务区域排行</h2></header>
                     <div class="panel-controls">
                         <label class="filter-select">
-                            <select v-model="selectedRegion" aria-label="筛选监测任务地区">
+                            <select v-model="selectedRankTask" aria-label="筛选区域排行任务类别">
                                 <option value="">全部</option>
-                                <option v-for="item in regionTaskRank" :key="item.name" :value="item.name">{{ item.name }}</option>
+                                <option v-for="item in taskComparisons" :key="item.name" :value="item.name">{{ item.name }}</option>
                             </select>
                         </label>
                     </div>
@@ -235,7 +235,7 @@ export default {
     setup() {
         const dashboard = ref(null);
         const errorMessage = ref('');
-        const selectedRegion = ref('');
+        const selectedRankTask = ref('');
         const selectedTask = ref('');
         const taskPieRef = ref(null);
         const regionRankRef = ref(null);
@@ -253,9 +253,11 @@ export default {
             { label: '监管机构数量', value: metrics.value.institutions, unit: '家', color: '#2cacf0', icon: institutionIcon },
             { label: '本年度新增', value: metrics.value.newInstitutions ?? dashboard.value?.newInstitutions?.total, unit: '家', color: '#fff66e', icon: newInstitutionIcon }
         ]);
-        const visibleTaskRank = computed(() => selectedRegion.value
-            ? regionTaskRank.value.filter(item => item.name === selectedRegion.value)
-            : regionTaskRank.value);
+        const visibleTaskRank = computed(() => {
+            if (!selectedRankTask.value) return regionTaskRank.value;
+            const task = taskComparisons.value.find(item => item.name === selectedRankTask.value);
+            return task?.regionTaskRank ?? [];
+        });
         const taskComparison = computed(() => {
             const comparison = dashboard.value?.annualComparison;
             const task = taskComparisons.value.find(item => item.name === selectedTask.value);
@@ -321,8 +323,8 @@ export default {
         });
 
         return {
-            dashboard, errorMessage, metrics, taskBreakdown, regionTaskRank, taskComparisons, mapMetrics,
-            selectedRegion, selectedTask, taskComparison,
+            dashboard, errorMessage, metrics, taskBreakdown, taskComparisons, mapMetrics,
+            selectedRankTask, selectedTask, taskComparison,
             taskPieRef, regionRankRef, taskComparisonRef, baseRankRef, baseComparisonRef,
             getRegulatoryRegion, handleMapError, formatMetric, growthDirection, growthValue,
             taskColors: TASK_COLORS, mapColors: BUSINESS_MAP_COLORS, mapAppearance: MAP_APPEARANCE,

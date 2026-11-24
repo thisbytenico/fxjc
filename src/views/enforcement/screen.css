@@ -228,7 +228,7 @@
 .map-panel :deep(.map-chart) {
     position: absolute;
     top: 5%;
-    height: 82%;
+    height: 92%;
 }
 
 .table-frame {

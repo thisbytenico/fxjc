@@ -103,7 +103,7 @@ const countryLabels = {
 };
 const mapAppearance = {
     countryZoom: 1.29,
-    countryLayoutCenter: ['48.8%', '54%'],
+    countryLayoutCenter: ['48.8%', '52%'],
     countryAspectScale: .7,
     countryFontSize: 12,
     countryLabelFormatter: ({ name }) => countryLabels[name] || name,

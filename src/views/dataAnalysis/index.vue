@@ -47,16 +47,25 @@
                 <header class="panel-heading"><i></i><h2>追溯业务数据</h2><span></span></header>
                 <div class="trace-content">
                     <article class="trace-card yellow-card">
-                        <div><h3>{{ dashboard.traceability.production.label }}</h3><strong>{{ formatNumber(dashboard.traceability.production.value) }}<small>次</small></strong></div>
+                        <div>
+                            <h3>{{ dashboard.traceability.production.label }}(条)</h3>
+                            <strong>{{ formatNumber(dashboard.traceability.production.value) }}</strong>
+                        </div>
                         <dl><div><dt>{{ formatNumber(dashboard.traceability.production.lastYear) }}</dt><dd>去年同期</dd></div><div><dt>{{ dashboard.traceability.production.growth }}%</dt><dd>同比增长</dd></div></dl>
                     </article>
                     <article class="trace-card blue-card">
-                        <div><h3>{{ dashboard.traceability.transaction.label }}</h3><strong>{{ formatNumber(dashboard.traceability.transaction.value) }}<small>次</small></strong></div>
+                        <div>
+                            <h3>{{ dashboard.traceability.transaction.label }}(条)</h3>
+                            <strong>{{ formatNumber(dashboard.traceability.transaction.value) }}</strong>
+                        </div>
                         <dl><div><dt>{{ formatNumber(dashboard.traceability.transaction.lastYear) }}</dt><dd>去年同期</dd></div><div><dt>{{ dashboard.traceability.transaction.growth }}%</dt><dd>同比增长</dd></div></dl>
                     </article>
                     <div ref="batchRankRef" class="batch-chart chart"></div>
                     <article class="trace-card cyan-card">
-                        <div><h3>{{ dashboard.traceability.printed.label }}</h3><strong>{{ formatNumber(dashboard.traceability.printed.value) }}<small>次</small></strong></div>
+                        <div>
+                            <h3>{{ dashboard.traceability.printed.label }}(次)</h3>
+                            <strong>{{ formatNumber(dashboard.traceability.printed.value) }}</strong>
+                        </div>
                         <dl><div><dt>{{ formatNumber(dashboard.traceability.printed.lastYear) }}</dt><dd>去年同期</dd></div><div><dt>{{ dashboard.traceability.printed.growth }}%</dt><dd>同比增长</dd></div></dl>
                     </article>
                     <div ref="printRankRef" class="print-chart chart"></div>
@@ -614,7 +623,6 @@ export default {
 .trace-card { min-height: 0; padding: 5px 13px; display: flex; align-items: center; justify-content: space-between; border: 1px solid #48708d; border-radius: 7px; background: rgba(5, 20, 37, .88); box-shadow: inset 0 0 12px rgba(71, 152, 197, .1); }
 .trace-card h3 { margin: 0; font-size: 16px; font-style: italic; line-height: 1; }
 .trace-card strong { display: block; margin-top: 4px; font: 700 27px/.95 "Arial Narrow", Arial, sans-serif; letter-spacing: 0; }
-.trace-card strong small { margin-left: 5px; font: 12px "Microsoft YaHei"; }
 .trace-card dl { margin: 0; display: flex; gap: 22px; text-align: center; }
 .trace-card dl div { display: flex; flex-direction: column; }
 .trace-card dt { font-size: 16px; font-weight: 700; }
@@ -631,9 +639,21 @@ export default {
     padding-top:6px
 }
 .certification-content { flex: 1; min-height: 0; padding: 19px 30px 12px; display: flex; flex-direction: column; }
-.certification-metric { width: 54%; padding: 8px 10px; display: flex; flex-direction: column; border: 1px solid rgba(192, 132, 72, .74); border-radius: 6px; background: rgba(8, 20, 34, .86); box-shadow: 0 0 14px rgba(232, 142, 61, .2); }
+.certification-metric {
+    width: 54%;
+    padding: 8px 10px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(192, 132, 72, .74);
+    border-radius: 6px;
+    background: rgba(8, 20, 34, .86);
+    box-shadow:
+        0 0 8px rgba(245, 166, 91, .32),
+        0 0 22px 3px rgba(232, 142, 61, .32),
+        inset 0 0 10px rgba(232, 142, 61, .12);
+}
 
-.certification-metric strong { color: #f0924e; font: 700 28px/1 "Arial Narrow", Arial, sans-serif; }
+.certification-metric strong { color: #f0924e; font: 700 28px/1 "Arial Narrow", Arial, sans-serif; text-shadow: 0 0 8px rgba(240, 146, 78, .26); }
 .certification-metric span { margin-top: 3px; font-size: 16px; }
 .certification-metric small { font-size: 14px; }
 @media (max-width: 1600px) {
@@ -733,6 +753,6 @@ export default {
     }
     .trace-card h3, .trace-card dt { font-size: 18px; }
     .trace-card strong { font-size: 32px; }
-    .trace-card strong small, .trace-card dd { font-size: 14px; }
+    .trace-card dd { font-size: 14px; }
 }
 </style>
