@@ -435,7 +435,7 @@ export default {
     //     radial-gradient(circle, rgba(123, 196, 239, .30) 1px, transparent 1.6px),
     //     linear-gradient(180deg, rgba(4, 22, 43, .66), rgba(4, 18, 35, .94));
     // background-size: auto, 49px 49px, auto;
-    background-image: url(@/assets/images/bg.jpg);
+    background-image: url(@/assets/images/regulatory/bg2-jgyw.png);
     background-size: contain;
     background-position: center;
 }

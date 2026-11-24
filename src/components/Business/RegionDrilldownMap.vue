@@ -71,7 +71,7 @@ export default {
         const rootRoute = () => ({
             level: 'country',
             displayName: '全国',
-            mapName: 'china',
+            mapName: props.appearance.showSouthChinaSeaInset === false ? 'china-without-inset' : 'china',
             adcode: '100000',
             url: `${props.mapAssetBase}/china.json`
         });
@@ -135,13 +135,14 @@ export default {
             });
         };
 
-        const loadValues = async route => {
+        const loadValues = async (route, geo) => {
             if (route.level === 'country') return props.data;
             if (!props.loadRegionData) return [];
             const response = await props.loadRegionData({
                 adcode: route.adcode,
                 level: route.level,
                 name: route.displayName,
+                regionNames: (geo.features || []).map(feature => feature.properties?.name).filter(Boolean),
                 routes: routes.map(item => ({
                     level: item.level,
                     displayName: item.displayName,
@@ -155,7 +156,15 @@ export default {
             const values = normalizeValues(geo, suppliedValues);
             const maxValue = Math.max(...values.map(item => Number(item.value) || 0), 1);
             const isCountry = route.level === 'country';
-            const { countryZoom = 1.2, countryLayoutCenter = ['50%', '50%'], borderColor = 'rgba(0,180,255,.4)', borderWidth = .8, countryFontSize = 10 } = props.appearance;
+            const {
+                countryZoom = 1.2,
+                countryLayoutCenter = ['50%', '50%'],
+                countryAspectScale = .75,
+                countryFontSize = 10,
+                countryLabelFormatter,
+                borderColor = 'rgba(0,180,255,.4)',
+                borderWidth = .8
+            } = props.appearance;
             return {
                 animationDurationUpdate: 450,
                 tooltip: {
@@ -177,6 +186,7 @@ export default {
                     type: 'map',
                     map: route.mapName,
                     roam: true,
+                    aspectScale: isCountry ? countryAspectScale : .75,
                     center: isCountry ? [104.3, 34.4] : getGeoBoundsCenter(geo),
                     zoom: isCountry ? countryZoom : .9,
                     layoutCenter: isCountry ? countryLayoutCenter : ['50%', '46%'],
@@ -186,6 +196,7 @@ export default {
                         show: true,
                         color: '#f5fbff',
                         fontSize: isCountry ? countryFontSize : 12,
+                        formatter: isCountry ? countryLabelFormatter : undefined,
                         textShadowColor: '#024d79',
                         textShadowBlur: 3
                     },
@@ -223,7 +234,7 @@ export default {
                         })
                     };
                 }
-                const values = await loadValues(route);
+                const values = await loadValues(route, geo);
                 if (destroyed || !chart || activeRequest !== requestId) return;
                 currentGeo = geo;
                 echarts.registerMap(route.mapName, geo);

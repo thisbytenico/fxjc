@@ -326,6 +326,7 @@ export default {
     height: 2px;
     background: #f1df83;
     transform: skewX(-30deg);
+    display: none;
 }
 .panel-heading h2 { margin: 0; overflow: hidden; font-size: 22px; line-height: 1; white-space: nowrap; text-overflow: ellipsis; }
 

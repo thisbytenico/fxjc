@@ -56,6 +56,12 @@ const router = createRouter({
       component: () => import('../views/regulatory/legacy.vue')
     },
     {
+      path: '/enforcement',
+      name: 'enforcement',
+      meta: { breadcrumbsName: '执法业务' },
+      component: () => import('../views/enforcement/index.vue')
+    },
+    {
       path: '/assets',
       name: 'assets',
       // meta:{breadcrumbsName:'资产管理1'},
