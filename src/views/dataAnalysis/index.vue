@@ -136,10 +136,36 @@ import {
     getDataAnalysisSubjectIndustry,
     getDataAnalysisSubjectInfo
 } from '@/y_api/dataAnalysis';
-import { SHOW_CHINA_MAP_NINE_DASH_LINE } from '@/config/dataAnalysis';
+import { SHOW_CHINA_MAP_NINE_DASH_LINE, USE_DATA_ANALYSIS_SUBJECT_MOCK } from '@/config/dataAnalysis';
 
 const CHART_COLORS = ['#31d3ae', '#f19a42', '#2faeea', '#f8ef51', '#51dce6'];
 const SUBJECT_PIE_CENTER = ['62%', '52%'];
+const SUBJECT_ANALYSIS_MOCK = {
+    info: { total: 627828, recentActive: 9384, activeRate: 93 },
+    industry: [
+        { name: '种植业', value: 466201 },
+        { name: '畜牧业', value: 150823 },
+        { name: '渔业', value: 36486 },
+        { name: '其他行业', value: 890 }
+    ],
+    business: [
+        { name: '屠宰主体', value: 2835, activeRate: 90.9, color: '#28b8ff' },
+        { name: '加工主体', value: 333921, activeRate: 92.9, color: '#f7ef3b' },
+        { name: '储存主体', value: 1366, activeRate: 88.9, color: '#4adce6' },
+        { name: '运输主体', value: 1571, activeRate: 97.9, color: '#21dbb0' }
+    ],
+    certifications: {
+        total: 333921,
+        activeRate: 97.9,
+        industry: [
+            { name: '绿色食品', value: 9608 },
+            { name: '有机产品', value: 7787 },
+            { name: '农产品地理标志', value: 9608 },
+            { name: '良好农业规范(GAP)', value: 1152 },
+            { name: '名特优新农产品', value: 878 }
+        ]
+    }
+};
 
 export default {
     name: 'DataAnalysis',
@@ -148,12 +174,13 @@ export default {
         const dashboard = ref(null);
         const loading = ref(true);
         const errorMessage = ref('');
-        const subjectInfo = ref(null);
-        const subjectIndustry = ref(null);
+        const subjectMock = USE_DATA_ANALYSIS_SUBJECT_MOCK ? SUBJECT_ANALYSIS_MOCK : null;
+        const subjectInfo = ref(subjectMock?.info ?? null);
+        const subjectIndustry = ref(subjectMock?.industry ?? null);
         const subjectIndustryFailed = ref(false);
-        const subjectBusiness = ref(null);
+        const subjectBusiness = ref(subjectMock?.business ?? null);
         const subjectError = ref('');
-        const certifications = ref(null);
+        const certifications = ref(subjectMock?.certifications ?? null);
         const certificationError = ref('');
         const subjectPieRef = ref(null);
         const batchRankRef = ref(null);
@@ -238,6 +265,7 @@ export default {
         };
 
         const loadRegionAnalysis = (routes) => {
+            if (USE_DATA_ANALYSIS_SUBJECT_MOCK) return;
             const regionKey = routes.filter(route => route.level !== 'country').map(route => route.adcode).join('/');
             if (regionKey === analysisRegionKey) return;
             analysisRegionKey = regionKey;
@@ -282,7 +310,8 @@ export default {
             const layouts = [
                 { x: width * .14, y: height * .88, anchor: [centerX - radius * .35, centerY + radius * .92] },
                 { x: 0, y: height * .58, anchor: [centerX - radius * .96, centerY + radius * .18] },
-                { x: 0, y: height * .34, anchor: [centerX - radius * .78, centerY - radius * .55] }
+                { x: 0, y: height * .34, anchor: [centerX - radius * .78, centerY - radius * .55] },
+                { x: width * .17, y: height * .12, anchor: params.labelLinePoints?.[0] ?? [centerX, centerY - radius] }
             ];
             const layout = layouts[params.dataIndex] || layouts[0];
             const lineEndX = layout.x + params.labelRect.width + 3;
@@ -297,7 +326,7 @@ export default {
         const subjectPieOption = () => regionalPieOption(
             subjectIndustry.value,
             subjectIndustryFailed.value,
-            ['#2bd1ab', '#f09a42', '#2aa9e6'],
+            ['#2bd1ab', '#f09a42', '#2aa9e6', '#f8ef51'],
             ['45%', '67%'],
             {
                 center: SUBJECT_PIE_CENTER,
