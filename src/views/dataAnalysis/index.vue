@@ -36,6 +36,8 @@
                     :data="dashboard.map.values"
                     :load-region-data="getDataAnalysisRegion"
                     :show-nine-dash-line="showChinaMapNineDashLine"
+                    :colors="mapColors"
+                    :appearance="mapAppearance"
                     @route-change="handleMapRouteChange"
                     @error="handleMapError"
                 />
@@ -136,6 +138,7 @@ import {
     getDataAnalysisSubjectIndustry,
     getDataAnalysisSubjectInfo
 } from '@/y_api/dataAnalysis';
+import { BUSINESS_MAP_BORDER, BUSINESS_MAP_COLORS } from '@/config/businessMap';
 import { SHOW_CHINA_MAP_NINE_DASH_LINE, USE_DATA_ANALYSIS_SUBJECT_MOCK } from '@/config/dataAnalysis';
 
 const CHART_COLORS = ['#31d3ae', '#f19a42', '#2faeea', '#f8ef51', '#51dce6'];
@@ -469,6 +472,7 @@ export default {
             subjectInfo, subjectIndustry, subjectBusiness, subjectError, formatActivityRate,
             certifications, certificationError, handleMapRouteChange,
             showChinaMapNineDashLine: SHOW_CHINA_MAP_NINE_DASH_LINE,
+            mapColors: BUSINESS_MAP_COLORS, mapAppearance: BUSINESS_MAP_BORDER,
             subjectPieRef, batchRankRef, printRankRef, certificationRef, farmingRef,
             productPieRef, queryRankRef
         };

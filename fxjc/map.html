@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>中国地图 · 配色调色盘</title>
+  <!-- 使用项目本地 echarts，避免 CDN 不可达导致页面白屏 -->
+  <script src="/lib/echart/echarts.min.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+      /* 深蓝星空底色 */
+      background: radial-gradient(ellipse at 50% 38%, #0b1c46 0%, #060b23 55%, #030614 100%);
+    }
+
+    /* ---------- 星空 ---------- */
+    .stars, .stars-twinkle {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .stars {
+      background-image:
+        radial-gradient(1px 1px at 8% 22%, rgba(255,255,255,.9) 50%, transparent 51%),
+        radial-gradient(1px 1px at 25% 68%, rgba(255,255,255,.55) 50%, transparent 51%),
+        radial-gradient(1.5px 1.5px at 41% 12%, rgba(255,255,255,.8) 50%, transparent 51%),
+        radial-gradient(1px 1px at 57% 82%, rgba(255,255,255,.5) 50%, transparent 51%),
+        radial-gradient(2px 2px at 72% 28%, rgba(200,230,255,.75) 50%, transparent 51%),
+        radial-gradient(1px 1px at 86% 58%, rgba(255,255,255,.7) 50%, transparent 51%),
+        radial-gradient(1px 1px at 93% 14%, rgba(255,255,255,.85) 50%, transparent 51%),
+        radial-gradient(1.5px 1.5px at 14% 48%, rgba(200,230,255,.6) 50%, transparent 51%),
+        radial-gradient(1px 1px at 33% 90%, rgba(255,255,255,.6) 50%, transparent 51%),
+        radial-gradient(1px 1px at 64% 8%, rgba(255,255,255,.65) 50%, transparent 51%),
+        radial-gradient(1.5px 1.5px at 78% 72%, rgba(200,230,255,.55) 50%, transparent 51%),
+        radial-gradient(1px 1px at 4% 78%, rgba(255,255,255,.5) 50%, transparent 51%),
+        radial-gradient(1px 1px at 48% 40%, rgba(255,255,255,.35) 50%, transparent 51%),
+        radial-gradient(2px 2px at 96% 88%, rgba(220,240,255,.6) 50%, transparent 51%);
+    }
+    .stars-twinkle {
+      background-image:
+        radial-gradient(1.5px 1.5px at 20% 40%, rgba(255,255,255,.9) 50%, transparent 51%),
+        radial-gradient(1.5px 1.5px at 66% 55%, rgba(255,255,255,.8) 50%, transparent 51%),
+        radial-gradient(1.5px 1.5px at 88% 35%, rgba(255,255,255,.85) 50%, transparent 51%),
+        radial-gradient(1.5px 1.5px at 38% 76%, rgba(255,255,255,.75) 50%, transparent 51%);
+      animation: twinkle 3s ease-in-out infinite alternate;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .stars-twinkle { animation: none; }
+    }
+    @keyframes twinkle {
+      from { opacity: .15; }
+      to   { opacity: .9; }
+    }
+
+    /* ---------- 地图下方光晕（雷达感） ---------- */
+    .glow {
+      position: absolute;
+      left: 50%;
+      bottom: -6%;
+      width: 76%;
+      height: 42%;
+      transform: translateX(-50%);
+      background: radial-gradient(ellipse at 50% 60%, rgba(0,190,255,.16) 0%, transparent 68%);
+      pointer-events: none;
+    }
+
+    /* ---------- 图表容器 ---------- */
+    #chart { position: absolute; inset: 0; }
+
+    /* ---------- 左上角位置信息 ---------- */
+    .crumb {
+      position: absolute;
+      top: 20px;
+      left: 24px;
+      z-index: 5;
+      color: #dcecff;
+      font-size: 15px;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-shadow: 0 0 12px rgba(80,180,255,.6);
+    }
+    .crumb .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #37dbff;
+      box-shadow: 0 0 10px #37dbff;
+    }
+
+    /* ---------- 调色盘面板 ---------- */
+    .panel {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      z-index: 10;
+      width: 272px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+      padding: 14px;
+      color: #dcecff;
+      background: rgba(8, 16, 42, .85);
+      border: 1px solid rgba(90, 160, 255, .28);
+      border-radius: 12px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, .45);
+    }
+    .panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .panel-toggle {
+      border: 1px solid rgba(90,160,255,.35);
+      background: transparent;
+      color: #9fc6ff;
+      border-radius: 6px;
+      padding: 2px 10px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .panel-body.collapsed { display: none; }
+
+    .section-label {
+      font-size: 12px;
+      color: #8fb4e8;
+      margin: 12px 0 6px;
+    }
+    .presets {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+    .preset {
+      cursor: pointer;
+      border: 1px solid rgba(90,160,255,.25);
+      border-radius: 8px;
+      background: rgba(255,255,255,.04);
+      padding: 6px 4px;
+      text-align: center;
+      color: #cfe4ff;
+      font-size: 11px;
+      transition: border-color .15s, transform .15s;
+    }
+    .preset:hover { border-color: rgba(120,200,255,.7); transform: translateY(-1px); }
+    .preset .sw {
+      display: block;
+      height: 10px;
+      border-radius: 5px;
+      margin-bottom: 5px;
+    }
+    .preset.active { border-color: #37dbff; box-shadow: 0 0 8px rgba(55,219,255,.35); }
+
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin: 8px 0;
+      font-size: 13px;
+    }
+    .row input[type="color"] {
+      width: 46px; height: 26px;
+      padding: 0;
+      border: 1px solid rgba(90,160,255,.35);
+      border-radius: 6px;
+      background: transparent;
+      cursor: pointer;
+    }
+    .row input[type="color"]::-webkit-color-swatch-wrapper { padding: 2px; }
+    .row input[type="color"]::-webkit-color-swatch { border: none; border-radius: 4px; }
+    .row input[type="range"] { flex: 1; accent-color: #37dbff; }
+    .row .val { width: 30px; text-align: right; font-size: 12px; color: #9fc6ff; }
+
+    .btns { display: flex; gap: 8px; margin-top: 14px; }
+    .btns button {
+      flex: 1;
+      padding: 7px 0;
+      font-size: 12px;
+      color: #dcecff;
+      background: rgba(55, 130, 255, .18);
+      border: 1px solid rgba(90, 160, 255, .45);
+      border-radius: 7px;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .btns button:hover { background: rgba(55, 130, 255, .35); }
+
+    .cfg-preview {
+      margin-top: 12px;
+      padding: 8px 10px;
+      background: rgba(0, 0, 0, .35);
+      border: 1px solid rgba(90,160,255,.18);
+      border-radius: 8px;
+      font-family: "JetBrains Mono", Menlo, Consolas, monospace;
+      font-size: 11px;
+      line-height: 1.6;
+      color: #9fd8ff;
+      white-space: pre-wrap;
+      word-break: break-all;
+      max-height: 220px;
+      overflow-y: auto;
+    }
+
+    /* ---------- 加载 / 提示 ---------- */
+    .loading {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #9fc6ff;
+      font-size: 15px;
+      letter-spacing: 2px;
+      z-index: 4;
+    }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 40px;
+      transform: translateX(-50%) translateY(10px);
+      padding: 8px 22px;
+      color: #06251a;
+      background: #37dbff;
+      border-radius: 999px;
+      font-size: 13px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s, transform .25s;
+      z-index: 99;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+  <div class="stars-twinkle"></div>
+  <div class="glow"></div>
+  <div id="chart"></div>
+  <div class="loading" id="loading">地图数据加载中…</div>
+
+  <div class="crumb"><span class="dot"></span>当前位置：全国</div>
+
+  <div class="panel">
+    <div class="panel-head">
+      <span>配色调色盘</span>
+      <button class="panel-toggle" id="panelToggle">收起</button>
+    </div>
+    <div class="panel-body" id="panelBody">
+      <div class="section-label">预设配色</div>
+      <div class="presets" id="presets"></div>
+
+      <div class="section-label">自定义颜色</div>
+      <div class="row"><span>低值色</span><input type="color" id="cStart" value="#0a1f5c"></div>
+      <div class="row"><span>高值色</span><input type="color" id="cEnd" value="#4fc3f7"></div>
+      <div class="row"><span>边框色</span><input type="color" id="cBorder" value="#37dbff"></div>
+      <div class="row"><span>标签色</span><input type="color" id="cLabel" value="#ffffff"></div>
+
+      <div class="section-label">细节</div>
+      <div class="row">
+        <span>边框宽度</span>
+        <input type="range" id="cBorderWidth" min="0" max="4" step="0.5" value="1">
+        <span class="val" id="bwVal">1</span>
+      </div>
+      <div class="row">
+        <span>发光强度</span>
+        <input type="range" id="cGlow" min="0" max="30" step="1" value="14">
+        <span class="val" id="glowVal">14</span>
+      </div>
+      <div class="row">
+        <span>标签大小</span>
+        <input type="range" id="cFont" min="8" max="16" step="1" value="10">
+        <span class="val" id="fontVal">10</span>
+      </div>
+
+      <div class="btns">
+        <button id="btnRand">随机数据</button>
+        <button id="btnCopy">复制配置</button>
+      </div>
+
+      <div class="section-label">当前 ECharts 配置</div>
+      <div class="cfg-preview" id="cfgPreview"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">配置已复制到剪贴板</div>
+
+  <script>
+    /* ==================== 预设配色 ==================== */
+    const PRESETS = [
+      { name: '深海蓝', start: '#0a1f5c', end: '#4fc3f7', border: '#37dbff' }, // 图中效果
+      { name: '翡翠绿', start: '#053d2a', end: '#4ef2a5', border: '#2fe3a9' },
+      { name: '星云紫', start: '#26064f', end: '#b388ff', border: '#a97bff' },
+      { name: '日落橙', start: '#3a0d16', end: '#ff8f66', border: '#ff7e57' },
+      { name: '赛博青', start: '#023344', end: '#00e5ff', border: '#00d0f5' },
+      { name: '鎏金',   start: '#33260a', end: '#ffd166', border: '#ffc84d' }
+    ];
+
+    const state = {
+      start: '#0a1f5c',
+      end: '#4fc3f7',
+      border: '#37dbff',
+      label: '#ffffff',
+      borderWidth: 1,
+      glow: 14,
+      fontSize: 10
+    };
+
+    /* ==================== 工具函数 ==================== */
+    const $ = id => document.getElementById(id);
+
+    // hex -> rgba 字符串
+    function hexToRgba(hex, a) {
+      const n = parseInt(hex.slice(1), 16);
+      return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${a})`;
+    }
+    // 颜色向白色提亮（hover 高亮用）
+    function lighten(hex, amt) {
+      const n = parseInt(hex.slice(1), 16);
+      const f = v => Math.round(v + (255 - v) * amt).toString(16).padStart(2, '0');
+      return '#' + f((n >> 16) & 255) + f((n >> 8) & 255) + f(n & 255);
+    }
+
+    /* ==================== 初始化 ==================== */
+    let chart = null;
+    let mapNames = [];
+
+    // 加载前先确认 echarts 就绪，失败时给出明确提示
+    if (typeof echarts === 'undefined') {
+      $('loading').textContent = 'echarts.min.js 加载失败，请检查 /lib/echart/echarts.min.js';
+    } else {
+      fetch('/lib/echart/map/china.json')
+        .then(r => {
+          if (!r.ok) throw new Error(`china.json HTTP ${r.status}`);
+          return r.json();
+        })
+        .then(geo => {
+          echarts.registerMap('china', geo);
+          // 从 geojson 提取区域名，自动适配任意命名格式
+          mapNames = geo.features.map(f => (f.properties && f.properties.name) || '').filter(Boolean);
+          $('loading').remove();
+          initChart();
+        })
+        .catch(err => {
+          $('loading').textContent = '地图数据加载失败：' + err.message;
+          console.error('[map] 加载失败:', err);
+        });
+    }
+
+    function randData() {
+      return mapNames.map(n => ({ name: n, value: Math.round(Math.random() * 100) }));
+    }
+
+    function buildOption() {
+      return {
+        backgroundColor: 'transparent',
+        tooltip: {
+          trigger: 'item',
+          backgroundColor: 'rgba(6,14,40,.9)',
+          borderColor: state.border,
+          textStyle: { color: '#dcecff', fontSize: 12 },
+          formatter: p => `${p.name}：<b>${p.value ?? '-'}</b>`
+        },
+        visualMap: {
+          type: 'continuous',
+          min: 0,
+          max: 100,
+          left: 24,
+          bottom: 24,
+          text: ['高', '低'],
+          textStyle: { color: '#9fc6ff', fontSize: 12 },
+          inRange: { color: [state.start, state.end] },
+          calculable: true
+        },
+        series: [{
+          type: 'map',
+          map: 'china',
+          roam: true, // 可缩放拖拽，方便看细节
+          zoom: 1.05,
+          data: randData(),
+          label: {
+            show: true,
+            color: state.label,
+            fontSize: state.fontSize
+          },
+          labelLayout: { hideOverlap: true },
+          itemStyle: {
+            borderColor: state.border,
+            borderWidth: state.borderWidth,
+            shadowBlur: state.glow,
+            shadowColor: hexToRgba(state.border, .55)
+          },
+          emphasis: {
+            label: { color: '#fff', fontWeight: 'bold' },
+            itemStyle: {
+              areaColor: lighten(state.end, .35),
+              shadowBlur: Math.max(state.glow, 18),
+              shadowColor: hexToRgba(state.end, .8)
+            }
+          },
+          select: { disabled: true }
+        }]
+      };
+    }
+
+    function initChart() {
+      chart = echarts.init($('chart'));
+      chart.setOption(buildOption());
+      renderPreview();
+      window.addEventListener('resize', () => chart && chart.resize());
+    }
+
+    /* ==================== 应用调色 ==================== */
+    function apply() {
+      if (!chart) return;
+      chart.setOption({
+        visualMap: { inRange: { color: [state.start, state.end] } },
+        series: [{
+          label: { color: state.label, fontSize: state.fontSize },
+          itemStyle: {
+            borderColor: state.border,
+            borderWidth: state.borderWidth,
+            shadowBlur: state.glow,
+            shadowColor: hexToRgba(state.border, .55)
+          },
+          emphasis: {
+            itemStyle: {
+              areaColor: lighten(state.end, .35),
+              shadowBlur: Math.max(state.glow, 18),
+              shadowColor: hexToRgba(state.end, .8)
+            }
+          }
+        }]
+      });
+      renderPreview();
+    }
+
+    /* 生成可复制的配置片段（贴回项目用） */
+    function currentConfig() {
+      return {
+        visualMap: {
+          min: 0,
+          max: 100,
+          inRange: { color: [state.start, state.end] }
+        },
+        series: [{
+          type: 'map',
+          map: 'china',
+          label: { show: true, color: state.label, fontSize: state.fontSize },
+          itemStyle: {
+            borderColor: state.border,
+            borderWidth: state.borderWidth,
+            shadowBlur: state.glow,
+            shadowColor: hexToRgba(state.border, .55)
+          },
+          emphasis: {
+            itemStyle: { areaColor: lighten(state.end, .35) }
+          }
+        }]
+      };
+    }
+
+    function renderPreview() {
+      $('cfgPreview').textContent = JSON.stringify(currentConfig(), null, 2);
+    }
+
+    /* ==================== 面板交互 ==================== */
+    // 预设按钮
+    PRESETS.forEach(p => {
+      const el = document.createElement('div');
+      el.className = 'preset';
+      el.innerHTML = `<span class="sw" style="background:linear-gradient(90deg,${p.start},${p.end})"></span>${p.name}`;
+      el.addEventListener('click', () => {
+        Object.assign(state, { start: p.start, end: p.end, border: p.border });
+        $('cStart').value = p.start;
+        $('cEnd').value = p.end;
+        $('cBorder').value = p.border;
+        document.querySelectorAll('.preset').forEach(b => b.classList.remove('active'));
+        el.classList.add('active');
+        apply();
+      });
+      $('presets').appendChild(el);
+    });
+
+    // 颜色输入
+    [['cStart', 'start'], ['cEnd', 'end'], ['cBorder', 'border'], ['cLabel', 'label']]
+      .forEach(([id, key]) => {
+        $(id).addEventListener('input', e => {
+          state[key] = e.target.value;
+          document.querySelectorAll('.preset').forEach(b => b.classList.remove('active'));
+          apply();
+        });
+      });
+
+    // 滑块
+    [['cBorderWidth', 'borderWidth', 'bwVal'],
+     ['cGlow', 'glow', 'glowVal'],
+     ['cFont', 'fontSize', 'fontVal']]
+      .forEach(([id, key, valId]) => {
+        $(id).addEventListener('input', e => {
+          state[key] = +e.target.value;
+          $(valId).textContent = e.target.value;
+          apply();
+        });
+      });
+
+    // 随机数据
+    $('btnRand').addEventListener('click', () => {
+      chart && chart.setOption({ series: [{ data: randData() }] });
+    });
+
+    // 复制配置
+    $('btnCopy').addEventListener('click', async () => {
+      const text = JSON.stringify(currentConfig(), null, 2);
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch (e) {
+        // 剪贴板 API 不可用时的兜底
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        ta.remove();
+      }
+      $('toast').classList.add('show');
+      setTimeout(() => $('toast').classList.remove('show'), 1600);
+    });
+
+    // 面板收起/展开
+    $('panelToggle').addEventListener('click', () => {
+      const body = $('panelBody');
+      const collapsed = body.classList.toggle('collapsed');
+      $('panelToggle').textContent = collapsed ? '展开' : '收起';
+    });
+  </script>
+</body>
+</html>

@@ -105,18 +105,17 @@ import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import * as echarts from 'echarts';
 import RegionDrilldownMap from '@/components/Business/RegionDrilldownMap.vue';
 import { getRegulatoryDashboard, getRegulatoryRegion } from '@/y_api/regulatory';
+import { BUSINESS_MAP_BORDER, BUSINESS_MAP_COLORS } from '@/config/businessMap';
 import { SHOW_REGULATORY_MAP_NINE_DASH_LINE } from '@/config/regulatory';
 import institutionIcon from '@/assets/images/regulatory/icon-g1.png';
 import newInstitutionIcon from '@/assets/images/regulatory/icon-g2.png';
 
 const TASK_COLORS = ['#008fdd', '#fff567', '#16f7db', '#28c8f1'];
-const MAP_COLORS = ['#074365', '#00608d', '#007eb9', '#009cd7', '#02b7ec'];
 const MAP_APPEARANCE = {
+    ...BUSINESS_MAP_BORDER,
     countryZoom: 1.12,
     countryLayoutCenter: ['48%', '50%'],
-    countryFontSize: 13,
-    borderColor: 'rgba(134, 219, 255, .82)',
-    borderWidth: 1.2
+    countryFontSize: 13
 };
 const AXIS_TEXT = { color: '#e6eff8', fontSize: 14 };
 const TICK_TEXT = { color: '#8797a9', fontSize: 11, hideOverlap: true };
@@ -326,7 +325,7 @@ export default {
             selectedRegion, selectedTask, taskComparison,
             taskPieRef, regionRankRef, taskComparisonRef, baseRankRef, baseComparisonRef,
             getRegulatoryRegion, handleMapError, formatMetric, growthDirection, growthValue,
-            taskColors: TASK_COLORS, mapColors: MAP_COLORS, mapAppearance: MAP_APPEARANCE,
+            taskColors: TASK_COLORS, mapColors: BUSINESS_MAP_COLORS, mapAppearance: MAP_APPEARANCE,
             showNineDashLine: SHOW_REGULATORY_MAP_NINE_DASH_LINE
         };
     }

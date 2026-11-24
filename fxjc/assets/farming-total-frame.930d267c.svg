@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="456" height="152" viewBox="0 0 456 152" fill="none">
+  <defs>
+    <linearGradient id="panel-fill" x1="0" y1="76" x2="456" y2="76" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#041A31" stop-opacity="0.98"/>
+      <stop offset="0.5" stop-color="#063A50" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#041A31" stop-opacity="0.98"/>
+    </linearGradient>
+    <linearGradient id="edge-line" x1="24" y1="6" x2="430" y2="146" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#39D7EC"/>
+      <stop offset="0.5" stop-color="#177E9D"/>
+      <stop offset="1" stop-color="#2BC7E2"/>
+    </linearGradient>
+    <pattern id="panel-grid" width="38" height="152" patternUnits="userSpaceOnUse">
+      <path d="M1 0V152" stroke="#32B4D2" stroke-opacity="0.08" stroke-width="2"/>
+      <path d="M20 0V152" stroke="#32B4D2" stroke-opacity="0.035"/>
+    </pattern>
+    <filter id="cyan-glow" x="-20%" y="-30%" width="140%" height="160%" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <path d="M22 5H171L184 14H272L285 5H434L451 22V130L434 147H22L5 130V22L22 5Z" fill="url(#panel-fill)" stroke="url(#edge-line)" stroke-width="3"/>
+  <path d="M26 13H165L179 22H277L291 13H430L443 26V126L430 139H26L13 126V26L26 13Z" stroke="#1B6D89" stroke-opacity="0.9" stroke-width="2"/>
+  <path d="M22 5H171L184 14H272L285 5H434L451 22V130L434 147H22L5 130V22L22 5Z" fill="url(#panel-grid)"/>
+
+  <g filter="url(#cyan-glow)">
+    <path d="M197 5H259" stroke="#3EE1F2" stroke-width="3"/>
+    <path d="M207 12H249" stroke="#176A87" stroke-width="2"/>
+    <path d="M159 11L168 2M172 11L181 2M185 11L190 6" stroke="#38D5EA" stroke-width="3"/>
+    <path d="M297 11L288 2M284 11L275 2M271 11L266 6" stroke="#38D5EA" stroke-width="3"/>
+  </g>
+
+  <path d="M22 5L8 19V31" stroke="#F1EA36" stroke-width="4"/>
+  <path d="M434 5L448 19V31" stroke="#F1EA36" stroke-width="4"/>
+  <path d="M17 119V128L27 138" stroke="#1D87A7" stroke-width="2"/>
+  <path d="M439 119V128L429 138" stroke="#1D87A7" stroke-width="2"/>
+</svg>
