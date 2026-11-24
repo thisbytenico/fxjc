@@ -459,9 +459,9 @@ export default {
     color: #f4f9ff;
     font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
     background-color: #06162a;
-    background-image: url(@/assets/images/bg.jpg);
-    background-size: contain;
-    background-position: center;
+    background-image: url(@/assets/images/bg-zsyw.png);
+    background-size: cover;
+    background-position: 50% 110%;
 }
 
 .dashboard-grid {

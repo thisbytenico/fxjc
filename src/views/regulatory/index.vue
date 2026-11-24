@@ -528,8 +528,10 @@ export default {
     right: 0;
     bottom: 0;
     left: 0;
-    height: 9px;
-    background: linear-gradient(180deg, #15324d55, #071523 40%, #0b1828 72%, #060f1d);
+    height: 12px;
+    background-image: url(@/assets/images/regulatory/line.png);
+    background-repeat: no-repeat;
+    background-size: contain;
     box-shadow: 0 0 7px #0f233b7d;
 }
 .comparison-summary strong { color: var(--value-color); font: italic 800 clamp(20px, 1.63vw, 31px)/1 Arial, sans-serif; }
