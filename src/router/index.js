@@ -32,6 +32,12 @@ const router = createRouter({
       component: () => import('../views/monitoring/index.vue')
     },
     {
+      path: '/monitoring-dashboard',
+      name: 'monitoringDashboard',
+      meta:{breadcrumbsName:'监测业务'},
+      component: () => import('../views/monitoringDashboard/index.vue')
+    },
+    {
       path: '/dataAnalysis',
       name: 'dataAnalysis',
       meta:{breadcrumbsName:'数据分析'},

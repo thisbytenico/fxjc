@@ -94,7 +94,7 @@ export default {
         const route = useRoute();
         // console.log('route.meta.breadcrumbsName',route.meta)
         const breadcrumbsName = computed(() => route.meta.breadcrumbsName);
-        const isDashboard = computed(() => ['/dataAnalysis', '/regulatory', '/regulatory/legacy'].includes(route.path));
+        const isDashboard = computed(() => ['/dataAnalysis', '/regulatory', '/regulatory/legacy', '/monitoring-dashboard'].includes(route.path));
 
         const store = useStore();
         const g_loading = computed(() => store.state.loading);
