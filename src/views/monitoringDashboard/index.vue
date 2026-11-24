@@ -19,7 +19,7 @@
                         <dl class="task-levels">
                             <div v-for="level in group.levels" :key="level.name">
                                 <dt>{{ level.name }}</dt>
-                                <dd>{{ formatNumber(level.value) }}<small>次</small></dd>
+                                <dd>{{ level.value }}<small>次</small></dd>
                             </div>
                         </dl>
                     </article>
@@ -180,7 +180,7 @@ const samplingOption = data => ({
     series: [{
         type: 'pie',
         center: ['50%', '50%'],
-        radius: ['51%', '64%'],
+        radius: ['74%', '90%'],
         startAngle: 90,
         clockwise: true,
         avoidLabelOverlap: true,
@@ -275,6 +275,8 @@ export default {
     color: #f5f8fc;
     font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
     background: #09182b url(@/assets/images/bg-zsyw.png) center bottom / cover no-repeat;
+    background-size: cover;
+    background-position: 50% 150%;
 }
 
 .dashboard-grid {
@@ -347,10 +349,10 @@ export default {
 .task-summary h3 i { position: absolute; top: 50%; left: -19px; width: 11px; height: 11px; background: var(--accent-color); transform: translateY(-50%); }
 .task-summary strong { color: var(--accent-color); font: italic 700 33px/1 Arial, sans-serif; white-space: nowrap; }
 .task-summary small { margin-left: 2px; font-size: 13px; }
-.task-levels { display: grid; gap: 5px; margin: 3px 13px 0 22px; }
-.task-levels > div { display: grid; grid-template-columns: minmax(80px, 1fr) minmax(80px, .62fr); align-items: center; gap: 10px; min-height: 25px; }
+.task-levels { display: grid; gap: 5px; margin: 3px 29px 0 22px; }
+.task-levels > div { display: grid; grid-template-columns: minmax(0, 1fr) 84px; align-items: center; gap: 7px; min-height: 25px; }
 .task-levels dt { position: relative; padding-left: 0; color: #8192a8; font-size: 17px; font-style: italic; white-space: nowrap; }
-.task-levels dt::after { content: ''; position: absolute; top: 50%; right: 0; width: 64%; border-top: 3px solid #1e3349; transform: translateY(-50%); }
+.task-levels dt::after { content: ''; position: absolute; top: 50%; right: 0; left: 80px; border-top: 3px solid #1e3349; transform: translateY(-50%); }
 .task-levels dd { margin: 0; text-align: right; font: italic 700 21px/1 Arial, sans-serif; white-space: nowrap; }
 .task-levels small { margin-left: 2px; font-size: 10px; }
 
@@ -396,9 +398,16 @@ export default {
 .sampling-metrics strong { color: #36bdf7; font: italic 700 32px/1 Arial, sans-serif; white-space: nowrap; }
 .sampling-metrics p:nth-child(2) strong { color: #4fe7e0; }
 .sampling-metrics small { margin-left: 2px; font-size: 11px; }
-.sampling-content { display: grid; grid-template-columns: minmax(150px, .94fr) minmax(120px, 1fr); flex: 1; min-height: 0; align-items: center; padding: 0 26px 12px 42px; }
-.sampling-dial { display: grid; place-items: center; width: 100%; height: 100%; min-height: 0; container-type: size; }
-.sampling-chart { width: min(100cqw, 100cqh, 168px); aspect-ratio: 1; background: url(@/assets/images/bg-btu2.png) center / 100% 100% no-repeat; }
+.sampling-content { display: grid; grid-template-columns: 52% minmax(0, 1fr); flex: 1; min-height: 0; align-items: center; padding: 0 26px 12px 42px; }
+.sampling-dial { display: grid; align-items: center; justify-items: start; width: 100%; height: 100%; min-height: 0; padding-left: 13px; container-type: size; transform: translateY(3px); }
+.sampling-chart {
+    width: min(100cqw, calc(100cqh * 168 / 167), 168px);
+    aspect-ratio: 168 / 167;
+    background-image: url(@/assets/images/bg-btu2.png);
+    background-position: center;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
 .sampling-legend { display: grid; gap: 8px; margin: 0; padding: 0 0 0 11px; list-style: none; }
 .sampling-legend li { display: flex; align-items: center; min-width: 0; font-size: 13px; white-space: nowrap; }
 .sampling-legend i { flex: 0 0 10px; width: 10px; height: 10px; margin-right: 7px; background: var(--legend-color); }
@@ -430,8 +439,8 @@ export default {
     .task-summary { min-height: 34px; padding-bottom: 7px; }
     .task-summary h3 { font-size: 15px; }
     .task-summary strong { font-size: 25px; }
-    .task-levels { gap: 2px; margin-top: 1px; }
-    .task-levels > div { min-height: 19px; }
+    .task-levels { gap: 2px; margin: 1px 20px 0 22px; }
+    .task-levels > div { grid-template-columns: minmax(0, 1fr) 68px; gap: 5px; min-height: 19px; }
     .task-levels dt { font-size: 13px; }
     .task-levels dd { font-size: 16px; }
     .map-panel :deep(.map-location) { font-size: 16px; }
@@ -443,6 +452,7 @@ export default {
     .sampling-metrics p { height: 34px; padding: 3px 10px; font-size: 13px; }
     .sampling-metrics strong { font-size: 23px; }
     .sampling-content { grid-template-columns: minmax(110px, .94fr) minmax(100px, 1fr); padding: 0 10px 6px 23px; }
+    .sampling-dial { place-items: center; padding-left: 0; transform: none; }
     .sampling-legend { gap: 4px; padding-left: 7px; }
     .sampling-legend li { font-size: 11px; }
     .news-table { margin: 10px 12px 10px; }
