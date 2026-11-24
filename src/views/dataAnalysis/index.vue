@@ -73,7 +73,7 @@
             </section>
 
             <section class="screen-panel certification-panel">
-                <header class="panel-heading"><i></i><h2>认证主体总数</h2><span></span></header>
+                <header class="panel-heading"><i></i><h2>各类主体情况</h2><span></span></header>
                 <div class="certification-content">
                     <div class="certification-metric">
                         <strong>{{ certifications ? formatNumber(certifications.total) : '—' }}</strong>
@@ -136,22 +136,25 @@
 </template>
 
 <script>
-import { nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import { nextTick, onBeforeUnmount, onMounted, ref, shallowRef, watch } from 'vue';
 import * as echarts from 'echarts';
 import RegionDrilldownMap from '@/components/Business/RegionDrilldownMap.vue';
 import {
     getDataAnalysisCertifications,
     getDataAnalysisDashboard,
     getDataAnalysisRegion,
+    getDataAnalysisRegionalMock,
     getDataAnalysisSubjectBusiness,
     getDataAnalysisSubjectIndustry,
     getDataAnalysisSubjectInfo
 } from '@/y_api/dataAnalysis';
+import { createRegionalMock } from '@/y_api/regionalMock';
 import { BUSINESS_MAP_BORDER, BUSINESS_MAP_COLORS } from '@/config/businessMap';
-import { SHOW_CHINA_MAP_NINE_DASH_LINE, USE_DATA_ANALYSIS_SUBJECT_MOCK } from '@/config/dataAnalysis';
+import { SHOW_CHINA_MAP_NINE_DASH_LINE, USE_DATA_ANALYSIS_MOCK, USE_DATA_ANALYSIS_SUBJECT_MOCK } from '@/config/dataAnalysis';
 
 const CHART_COLORS = ['#31d3ae', '#f19a42', '#2faeea', '#f8ef51', '#51dce6'];
 const SUBJECT_PIE_CENTER = ['62%', '52%'];
+const MOCK_SUBJECT_PANELS = USE_DATA_ANALYSIS_MOCK || USE_DATA_ANALYSIS_SUBJECT_MOCK;
 const SUBJECT_ANALYSIS_MOCK = {
     info: { total: 627828, recentActive: 9384, activeRate: 93 },
     industry: [
@@ -183,10 +186,10 @@ export default {
     name: 'DataAnalysis',
     components: { RegionDrilldownMap },
     setup() {
-        const dashboard = ref(null);
+        const dashboard = shallowRef(null);
         const loading = ref(true);
         const errorMessage = ref('');
-        const subjectMock = USE_DATA_ANALYSIS_SUBJECT_MOCK ? SUBJECT_ANALYSIS_MOCK : null;
+        const subjectMock = MOCK_SUBJECT_PANELS ? SUBJECT_ANALYSIS_MOCK : null;
         const subjectInfo = ref(subjectMock?.info ?? null);
         const subjectIndustry = ref(subjectMock?.industry ?? null);
         const subjectIndustryFailed = ref(false);
@@ -201,12 +204,13 @@ export default {
         const farmingRef = ref(null);
         const productPieRef = ref(null);
         const queryRankRef = ref(null);
-        const chartInstances = [];
+        const chartInstances = new Map();
         let subjectPieChart = null;
         let subjectPieResizeObserver = null;
         let certificationChart = null;
         let analysisRegionKey;
         let analysisRequestId = 0;
+        let destroyed = false;
 
         const formatNumber = value => Number(value || 0).toLocaleString('en-US');
         const formatActivityRate = (value, maximumFractionDigits = 2) => {
@@ -219,11 +223,11 @@ export default {
             borderColor: '#36c9ef',
             textStyle: { color: '#fff', fontSize: 12 }
         };
-        const initChart = (element, option) => {
+        const setChartOption = (element, option) => {
             if (!element) return null;
-            const chart = echarts.init(element);
+            const chart = chartInstances.get(element) ?? echarts.init(element);
             chart.setOption(option);
-            chartInstances.push(chart);
+            chartInstances.set(element, chart);
             return chart;
         };
         const resizeCharts = () => chartInstances.forEach(chart => chart && !chart.isDisposed() && chart.resize());
@@ -277,7 +281,6 @@ export default {
         };
 
         const loadRegionAnalysis = (routes) => {
-            if (USE_DATA_ANALYSIS_SUBJECT_MOCK) return;
             const regionKey = routes.filter(route => route.level !== 'country').map(route => route.adcode).join('/');
             if (regionKey === analysisRegionKey) return;
             analysisRegionKey = regionKey;
@@ -310,7 +313,31 @@ export default {
             ]);
         };
 
-        const handleMapRouteChange = ({ routes }) => loadRegionAnalysis(routes);
+        const updateSubjectMock = region => {
+            const { info, industry, business, certifications: cert } = SUBJECT_ANALYSIS_MOCK;
+            if (region.current.level === 'country') {
+                subjectInfo.value = info;
+                subjectIndustry.value = industry;
+                subjectBusiness.value = business;
+                certifications.value = cert;
+                return;
+            }
+            const { count, rate, values } = createRegionalMock(region);
+            subjectInfo.value = { total: count(info.total), recentActive: count(info.recentActive, 1), activeRate: rate(info.activeRate) };
+            subjectIndustry.value = values(industry);
+            subjectBusiness.value = values(business).map((item, index) => ({ ...item, activeRate: rate(item.activeRate, index) }));
+            certifications.value = { total: count(cert.total), activeRate: rate(cert.activeRate), industry: values(cert.industry) };
+        };
+
+        const handleMapRouteChange = region => {
+            const data = getDataAnalysisRegionalMock(region);
+            if (data && data !== dashboard.value) {
+                dashboard.value = data;
+                renderDashboardCharts(data, region.current.level !== 'country');
+            }
+            if (MOCK_SUBJECT_PANELS) updateSubjectMock(region);
+            else loadRegionAnalysis(region.routes);
+        };
 
         const axisText = { color: '#d8e5f2', fontSize: 12 };
         const subjectPieLabelLayout = params => {
@@ -356,9 +383,8 @@ export default {
         watch([certifications, certificationError], () => certificationChart?.setOption(certificationPieOption()));
 
         const initCharts = () => {
-            const data = dashboard.value;
             const subjectPieElement = subjectPieRef.value;
-            subjectPieChart = initChart(subjectPieElement, subjectPieOption());
+            subjectPieChart = setChartOption(subjectPieElement, subjectPieOption());
             if (subjectPieChart && typeof ResizeObserver !== 'undefined') {
                 subjectPieResizeObserver = new ResizeObserver(() => {
                     const { clientWidth, clientHeight } = subjectPieElement;
@@ -368,12 +394,16 @@ export default {
                 });
                 subjectPieResizeObserver.observe(subjectPieElement);
             }
+            certificationChart = setChartOption(certificationRef.value, certificationPieOption());
+            renderDashboardCharts(dashboard.value);
+        };
 
+        const renderDashboardCharts = (data, regional = false) => {
             const rank = data.traceability.productionRank;
             const traceCategoryLabel = { ...axisText, fontSize: 13, interval: 0, hideOverlap: true };
             const traceAxisLabel = { color: '#526379', fontSize: 10, margin: 4, showMaxLabel: true, hideOverlap: true, formatter: value => String(value) };
             const traceValueLabel = { show: true, position: 'insideRight', color: '#fff', fontSize: 10 };
-            initChart(batchRankRef.value, {
+            setChartOption(batchRankRef.value, {
                 tooltip: { ...tooltip, trigger: 'axis', axisPointer: { type: 'shadow' } },
                 legend: {
                     data: ['生产批次', '交易批次'],
@@ -388,7 +418,7 @@ export default {
                     textStyle: { color: '#f4f9ff', fontSize: 12 }
                 },
                 grid: { left: 8, right: 18, top: 18, bottom: 4, containLabel: true },
-                xAxis: { type: 'value', max: 180000, splitNumber: 6, axisLabel: traceAxisLabel, splitLine: { lineStyle: { color: 'rgba(105,140,175,.22)' } } },
+                xAxis: { type: 'value', max: regional ? null : 180000, splitNumber: 6, axisLabel: traceAxisLabel, splitLine: { lineStyle: { color: 'rgba(105,140,175,.22)' } } },
                 yAxis: { type: 'category', inverse: true, data: rank.map(item => item.name), axisLabel: traceCategoryLabel, axisTick: { show: false }, axisLine: { show: false } },
                 series: [
                     {
@@ -423,30 +453,29 @@ export default {
             });
 
             const printRank = data.traceability.printRank;
-            initChart(printRankRef.value, {
+            setChartOption(printRankRef.value, {
                 tooltip: { ...tooltip, trigger: 'axis', axisPointer: { type: 'shadow' } },
                 grid: { left: 8, right: 18, top: 8, bottom: 4, containLabel: true },
-                xAxis: { type: 'value', max: 180000, splitNumber: 6, axisLabel: traceAxisLabel, splitLine: { lineStyle: { color: 'rgba(105,140,175,.22)' } } },
+                xAxis: { type: 'value', max: regional ? null : 180000, splitNumber: 6, axisLabel: traceAxisLabel, splitLine: { lineStyle: { color: 'rgba(105,140,175,.22)' } } },
                 yAxis: { type: 'category', inverse: true, data: printRank.map(item => item.name), axisLabel: traceCategoryLabel, axisTick: { show: false }, axisLine: { show: false } },
                 series: [{ type: 'bar', barWidth: 12, data: printRank.map(item => item.value), itemStyle: { color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{ offset: 0, color: 'rgba(20,75,79,.45)' }, { offset: .58, color: '#188d96' }, { offset: 1, color: '#38bfcb' }]), borderRadius: [0, 7, 7, 0] }, label: traceValueLabel }]
             });
 
-            certificationChart = initChart(certificationRef.value, certificationPieOption());
-            initChart(productPieRef.value, pieOption(data.products.distribution, ['#31d3ae', '#35b7f0', '#ffcc72'], ['49%', '72%']));
+            setChartOption(productPieRef.value, pieOption(data.products.distribution, ['#31d3ae', '#35b7f0', '#ffcc72'], ['49%', '72%']));
 
-            initChart(farmingRef.value, {
+            setChartOption(farmingRef.value, {
                 tooltip: { ...tooltip, trigger: 'axis' },
                 grid: { left: 12, right: 8, top: 10, bottom: 0, containLabel: true },
                 xAxis: { type: 'category', data: data.farming.categories.map(item => item.name), axisLabel: axisText, axisTick: { show: false }, axisLine: { lineStyle: { color: '#54708b' } } },
-                yAxis: { type: 'value', max: 180000, splitNumber: 3, axisLabel: { color: '#5a7188', fontSize: 9 }, splitLine: { lineStyle: { color: 'rgba(80,118,153,.25)' } } },
+                yAxis: { type: 'value', max: regional ? null : 180000, splitNumber: 3, axisLabel: { color: '#5a7188', fontSize: 9 }, splitLine: { lineStyle: { color: 'rgba(80,118,153,.25)' } } },
                 series: [{ type: 'bar', barWidth: 8, data: data.farming.categories.map(item => item.value), itemStyle: { color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{ offset: 0, color: '#65ecf2' }, { offset: .45, color: '#1f9fb7' }, { offset: 1, color: 'rgba(15,52,79,.15)' }]), borderRadius: [4, 4, 0, 0] } }]
             });
 
-            initChart(queryRankRef.value, {
+            setChartOption(queryRankRef.value, {
                 tooltip: { ...tooltip, trigger: 'axis' },
                 grid: { left: 6, right: 6, top: 6, bottom: 0, containLabel: true },
                 xAxis: { type: 'category', data: data.products.queryRank.map(item => item.name), axisLabel: axisText, axisTick: { show: false }, axisLine: { lineStyle: { color: '#54708b' } } },
-                yAxis: { type: 'value', max: 1000, splitNumber: 2, axisLabel: { color: '#5a7188', fontSize: 8 }, splitLine: { lineStyle: { color: 'rgba(80,118,153,.2)' } } },
+                yAxis: { type: 'value', max: regional ? null : 1000, splitNumber: 2, axisLabel: { color: '#5a7188', fontSize: 8 }, splitLine: { lineStyle: { color: 'rgba(80,118,153,.2)' } } },
                 series: [{ type: 'bar', barWidth: 8, data: data.products.queryRank.map(item => item.value), itemStyle: { color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{ offset: 0, color: '#63edf0' }, { offset: 1, color: 'rgba(12,53,78,.08)' }]), borderRadius: [4, 4, 0, 0] } }]
             });
         };
@@ -456,10 +485,13 @@ export default {
         };
 
         onMounted(async () => {
-            loadRegionAnalysis([]);
+            if (!MOCK_SUBJECT_PANELS) loadRegionAnalysis([]);
             try {
-                dashboard.value = await getDataAnalysisDashboard();
+                const data = await getDataAnalysisDashboard();
+                if (destroyed) return;
+                dashboard.value = data;
                 await nextTick();
+                if (destroyed) return;
                 initCharts();
                 window.addEventListener('resize', resizeCharts);
             } catch (error) {
@@ -470,6 +502,7 @@ export default {
         });
 
         onBeforeUnmount(() => {
+            destroyed = true;
             analysisRequestId += 1;
             subjectPieResizeObserver?.disconnect();
             window.removeEventListener('resize', resizeCharts);

@@ -23,11 +23,11 @@
                         class="monitoring-metric"
                         :style="{ '--metric-color': monitoringColors[index % monitoringColors.length] }"
                     >
-                        <h2>{{ metric.label }} <strong>{{ formatCount(metric.total) }}<small v-if="metric.total != null">次</small></strong></h2>
+                        <h2>{{ metric.label }} <strong>{{ formatCount(metric.total) }}<small v-if="metric.total != null">{{ metricUnits[metric.label] ?? '次' }}</small></strong></h2>
                         <dl class="metric-details">
                             <div v-for="level in levels" :key="level.key">
                                 <dt>{{ level.label }}</dt>
-                                <dd>{{ formatCount(metric[level.key], false) }}<small v-if="metric[level.key] != null">次</small></dd>
+                                <dd>{{ formatCount(metric[level.key]) }}<small v-if="metric[level.key] != null">{{ metricUnits[metric.label] ?? '次' }}</small></dd>
                             </div>
                         </dl>
                     </section>
@@ -42,6 +42,7 @@
                         value-label="执法次数"
                         value-unit="次"
                         aria-label="全国执法业务分布地图，点击行政区可下钻"
+                        @route-change="handleMapRouteChange"
                     />
                 </div>
             </section>
@@ -87,10 +88,11 @@
 import { nextTick, onBeforeUnmount, onMounted, ref, shallowRef } from 'vue';
 import * as echarts from 'echarts';
 import RegionDrilldownMap from '@/components/Business/RegionDrilldownMap.vue';
-import { getEnforcementDashboard, getEnforcementRegion } from '@/y_api/enforcement';
+import { getEnforcementDashboard, getEnforcementRegion, getEnforcementRegionalMock } from '@/y_api/enforcement';
 import { patrolComparisonOption, patrolTrendOption } from './charts';
 
 const monitoringColors = ['#2cabea', '#1bd4ad', '#fff878'];
+const metricUnits = { 执法机构: '家', 执法人员: '人', 执法任务: '条' };
 const mapColors = ['#06425b', '#006894', '#0084c9', '#00b0e7'];
 const countryLabels = {
     新疆: '新疆维吾尔自治区',
@@ -124,13 +126,13 @@ const comparisonTotals = [
     { key: 'critical', label: '特紧任务数量', color: '#ff963e' }
 ];
 const taskTables = [
-    { key: 'inspection-panel', title: '例行检查抽检统计', dateLabel: '巡查时间', dataKey: 'inspectionTasks' },
-    { key: 'ranking-panel', title: '监测任务区域排行', dateLabel: '执法时间', dataKey: 'rankedTasks' }
+    { key: 'inspection-panel', title: '现场巡查任务', dateLabel: '巡查时间', dataKey: 'inspectionTasks' },
+    { key: 'ranking-panel', title: '行政处罚任务', dateLabel: '执法时间', dataKey: 'rankedTasks' }
 ];
 const numberFormat = new Intl.NumberFormat('zh-CN');
-const formatCount = (value, grouped = true) => {
+const formatCount = value => {
     if (value == null) return '—';
-    return grouped ? numberFormat.format(value) : String(value);
+    return numberFormat.format(value);
 };
 
 const dashboard = shallowRef(null);
@@ -147,6 +149,15 @@ const mountChart = (element, option) => {
     charts.set(element, chart);
     chart.setOption(option);
     observer?.observe(element);
+};
+
+const handleMapRouteChange = region => {
+    const data = getEnforcementRegionalMock(region);
+    if (!data || data === dashboard.value) return;
+    dashboard.value = data;
+    const regional = region.current.level !== 'country';
+    charts.get(trendRef.value)?.setOption(patrolTrendOption(data.patrolTrend, regional));
+    charts.get(comparisonRef.value)?.setOption(patrolComparisonOption(data.comparison, regional));
 };
 
 onMounted(async () => {

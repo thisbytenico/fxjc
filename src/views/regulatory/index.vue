@@ -63,6 +63,7 @@
                     value-label="监管任务数"
                     value-unit="次"
                     aria-label="全国监管任务分布地图，点击行政区可下钻"
+                    @route-change="handleMapRouteChange"
                     @error="handleMapError"
                 />
                 <dl class="map-metrics">
@@ -75,7 +76,7 @@
 
             <div class="side-column patrol-column">
                 <section class="screen-panel">
-                    <header class="panel-heading"><h2>基地巡查区域排行</h2></header>
+                    <header class="panel-heading"><h2>基地检查情况</h2></header>
                     <div class="comparison-summary comparison-summary--patrol">
                         <p>基地巡查总数
                             <strong>{{ formatMetric(metrics.basePatrols) }}<small v-if="metrics.basePatrols != null">次</small></strong>
@@ -101,10 +102,10 @@
 </template>
 
 <script>
-import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, shallowRef, watch } from 'vue';
 import * as echarts from 'echarts';
 import RegionDrilldownMap from '@/components/Business/RegionDrilldownMap.vue';
-import { getRegulatoryDashboard, getRegulatoryRegion } from '@/y_api/regulatory';
+import { getRegulatoryDashboard, getRegulatoryRegion, getRegulatoryRegionalMock } from '@/y_api/regulatory';
 import { BUSINESS_MAP_BORDER, BUSINESS_MAP_COLORS } from '@/config/businessMap';
 import { SHOW_REGULATORY_MAP_NINE_DASH_LINE } from '@/config/regulatory';
 import institutionIcon from '@/assets/images/regulatory/icon-g1.png';
@@ -233,7 +234,7 @@ export default {
     name: 'RegulatoryDashboard',
     components: { RegionDrilldownMap },
     setup() {
-        const dashboard = ref(null);
+        const dashboard = shallowRef(null);
         const errorMessage = ref('');
         const selectedRankTask = ref('');
         const selectedTask = ref('');
@@ -272,6 +273,7 @@ export default {
         const charts = new Map();
         let observer;
         let destroyed = false;
+        let regionalMockActive = false;
         const resizeCharts = () => charts.forEach(chart => chart.resize());
         const initChart = (element, option) => {
             const chart = echarts.init(element);
@@ -281,7 +283,8 @@ export default {
         };
 
         watch(visibleTaskRank, items => {
-            charts.get(regionRankRef.value)?.setOption(rankOption(items, BLUE_RANK_COLORS, 12, rankMaximum(regionTaskRank.value)));
+            const max = regionalMockActive ? null : rankMaximum(regionTaskRank.value);
+            charts.get(regionRankRef.value)?.setOption(rankOption(items, BLUE_RANK_COLORS, 12, max));
         });
         watch(taskComparison, data => {
             charts.get(taskComparisonRef.value)?.setOption(comparisonOption(data, TASK_BAR_COLORS));
@@ -289,6 +292,16 @@ export default {
 
         const handleMapError = error => {
             errorMessage.value = error.message || '地图数据加载失败';
+        };
+        const handleMapRouteChange = region => {
+            const data = getRegulatoryRegionalMock(region);
+            if (!data || data === dashboard.value) return;
+            regionalMockActive = region.current.level !== 'country';
+            dashboard.value = data;
+            const max = regionalMockActive ? null : rankMaximum(basePatrolRank.value);
+            charts.get(taskPieRef.value)?.setOption(taskPieOption(taskBreakdown.value));
+            charts.get(baseRankRef.value)?.setOption(rankOption(basePatrolRank.value, GREEN_RANK_COLORS, 16, max));
+            charts.get(baseComparisonRef.value)?.setOption(comparisonOption(data.quarterlyComparison, PATROL_BAR_COLORS));
         };
         onMounted(async () => {
             try {
@@ -326,7 +339,7 @@ export default {
             dashboard, errorMessage, metrics, taskBreakdown, taskComparisons, mapMetrics,
             selectedRankTask, selectedTask, taskComparison,
             taskPieRef, regionRankRef, taskComparisonRef, baseRankRef, baseComparisonRef,
-            getRegulatoryRegion, handleMapError, formatMetric, growthDirection, growthValue,
+            getRegulatoryRegion, handleMapError, handleMapRouteChange, formatMetric, growthDirection, growthValue,
             taskColors: TASK_COLORS, mapColors: BUSINESS_MAP_COLORS, mapAppearance: MAP_APPEARANCE,
             showNineDashLine: SHOW_REGULATORY_MAP_NINE_DASH_LINE
         };

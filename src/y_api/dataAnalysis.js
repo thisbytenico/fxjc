@@ -1,5 +1,6 @@
 import ajax, { http } from '@/utils/ajax';
 import { DATA_ANALYSIS_API, USE_DATA_ANALYSIS_MOCK } from '@/config/dataAnalysis';
+import { createRegionalMock, mockRegionMapValues } from './regionalMock';
 
 const MOCK_MAP_REGION_NAMES = [
     '北京', '天津', '河北', '山西', '内蒙古', '辽宁', '吉林', '黑龙江',
@@ -74,6 +75,52 @@ const waitForMock = (data) => new Promise(resolve => {
     window.setTimeout(() => resolve(data), 120);
 });
 
+export const getDataAnalysisRegionalMock = region => {
+    if (!USE_DATA_ANALYSIS_MOCK) return null;
+    if (region.current.level === 'country') return mockDashboard;
+
+    const { count, rate, values, rank } = createRegionalMock(region);
+    const { traceability, farming, products } = mockDashboard;
+    const batch = (item, index) => ({
+        ...item,
+        value: count(item.value, index),
+        lastYear: count(item.lastYear, index),
+        growth: rate(item.growth, index, -100)
+    });
+    const farmingActivities = ['施肥', '播种(定植)', '养殖', '产蛋', '投苗'];
+    return {
+        ...mockDashboard,
+        traceability: {
+            production: batch(traceability.production, 0),
+            transaction: batch(traceability.transaction, 1),
+            printed: batch(traceability.printed, 2),
+            productionRank: rank(traceability.productionRank, (item, index) => {
+                const primary = count(item.primary, index);
+                const secondary = count(item.secondary, index);
+                return { name: item.name, primary, secondary, total: primary + secondary };
+            }, 'total'),
+            printRank: rank(traceability.printRank, (item, index) => ({
+                ...item, value: count(item.value, index)
+            }))
+        },
+        farming: {
+            total: count(farming.total),
+            categories: values(farming.categories),
+            news: farming.news.map(({ time }, index) => ({
+                time,
+                text: `${region.current.name}的农业经营主体新增了一条${farmingActivities[index]}记录`
+            }))
+        },
+        products: {
+            ...products,
+            varieties: count(products.varieties),
+            distribution: values(products.distribution),
+            queries: count(products.queries),
+            queryRank: values(products.queryRank).sort((left, right) => right.value - left.value)
+        }
+    };
+};
+
 export const getDataAnalysisDashboard = () => {
     if (USE_DATA_ANALYSIS_MOCK) return waitForMock(mockDashboard);
     return ajax.get({
@@ -84,9 +131,9 @@ export const getDataAnalysisDashboard = () => {
     });
 };
 
-export const getDataAnalysisRegion = ({ adcode, level }) => {
+export const getDataAnalysisRegion = ({ adcode, level, name, regionNames }) => {
     if (USE_DATA_ANALYSIS_MOCK) {
-        return waitForMock({ adcode, level, values: [] });
+        return waitForMock({ adcode, level, values: mockRegionMapValues({ adcode, name, regionNames }) });
     }
     return ajax.get({
         url: DATA_ANALYSIS_API.region,

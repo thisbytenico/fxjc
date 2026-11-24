@@ -1,5 +1,6 @@
 import ajax from '@/utils/ajax';
 import { ENFORCEMENT_API, USE_ENFORCEMENT_MOCK } from '@/config/enforcement';
+import { createRegionalMock, mockRegionMapValues } from './regionalMock';
 
 const taskDate = '2026-04-17';
 const taskNames = [
@@ -19,7 +20,7 @@ const provinceValues = {
 
 const mockDashboard = {
     patrolTrend: {
-        total: 9092,
+        total: 9921,
         months: ['2026-01', '2026-02', '2026-03', '2026-04'],
         points: [
             { date: '2026-01-01', value: 160 },
@@ -35,7 +36,7 @@ const mockDashboard = {
         ]
     },
     comparison: {
-        totals: { tasks: 6278, normal: 161, urgent: 37, critical: 8 },
+        totals: { tasks: 176, normal: 161, urgent: 9, critical: 3 },
         categories: ['例行监测', '专项监测', '监督抽查', '复检任务'],
         series: [
             { name: '例行监测', values: [138, 210, 155, 253] },
@@ -45,9 +46,9 @@ const mockDashboard = {
         ]
     },
     monitoringSummary: [
-        { id: 'routine', label: '例行监测数量', total: 6828, province: 16067, city: 1145, county: 23416 },
-        { id: 'special', label: '专项监测数量', total: 7174, province: 16067, city: 1145, county: 1145 },
-        { id: 'special-secondary', label: '专项监测数量', total: 7174, province: 16067, city: 1145, county: 1145 }
+        { id: 'routine', label: '执法机构', total: 4245, province: 1067, city: 2004, county: 1174 },
+        { id: 'special', label: '执法人员', total: 7245, province: 4039, city: 1067, county: 2139 },
+        { id: 'special-secondary', label: '执法任务', total: 34245, province: 18817, city: 8076, county: 7352 }
     ],
     inspectionTasks: taskRows([0, 1, 2, 3, 4, 5, 6, 7]),
     rankedTasks: taskRows([4, 5, 6, 7, 8, 9, 0, 1]),
@@ -60,16 +61,46 @@ const request = async (url, data) => {
     return response?.data ?? response;
 };
 
+export const getEnforcementRegionalMock = region => {
+    if (!USE_ENFORCEMENT_MOCK) return null;
+    if (region.current.level === 'country') return mockDashboard;
+
+    const { count, values, seed } = createRegionalMock(region);
+    const { patrolTrend, comparison, monitoringSummary, inspectionTasks, rankedTasks } = mockDashboard;
+    const taskTypes = ['种植基地', '养殖基地', '家庭农场', '农民合作社'];
+    const regionalTasks = (tasks, action) => tasks.map((task, index) => ({
+        ...task,
+        name: `${region.current.name}${taskTypes[(seed + index) % taskTypes.length]}${index + 1}号${action}`,
+        date: `2026-04-${String(17 - (seed + index) % 12).padStart(2, '0')}`
+    }));
+    return {
+        ...mockDashboard,
+        patrolTrend: { ...patrolTrend, total: count(patrolTrend.total), points: values(patrolTrend.points) },
+        comparison: {
+            ...comparison,
+            totals: Object.fromEntries(Object.entries(comparison.totals).map(([key, value], index) => [key, count(value, index)])),
+            series: comparison.series.map((item, index) => ({
+                ...item, values: item.values.map((value, position) => count(value, index + position))
+            }))
+        },
+        monitoringSummary: monitoringSummary.map((item, index) => ({
+            ...item,
+            total: count(item.total, index),
+            province: count(item.province, index),
+            city: count(item.city, index + 1),
+            county: count(item.county, index + 2)
+        })),
+        inspectionTasks: regionalTasks(inspectionTasks, '巡查'),
+        rankedTasks: regionalTasks(rankedTasks, '行政处罚')
+    };
+};
+
 export const getEnforcementDashboard = () => USE_ENFORCEMENT_MOCK
     ? Promise.resolve(mockDashboard)
     : request(ENFORCEMENT_API.dashboard, {});
 
-export const getEnforcementRegion = ({ adcode, level, name, regionNames = [] }) => {
+export const getEnforcementRegion = ({ adcode, level, name, regionNames }) => {
     if (!USE_ENFORCEMENT_MOCK) return request(ENFORCEMENT_API.region, { adcode, level, name });
 
-    const values = regionNames.map((regionName, index) => ({
-        name: regionName,
-        value: 18 + (Number(adcode.slice(0, 4)) + index * 47) % 240
-    }));
-    return Promise.resolve({ values });
+    return Promise.resolve({ values: mockRegionMapValues({ adcode, name, regionNames }) });
 };

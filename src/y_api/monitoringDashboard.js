@@ -3,6 +3,7 @@ import {
     MONITORING_DASHBOARD_API,
     USE_MONITORING_DASHBOARD_MOCK
 } from '@/config/monitoringDashboard';
+import { createRegionalMock, mockRegionMapValues } from './regionalMock';
 
 const REGION_NAMES = [
     '北京', '天津', '河北', '山西', '内蒙古', '辽宁', '吉林', '黑龙江',
@@ -16,44 +17,44 @@ const mockDashboard = {
     taskGroups: [
         {
             name: '例行监测数量',
-            value: 627828,
+            value: 21384,
             unit: '次',
             color: '#32b9f5',
             levels: [
                 { name: '省级数量', value: 16067 },
                 { name: '市级数量', value: 1145 },
-                { name: '县级数量', value: 23416 }
+                { name: '县级数量', value: 4172 }
             ]
         },
         {
             name: '专项监测数量',
-            value: 627828,
+            value: 18398,
             unit: '次',
             color: '#25d5aa',
             levels: [
-                { name: '省级数量', value: 16067 },
-                { name: '市级数量', value: 1145 },
-                { name: '县级数量', value: 1145 }
+                { name: '省级数量', value: 10875 },
+                { name: '市级数量', value: 5175 },
+                { name: '县级数量', value: 2348 }
             ]
         },
         {
             name: '监督抽查数量',
-            value: 627828,
+            value: 30771,
             unit: '次',
             color: '#fff45e',
             levels: [
-                { name: '省级数量', value: 16067 },
-                { name: '市级数量', value: 1145 },
-                { name: '县级数量', value: 1145 }
+                { name: '省级数量', value: 18419 },
+                { name: '市级数量', value: 10124 },
+                { name: '县级数量', value: 2228 }
             ]
         }
     ],
     inspectionComparison: {
         metrics: [
-            { name: '任务数量', value: 6278, unit: '次', color: '#31bafa' },
+            { name: '任务数量', value: 176, unit: '次', color: '#31bafa' },
             { name: '一般任务数量', value: 161, unit: '次', color: '#50e7de' },
-            { name: '紧急任务数量', value: 37, unit: '次', color: '#16d064' },
-            { name: '特紧任务数量', value: 8, unit: '次', color: '#ff9744' }
+            { name: '紧急任务数量', value: 9, unit: '次', color: '#16d064' },
+            { name: '特紧任务数量', value: 3, unit: '次', color: '#ff9744' }
         ],
         categories: ['例行监测', '专项监测', '监督抽查', '复检任务'],
         series: [
@@ -73,14 +74,6 @@ const mockDashboard = {
             { name: '其他', value: 1152, color: '#fff45f' }
         ]
     },
-    news: [
-        { time: '4月17日9:00分', content: '南昌市嘉禾农业有限公司添加了一条记施肥录' },
-        { time: '4月17日8:54分', content: '南昌市嘉禾农业有限公司添加了一条播种(定植)记录' },
-        { time: '4月17日8:50分', content: '天津嘉立荷牧业集团有限公司添加了一条养殖记录' },
-        { time: '4月17日8:50分', content: '瑞林家庭农场添加了一条产蛋记录' },
-        { time: '4月17日8:36分', content: '亨利渔业有限公司添加了一条投苗记录' },
-        { time: '4月17日11:00分', content: '南昌市嘉禾农业有限公司添加了一条记施肥录' }
-    ],
     regionRanking: [
         { name: '云南省', tasks: 2000, passRate: 99 },
         { name: '新疆维吾尔自治区', tasks: 1800, passRate: 98 },
@@ -101,6 +94,33 @@ const mockResponse = data => new Promise(resolve => {
     window.setTimeout(() => resolve(data), 120);
 });
 
+export const getMonitoringRegionalMock = region => {
+    if (!USE_MONITORING_DASHBOARD_MOCK) return null;
+    if (region.current.level === 'country') return mockDashboard;
+
+    const { count, rate, values, rank } = createRegionalMock(region);
+    const { taskGroups, inspectionComparison, samplingStatistics, regionRanking } = mockDashboard;
+    return {
+        ...mockDashboard,
+        taskGroups: values(taskGroups).map(group => ({ ...group, levels: values(group.levels) })),
+        inspectionComparison: {
+            ...inspectionComparison,
+            metrics: values(inspectionComparison.metrics),
+            series: inspectionComparison.series.map((item, index) => ({
+                ...item, values: item.values.map((value, position) => count(value, index + position))
+            }))
+        },
+        samplingStatistics: {
+            traceable: count(samplingStatistics.traceable),
+            untraceable: count(samplingStatistics.untraceable, 1),
+            categories: values(samplingStatistics.categories)
+        },
+        regionRanking: rank(regionRanking, (item, index) => ({
+            ...item, tasks: count(item.tasks, index), passRate: rate(item.passRate, index)
+        }), 'tasks')
+    };
+};
+
 export const getMonitoringDashboard = () => {
     if (USE_MONITORING_DASHBOARD_MOCK) return mockResponse(mockDashboard);
     return ajax.get({
@@ -111,9 +131,9 @@ export const getMonitoringDashboard = () => {
     });
 };
 
-export const getMonitoringRegion = ({ adcode, level, name }) => {
+export const getMonitoringRegion = ({ adcode, level, name, regionNames }) => {
     if (USE_MONITORING_DASHBOARD_MOCK) {
-        return mockResponse({ adcode, level, name, values: [] });
+        return mockResponse({ adcode, level, name, values: mockRegionMapValues({ adcode, name, regionNames }) });
     }
     return ajax.get({
         url: MONITORING_DASHBOARD_API.region,

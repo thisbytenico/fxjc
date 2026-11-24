@@ -1,5 +1,6 @@
 import ajax from '@/utils/ajax';
 import { REGULATORY_API, USE_REGULATORY_MOCK } from '@/config/regulatory';
+import { createRegionalMock, mockRegionMapValues } from './regionalMock';
 
 const REGION_NAMES = [
     '北京', '天津', '河北', '山西', '内蒙古', '辽宁', '吉林', '黑龙江',
@@ -155,6 +156,37 @@ const mockResponse = data => new Promise(resolve => {
     window.setTimeout(() => resolve(data), 120);
 });
 
+export const getRegulatoryRegionalMock = region => {
+    if (!USE_REGULATORY_MOCK) return null;
+    if (region.current.level === 'country') return mockDashboard;
+
+    const { count, rate, values, rank } = createRegionalMock(region);
+    const { overview, annualComparison, quarterlyComparison } = mockDashboard;
+    const rankByRegion = items => rank(items, (item, index) => ({
+        ...item, value: count(item.value, index)
+    }));
+    const comparison = item => ({
+        ...item,
+        current: item.current.map(count),
+        previous: item.previous.map((value, index) => count(value, index + item.current.length))
+    });
+    return {
+        ...mockDashboard,
+        overview: {
+            metrics: Object.fromEntries(Object.entries(overview.metrics).map(([key, value], index) => [key, count(value, index)])),
+            taskBreakdown: values(overview.taskBreakdown),
+            regionTaskRank: rankByRegion(overview.regionTaskRank),
+            basePatrolRank: rankByRegion(overview.basePatrolRank),
+            taskComparisons: overview.taskComparisons.map(task => ({
+                ...comparison(task),
+                regionTaskRank: rankByRegion(task.regionTaskRank)
+            }))
+        },
+        annualComparison: { ...comparison(annualComparison), growth: rate(annualComparison.growth, 0, -100) },
+        quarterlyComparison: { ...comparison(quarterlyComparison), growth: rate(quarterlyComparison.growth, 1, -100) }
+    };
+};
+
 export const getRegulatoryDashboard = () => {
     if (USE_REGULATORY_MOCK) return mockResponse(mockDashboard);
     return ajax.get({
@@ -165,9 +197,9 @@ export const getRegulatoryDashboard = () => {
     });
 };
 
-export const getRegulatoryRegion = ({ adcode, level, name }) => {
+export const getRegulatoryRegion = ({ adcode, level, name, regionNames }) => {
     if (USE_REGULATORY_MOCK) {
-        return mockResponse({ adcode, level, name, values: [] });
+        return mockResponse({ adcode, level, name, values: mockRegionMapValues({ adcode, name, regionNames }) });
     }
     return ajax.get({
         url: REGULATORY_API.region,

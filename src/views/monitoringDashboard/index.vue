@@ -19,7 +19,7 @@
                         <dl class="task-levels">
                             <div v-for="level in group.levels" :key="level.name">
                                 <dt>{{ level.name }}</dt>
-                                <dd>{{ level.value }}<small>次</small></dd>
+                                <dd>{{ formatNumber(level.value) }}<small>次</small></dd>
                             </div>
                         </dl>
                     </article>
@@ -37,6 +37,7 @@
                     value-label="监测任务数"
                     value-unit="次"
                     aria-label="全国监测任务分布地图，点击行政区可下钻"
+                    @route-change="handleMapRouteChange"
                     @error="handleMapError"
                 />
             </section>
@@ -58,7 +59,7 @@
             </section>
 
             <section class="screen-panel sampling-panel">
-                <header class="panel-heading"><h2>例行检查抽检统计</h2></header>
+                <header class="panel-heading"><h2>例行监测抽检统计</h2></header>
                 <div class="sampling-metrics">
                     <p>可追溯数量<strong>{{ formatNumber(dashboard.samplingStatistics.traceable) }}<small>次</small></strong></p>
                     <p>不可追溯数量<strong>{{ formatNumber(dashboard.samplingStatistics.untraceable) }}<small>次</small></strong></p>
@@ -74,20 +75,6 @@
                             :style="{ '--legend-color': item.color }"
                         ><i aria-hidden="true"></i><span>{{ item.name }}：</span><strong>{{ formatNumber(item.value) }}</strong></li>
                     </ul>
-                </div>
-            </section>
-
-            <section class="screen-panel news-panel">
-                <header class="panel-heading"><h2>动态信息</h2></header>
-                <div class="news-table" role="table" aria-label="监测业务动态信息">
-                    <div class="news-table-head" role="row">
-                        <span role="columnheader">时间</span><span role="columnheader">内容</span>
-                    </div>
-                    <div class="news-table-body">
-                        <div v-for="(item, index) in dashboard.news" :key="`${item.time}-${index}`" role="row">
-                            <time role="cell">{{ item.time }}</time><span role="cell">{{ item.content }}</span>
-                        </div>
-                    </div>
                 </div>
             </section>
 
@@ -111,18 +98,19 @@
 </template>
 
 <script>
-import { nextTick, onBeforeUnmount, onMounted, ref } from 'vue';
+import { nextTick, onBeforeUnmount, onMounted, ref, shallowRef } from 'vue';
 import * as echarts from 'echarts';
 import RegionDrilldownMap from '@/components/Business/RegionDrilldownMap.vue';
-import { getMonitoringDashboard, getMonitoringRegion } from '@/y_api/monitoringDashboard';
+import { getMonitoringDashboard, getMonitoringRegion, getMonitoringRegionalMock } from '@/y_api/monitoringDashboard';
 import { SHOW_MONITORING_MAP_NINE_DASH_LINE } from '@/config/monitoringDashboard';
 
 const MAP_COLORS = ['#075071', '#007aa8', '#0099ce', '#00afe5', '#21c6f4'];
 const MAP_APPEARANCE = {
-    countryZoom: 1.32,
+    countryZoom: 1.3,
     countryLayoutCenter: ['50%', '53%'],
-    countryAspectScale: .8,
+    countryAspectScale: .72,
     countryFontSize: 12,
+    showSouthChinaSeaInset: false,
     borderColor: 'rgba(177, 233, 255, .9)',
     borderWidth: 1.2
 };
@@ -133,7 +121,7 @@ const TOOLTIP = {
     textStyle: { color: '#fff', fontSize: 12 }
 };
 
-const comparisonOption = data => ({
+const comparisonOption = (data, regional = false) => ({
     color: data.series.map(item => item.color),
     tooltip: { ...TOOLTIP, trigger: 'axis', axisPointer: { type: 'shadow' } },
     legend: {
@@ -157,8 +145,8 @@ const comparisonOption = data => ({
     yAxis: {
         type: 'value',
         min: 0,
-        max: 650,
-        interval: 100,
+        max: regional ? null : 650,
+        interval: regional ? null : 100,
         axisLabel: { color: '#6f8091', fontSize: 10 },
         axisTick: { show: false },
         axisLine: { show: true, lineStyle: { color: 'rgba(151, 181, 202, .52)' } },
@@ -196,7 +184,7 @@ export default {
     name: 'MonitoringDashboard',
     components: { RegionDrilldownMap },
     setup() {
-        const dashboard = ref(null);
+        const dashboard = shallowRef(null);
         const errorMessage = ref('');
         const comparisonChartRef = ref(null);
         const samplingChartRef = ref(null);
@@ -215,6 +203,14 @@ export default {
         };
         const handleMapError = error => {
             errorMessage.value = error.message || '地图数据加载失败';
+        };
+        const handleMapRouteChange = region => {
+            const data = getMonitoringRegionalMock(region);
+            if (!data || data === dashboard.value) return;
+            dashboard.value = data;
+            const regional = region.current.level !== 'country';
+            charts.get(comparisonChartRef.value)?.setOption(comparisonOption(data.inspectionComparison, regional));
+            charts.get(samplingChartRef.value)?.setOption(samplingOption(data.samplingStatistics.categories));
         };
 
         onMounted(async () => {
@@ -255,6 +251,7 @@ export default {
             formatNumber,
             getMonitoringRegion,
             handleMapError,
+            handleMapRouteChange,
             mapColors: MAP_COLORS,
             mapAppearance: MAP_APPEARANCE,
             showNineDashLine: SHOW_MONITORING_MAP_NINE_DASH_LINE
@@ -275,15 +272,16 @@ export default {
     overflow: hidden;
     color: #f5f8fc;
     font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
-    background: #09182b url(@/assets/images/bg-zsyw.png) center bottom / cover no-repeat;
-    background-size: cover;
-    background-position: 50% 150%;
+    background: #0e192a url(@/assets/images/regulatory/bg2-jgyw.png) center bottom / cover no-repeat;
 }
 
 .dashboard-grid {
     display: grid;
     grid-template-columns: minmax(280px, 1fr) minmax(550px, 1.91fr) minmax(280px, 1fr);
     grid-template-rows: minmax(0, 59fr) minmax(0, 41fr);
+    grid-template-areas:
+        'tasks map comparison'
+        'sampling map ranking';
     gap: clamp(14px, 1.56vw, 30px);
     width: 100%;
     height: 100%;
@@ -344,23 +342,28 @@ export default {
 }
 
 .task-groups { display: flex; flex: 1; min-height: 0; flex-direction: column; padding: 13px 24px 15px; }
-.task-group { display: flex; flex: 1; min-height: 0; flex-direction: column; justify-content: center; }
-.task-summary { display: flex; align-items: center; justify-content: space-between; min-height: 42px; padding: 0 8px 10px 20px; }
+.task-group { --task-value-inset: 24px; display: flex; flex: 1; min-height: 0; flex-direction: column; justify-content: center; }
+.task-summary { display: flex; align-items: center; justify-content: space-between; min-height: 42px; padding: 0 var(--task-value-inset) 10px 20px; }
 .task-summary::after { left: -20px; }
 .task-summary h3 { position: relative; margin: 0; font-size: 19px; font-style: italic; white-space: nowrap; }
 .task-summary h3 i { position: absolute; top: 50%; left: -19px; width: 11px; height: 11px; background: var(--accent-color); transform: translateY(-50%); }
-.task-summary strong { color: var(--accent-color); font: italic 700 33px/1 Arial, sans-serif; white-space: nowrap; }
-.task-summary small { margin-left: 2px; font-size: 13px; }
-.task-levels { display: grid; gap: 5px; margin: 3px 29px 0 22px; }
+.task-summary strong { color: var(--accent-color); font: italic 700 33px/1 Arial, sans-serif; text-align: right; white-space: nowrap; }
+.task-summary small, .task-levels small { display: inline-block; width: 13px; margin-left: 2px; }
+.task-summary small { font-size: 13px; }
+.task-levels { display: grid; gap: 5px; margin: 3px var(--task-value-inset) 0 22px; }
 .task-levels > div { display: grid; grid-template-columns: minmax(0, 1fr) 84px; align-items: center; gap: 7px; min-height: 25px; }
 .task-levels dt { position: relative; padding-left: 0; color: #8192a8; font-size: 17px; font-style: italic; white-space: nowrap; }
 .task-levels dt::after { content: ''; position: absolute; top: 50%; right: 0; left: 80px; border-top: 3px solid #1e3349; transform: translateY(-50%); }
 .task-levels dd { margin: 0; text-align: right; font: italic 700 21px/1 Arial, sans-serif; white-space: nowrap; }
-.task-levels small { margin-left: 2px; font-size: 10px; }
+.task-levels small { font-size: 10px; }
 
-.map-panel { position: relative; min-width: 0; min-height: 0; }
-.map-panel :deep(.map-location) { top: -1px; left: 6px; font-size: 20px; }
-.map-panel :deep(.map-chart) { position: absolute; inset: 20px 0 0; height: calc(100% - 20px); }
+.task-panel { grid-area: tasks; }
+.comparison-panel { grid-area: comparison; }
+.sampling-panel { grid-area: sampling; }
+.ranking-panel { grid-area: ranking; }
+.map-panel { grid-area: map; position: relative; min-width: 0; min-height: 0; }
+.map-panel :deep(.map-location) { top: -4px; left: 4%; font-size: 20px; }
+.map-panel :deep(.map-chart) { position: absolute; top: 15.5%; height: 62%; }
 
 .comparison-metrics {
     display: grid;
@@ -415,13 +418,6 @@ export default {
 .sampling-legend i { flex: 0 0 10px; width: 10px; height: 10px; margin-right: 7px; background: var(--legend-color); }
 .sampling-legend strong { font-weight: 400; }
 
-.news-table { display: flex; flex: 1; min-height: 0; flex-direction: column; margin: 19px 21px 18px; border: 1px solid #24557a; background: rgba(3, 25, 43, .55); }
-.news-table-head { display: grid; grid-template-columns: 142px minmax(0, 1fr); flex: 0 0 31px; align-items: center; padding: 0 17px; border-bottom: 1px solid #2a6285; background: rgba(47, 77, 105, .56); font-size: 18px; font-weight: 700; }
-.news-table-body { display: grid; align-content: space-evenly; flex: 1; min-height: 0; padding: 6px 18px 8px; overflow: hidden; }
-.news-table-body > div { display: grid; grid-template-columns: 142px minmax(0, 1fr); align-items: center; min-height: 0; font-size: 16px; }
-.news-table-body time { color: #4f8ac7; white-space: nowrap; }
-.news-table-body span { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-
 .ranking-table-wrap { flex: 1; min-height: 0; margin: 20px 15px 17px; overflow: hidden; border: 1px solid #24557a; background: rgba(3, 25, 43, .46); }
 .ranking-table { width: 100%; height: 100%; border-collapse: collapse; table-layout: fixed; font-size: 17px; }
 .ranking-table th { height: 30px; padding: 0 19px; color: #c8d7e5; background: rgba(47, 77, 105, .56); font-size: 18px; text-align: left; }
@@ -438,10 +434,11 @@ export default {
     .panel-heading { flex-basis: 30px; }
     .panel-heading h2 { font-size: 17px; }
     .task-groups { padding: 6px 13px 8px; }
+    .task-group { --task-value-inset: 20px; }
     .task-summary { min-height: 34px; padding-bottom: 7px; }
     .task-summary h3 { font-size: 15px; }
     .task-summary strong { font-size: 25px; }
-    .task-levels { gap: 2px; margin: 1px 20px 0 22px; }
+    .task-levels { gap: 2px; margin-top: 1px; }
     .task-levels > div { grid-template-columns: minmax(0, 1fr) 68px; gap: 5px; min-height: 19px; }
     .task-levels dt { font-size: 13px; }
     .task-levels dd { font-size: 16px; }
@@ -457,10 +454,6 @@ export default {
     .sampling-dial { place-items: center; padding-left: 0; transform: none; }
     .sampling-legend { gap: 4px; padding-left: 7px; }
     .sampling-legend li { font-size: 11px; }
-    .news-table { margin: 10px 12px 10px; }
-    .news-table-head { grid-template-columns: 112px minmax(0, 1fr); flex-basis: 26px; padding: 0 12px; font-size: 14px; }
-    .news-table-body { padding: 3px 12px 5px; }
-    .news-table-body > div { grid-template-columns: 112px minmax(0, 1fr); font-size: 12px; }
     .ranking-table-wrap { margin: 10px 9px 9px; }
     .ranking-table { font-size: 13px; }
     .ranking-table th { height: 26px; padding: 0 12px; font-size: 14px; }

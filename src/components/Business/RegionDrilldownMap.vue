@@ -135,14 +135,14 @@ export default {
             });
         };
 
-        const loadValues = async (route, geo) => {
+        const loadValues = async (route, regionNames) => {
             if (route.level === 'country') return props.data;
             if (!props.loadRegionData) return [];
             const response = await props.loadRegionData({
                 adcode: route.adcode,
                 level: route.level,
                 name: route.displayName,
-                regionNames: (geo.features || []).map(feature => feature.properties?.name).filter(Boolean),
+                regionNames,
                 routes: routes.map(item => ({
                     level: item.level,
                     displayName: item.displayName,
@@ -234,7 +234,8 @@ export default {
                         })
                     };
                 }
-                const values = await loadValues(route, geo);
+                const regionNames = (geo.features || []).map(feature => feature.properties?.name).filter(Boolean);
+                const values = await loadValues(route, regionNames);
                 if (destroyed || !chart || activeRequest !== requestId) return;
                 currentGeo = geo;
                 echarts.registerMap(route.mapName, geo);
@@ -246,7 +247,8 @@ export default {
                 }
                 emit('route-change', {
                     current: { level: route.level, name: route.displayName, adcode: route.adcode },
-                    routes: routes.map(item => ({ level: item.level, name: item.displayName, adcode: item.adcode }))
+                    routes: routes.map(item => ({ level: item.level, name: item.displayName, adcode: item.adcode })),
+                    regionNames
                 });
             } catch (error) {
                 if (activeRequest !== requestId || destroyed) return;

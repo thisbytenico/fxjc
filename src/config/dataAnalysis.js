@@ -1,7 +1,7 @@
-// Mock switch for the dashboard and map data.
+// Mock the entire dashboard, including subject and certification panels.
 export const USE_DATA_ANALYSIS_MOCK = true;
 
-// Use fixed design data for the subject and certification panels at every map level.
+// Mock only the subject and certification panels when dashboard mock mode is off.
 export const USE_DATA_ANALYSIS_SUBJECT_MOCK = true;
 
 // China map inset/nine-dash-line feature.

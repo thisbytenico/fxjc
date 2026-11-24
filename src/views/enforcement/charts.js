@@ -33,7 +33,7 @@ const compactAxisLabels = {
     yAxis: { axisLabel: { fontSize: 10, margin: 7 } }
 };
 
-export const patrolTrendOption = ({ months, points }) => ({
+export const patrolTrendOption = ({ months, points }, regional = false) => ({
     baseOption: {
         tooltip,
         grid: { left: '12.5%', right: '10.2%', top: '10%', bottom: '17.5%' },
@@ -41,7 +41,11 @@ export const patrolTrendOption = ({ months, points }) => ({
             categoryAxis(months),
             { type: 'category', show: false, boundaryGap: false, data: points.map(point => point.date) }
         ],
-        yAxis: { ...valueAxis(true), max: ({ max }) => Math.max(600, Math.ceil(max / 100) * 100) },
+        yAxis: {
+            ...valueAxis(true),
+            interval: regional ? null : 100,
+            max: regional ? null : ({ max }) => Math.max(600, Math.ceil(max / 100) * 100)
+        },
         series: [{
             name: '执法次数',
             type: 'line',
@@ -68,7 +72,7 @@ export const patrolTrendOption = ({ months, points }) => ({
 const barColors = ['#2fa9e9', '#19d2a9', '#19be46', '#ff9742'];
 const comparisonValueAxis = valueAxis(false);
 
-export const patrolComparisonOption = ({ categories, series }) => ({
+export const patrolComparisonOption = ({ categories, series }, regional = false) => ({
     baseOption: {
         tooltip: { ...tooltip, axisPointer: { type: 'shadow' } },
         legend: {
@@ -86,7 +90,8 @@ export const patrolComparisonOption = ({ categories, series }) => ({
         xAxis: categoryAxis(categories),
         yAxis: {
             ...comparisonValueAxis,
-            max: ({ max }) => Math.ceil(max / 25) * 25 || 100,
+            interval: regional ? null : 100,
+            max: regional ? null : ({ max }) => Math.ceil(max / 25) * 25 || 100,
             axisLabel: { ...comparisonValueAxis.axisLabel, showMaxLabel: false }
         },
         series: series.map((item, index) => ({
