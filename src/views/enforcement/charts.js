@@ -69,57 +69,24 @@ export const patrolTrendOption = ({ months, points }, regional = false) => ({
     ]
 });
 
-const barColors = ['#2fa9e9', '#19d2a9', '#19be46', '#ff9742'];
-const comparisonValueAxis = valueAxis(false);
-
-export const patrolComparisonOption = ({ categories, series }, regional = false) => ({
-    baseOption: {
-        tooltip: { ...tooltip, axisPointer: { type: 'shadow' } },
-        legend: {
-            type: 'scroll',
-            right: '4%',
-            top: 4,
-            icon: 'rect',
-            itemWidth: 12,
-            itemHeight: 10,
-            itemGap: 9,
-            formatter: name => series.find(item => item.name === name)?.legendLabel ?? name,
-            textStyle: { color: '#e2edf7', fontSize: 12 }
-        },
-        grid: { left: '18%', right: '9.5%', top: '15%', bottom: '17%' },
-        xAxis: categoryAxis(categories),
-        yAxis: {
-            ...comparisonValueAxis,
-            interval: regional ? null : 100,
-            max: regional ? null : ({ max }) => Math.ceil(max / 25) * 25 || 100,
-            axisLabel: { ...comparisonValueAxis.axisLabel, showMaxLabel: false }
-        },
-        series: series.map((item, index) => ({
+export const supervisionOption = statuses => ({
+    tooltip: { ...tooltip, trigger: 'item', formatter: '{b}：{c}' },
+    series: [{
+        type: 'pie',
+        // Match the center of the dial artwork (97.5, 94) in the 189 × 184 image.
+        center: ['51.6%', '51.1%'],
+        radius: ['63%', '78%'],
+        startAngle: 90,
+        padAngle: 2,
+        label: { show: false },
+        labelLine: { show: false },
+        stillShowZeroSum: false,
+        emptyCircleStyle: { color: '#25465e' },
+        data: statuses.filter(item => item.value != null).map(item => ({
+            id: item.key,
             name: item.name,
-            type: 'bar',
-            stack: 'tasks',
-            barWidth: '25%',
-            barMaxWidth: 22,
-            itemStyle: { color: barColors[index % barColors.length] },
-            data: item.values
+            value: item.value,
+            itemStyle: { color: item.color }
         }))
-    },
-    media: [
-        {
-            query: { maxWidth: 375 },
-            option: {
-                ...compactAxisLabels,
-                legend: { itemWidth: 8, itemHeight: 8, itemGap: 6, textStyle: { fontSize: 9 } },
-                grid: { left: '14%', right: '6%' }
-            }
-        },
-        {
-            option: {
-                xAxis: [{ axisLabel: categoryLabel }],
-                yAxis: { axisLabel: { fontSize: 11, margin: 12 } },
-                legend: { itemWidth: 12, itemHeight: 10, itemGap: 9, textStyle: { fontSize: 12 } },
-                grid: { left: '18%', right: '9.5%' }
-            }
-        }
-    ]
+    }]
 });

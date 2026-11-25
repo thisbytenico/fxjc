@@ -35,15 +35,9 @@ const mockDashboard = {
             { date: '2026-04-28', value: 211 }
         ]
     },
-    comparison: {
-        totals: { tasks: 176, normal: 161, urgent: 9, critical: 3 },
-        categories: ['例行监测', '专项监测', '监督抽查', '复检任务'],
-        series: [
-            { name: '例行监测', values: [138, 210, 155, 253] },
-            { name: '专项监测', values: [44, 65, 50, 91] },
-            { name: '例行监测（第二组）', legendLabel: '例行监测', values: [81, 124, 93, 151] },
-            { name: '专项监测（第二组）', legendLabel: '专项监测', values: [68, 105, 78, 127] }
-        ]
+    supervision: {
+        total: 9888,
+        statuses: { completed: 4485, incomplete: 8588, running: 364, revoked: 1508, published: 4662 }
     },
     monitoringSummary: [
         { id: 'routine', label: '执法机构', total: 4245, province: 1067, city: 2004, county: 1174 },
@@ -66,7 +60,7 @@ export const getEnforcementRegionalMock = region => {
     if (region.current.level === 'country') return mockDashboard;
 
     const { count, values, seed } = createRegionalMock(region);
-    const { patrolTrend, comparison, monitoringSummary, inspectionTasks, rankedTasks } = mockDashboard;
+    const { patrolTrend, supervision, monitoringSummary, inspectionTasks, rankedTasks } = mockDashboard;
     const taskTypes = ['种植基地', '养殖基地', '家庭农场', '农民合作社'];
     const regionalTasks = (tasks, action) => tasks.map((task, index) => ({
         ...task,
@@ -76,12 +70,9 @@ export const getEnforcementRegionalMock = region => {
     return {
         ...mockDashboard,
         patrolTrend: { ...patrolTrend, total: count(patrolTrend.total), points: values(patrolTrend.points) },
-        comparison: {
-            ...comparison,
-            totals: Object.fromEntries(Object.entries(comparison.totals).map(([key, value], index) => [key, count(value, index)])),
-            series: comparison.series.map((item, index) => ({
-                ...item, values: item.values.map((value, position) => count(value, index + position))
-            }))
+        supervision: {
+            total: count(supervision.total),
+            statuses: Object.fromEntries(Object.entries(supervision.statuses).map(([key, value], index) => [key, count(value, index)]))
         },
         monitoringSummary: monitoringSummary.map((item, index) => ({
             ...item,

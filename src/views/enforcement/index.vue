@@ -47,15 +47,27 @@
                 </div>
             </section>
 
-            <section class="screen-panel comparison-panel">
-                <header class="panel-heading"><h2>基地巡查数据对比</h2></header>
-                <dl class="totals-box comparison-totals">
-                    <div v-for="item in comparisonTotals" :key="item.key" :style="{ '--metric-color': item.color }">
-                        <dt>{{ item.label }}</dt>
-                        <dd>{{ formatCount(dashboard.comparison.totals[item.key]) }}<small v-if="dashboard.comparison.totals[item.key] != null">次</small></dd>
+            <section class="screen-panel supervision-panel">
+                <header class="panel-heading"><h2>监督抽查情况</h2></header>
+                <dl class="totals-box supervision-total">
+                    <div>
+                        <dt>监督抽查任务</dt>
+                        <dd>{{ formatCount(dashboard.supervision?.total) }}<small v-if="dashboard.supervision?.total != null">次</small></dd>
                     </div>
                 </dl>
-                <div ref="comparisonRef" class="chart comparison-chart" role="img" aria-label="各类基地巡查任务对比堆叠柱状图"></div>
+                <div class="supervision-dial">
+                    <div ref="supervisionRef" class="supervision-chart" role="img" aria-label="监督抽查任务状态分布"></div>
+                </div>
+                <ul class="supervision-legend" aria-label="监督抽查任务状态">
+                    <li
+                        v-for="item in supervisionStatuses"
+                        :key="item.key"
+                        :style="{ gridArea: item.key, '--status-color': item.color }"
+                    >
+                        <span>{{ item.name }}</span>
+                        <strong>{{ item.value ?? '—' }}</strong>
+                    </li>
+                </ul>
             </section>
 
             <section v-for="table in taskTables" :key="table.key" class="screen-panel" :class="table.key">
@@ -85,11 +97,11 @@
 </template>
 
 <script setup>
-import { nextTick, onBeforeUnmount, onMounted, ref, shallowRef } from 'vue';
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, shallowRef } from 'vue';
 import * as echarts from 'echarts';
 import RegionDrilldownMap from '@/components/Business/RegionDrilldownMap.vue';
 import { getEnforcementDashboard, getEnforcementRegion, getEnforcementRegionalMock } from '@/y_api/enforcement';
-import { patrolComparisonOption, patrolTrendOption } from './charts';
+import { patrolTrendOption, supervisionOption } from './charts';
 
 const monitoringColors = ['#2cabea', '#1bd4ad', '#fff878'];
 const metricUnits = { 执法机构: '家', 执法人员: '人', 执法任务: '条' };
@@ -119,11 +131,12 @@ const levels = [
     { key: 'city', label: '市级数量' },
     { key: 'county', label: '县级数量' }
 ];
-const comparisonTotals = [
-    { key: 'tasks', label: '任务数量', color: '#2cabea' },
-    { key: 'normal', label: '一般任务数量', color: '#39edee' },
-    { key: 'urgent', label: '紧急任务数量', color: '#16c549' },
-    { key: 'critical', label: '特紧任务数量', color: '#ff963e' }
+const supervisionStatusTypes = [
+    { key: 'revoked', name: '已废止', color: '#28c5ef' },
+    { key: 'published', name: '已发布', color: '#ff8000' },
+    { key: 'completed', name: '已结束已完成', color: '#008ddb' },
+    { key: 'incomplete', name: '已结束未完成', color: '#fff77b' },
+    { key: 'running', name: '执行中', color: '#16f4dc' }
 ];
 const taskTables = [
     { key: 'inspection-panel', title: '现场巡查任务', dateLabel: '巡查时间', dataKey: 'inspectionTasks' },
@@ -136,9 +149,13 @@ const formatCount = value => {
 };
 
 const dashboard = shallowRef(null);
+const supervisionStatuses = computed(() => supervisionStatusTypes.map(item => ({
+    ...item,
+    value: dashboard.value?.supervision?.statuses?.[item.key]
+})));
 const errorMessage = ref('');
 const trendRef = ref(null);
-const comparisonRef = ref(null);
+const supervisionRef = ref(null);
 const charts = new Map();
 let observer;
 let destroyed = false;
@@ -157,14 +174,14 @@ const handleMapRouteChange = region => {
     dashboard.value = data;
     const regional = region.current.level !== 'country';
     charts.get(trendRef.value)?.setOption(patrolTrendOption(data.patrolTrend, regional));
-    charts.get(comparisonRef.value)?.setOption(patrolComparisonOption(data.comparison, regional));
+    charts.get(supervisionRef.value)?.setOption(supervisionOption(supervisionStatuses.value));
 };
 
 onMounted(async () => {
     try {
         const data = await getEnforcementDashboard();
         if (destroyed) return;
-        if (!data?.patrolTrend || !data.comparison || !data.map ||
+        if (!data?.patrolTrend || !data.map ||
             !Array.isArray(data.monitoringSummary) || !Array.isArray(data.inspectionTasks) || !Array.isArray(data.rankedTasks)) {
             throw new Error('执法业务接口返回的数据格式不正确');
         }
@@ -181,7 +198,7 @@ onMounted(async () => {
             });
         }
         mountChart(trendRef.value, patrolTrendOption(data.patrolTrend));
-        mountChart(comparisonRef.value, patrolComparisonOption(data.comparison));
+        mountChart(supervisionRef.value, supervisionOption(supervisionStatuses.value));
     } catch (error) {
         if (!destroyed) errorMessage.value = error.message || '执法业务数据加载失败';
     }

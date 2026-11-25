@@ -13,7 +13,7 @@
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) minmax(0, 1fr);
     grid-template-rows: minmax(0, 1.05fr) minmax(0, 1fr);
-    grid-template-areas: "patrol map comparison" "inspection map ranking";
+    grid-template-areas: "patrol map supervision" "inspection map ranking";
     column-gap: clamp(7px, .52vw, 10px);
     row-gap: clamp(15px, 2.78vh, 30px);
     height: 100%;
@@ -22,7 +22,7 @@
 }
 
 .patrol-panel { grid-area: patrol; }
-.comparison-panel { grid-area: comparison; }
+.supervision-panel { grid-area: supervision; }
 .inspection-panel { grid-area: inspection; margin-bottom: clamp(4px, .93vh, 10px); }
 .ranking-panel { grid-area: ranking; margin-top: clamp(4px, .93vh, 10px); }
 
@@ -80,9 +80,6 @@
     flex: 0 0 auto;
     min-width: 0;
     margin-block: 0;
-    border: 1px solid #42718b;
-    border-radius: 6px;
-    box-shadow: 0 0 17px rgba(46, 157, 213, .33), inset 0 0 8px rgba(52, 131, 172, .12);
     font-size: clamp(12px, 1.04vw, 20px);
     font-style: italic;
 }
@@ -117,25 +114,81 @@
     --metric-color: #2eacee;
     margin: clamp(8px, 1.3vh, 14px) 9.4% 0 5%;
     padding: clamp(3px, .37vh, 4px) clamp(8px, .68vw, 13px);
+    border: 1px solid #42718b;
+    border-radius: 6px;
+    box-shadow: 0 0 17px rgba(46, 157, 213, .33), inset 0 0 8px rgba(52, 131, 172, .12);
 }
+.patrol-total > div { align-items: center; }
 .patrol-total dd { transform: scaleX(1.1); transform-origin: right; }
 
-.comparison-totals {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: clamp(7px, 1.05vw, 20px);
-    row-gap: clamp(3px, .5vh, 5px);
-    margin: clamp(10px, 1.85vh, 20px) 3.8% 0 2.4%;
-    padding: clamp(5px, .65vh, 7px) 7px clamp(4px, .55vh, 6px) clamp(8px, .63vw, 12px);
-    font-size: clamp(11px, .98vw, 19px);
+.supervision-total {
+    --metric-color: #2eacee;
+    position: relative;
+    margin: clamp(11px, 2.4vh, 26px) 16% 0;
+    padding: 0 clamp(4px, .55vw, 11px) clamp(6px, 1.1vh, 12px);
 }
 
-.comparison-totals > div { position: relative; padding-bottom: 5px; }
+.supervision-total dd { font-size: clamp(18px, 1.63vw, 31px); }
 
-.comparison-totals dd { font-size: clamp(16px, 1.47vw, 28px); }
+.supervision-total::after {
+    content: '';
+    position: absolute;
+    inset: auto 10% 0 0;
+    height: 12px;
+    background: url('@/assets/images/line.png') left center / 100% 100% no-repeat;
+    box-shadow: 0 0 7px #0f233b7d;
+    pointer-events: none;
+}
+
+.supervision-dial {
+    display: grid;
+    place-items: center;
+    flex: 1;
+    min-height: 0;
+    padding: 0 clamp(4px, .73vw, 14px) clamp(5px, 1.3vh, 14px) 0;
+    container-type: size;
+}
+
+.supervision-chart {
+    width: min(65%, 206px);
+    width: min(100cqw, calc(100cqh * 189 / 184), clamp(122px, 19.1vh, 206px));
+    aspect-ratio: 189 / 184;
+    background: url('@/assets/images/regulatory/bg-bingtu.png') center / 100% 100% no-repeat;
+}
+
+.supervision-legend {
+    display: grid;
+    flex: 0 0 auto;
+    grid-template:
+        "completed revoked"
+        "incomplete published"
+        "running ." / minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: clamp(4px, 1.36vh, 15px) clamp(8px, 2.02vw, 39px);
+    margin: 0 10.3% clamp(12px, 2.4vh, 26px) 6.7%;
+    padding: 0;
+    font-size: clamp(10px, .94vw, 18px);
+    line-height: 1.2;
+    list-style: none;
+}
+
+.supervision-legend li {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: clamp(4px, .42vw, 8px);
+}
+
+.supervision-legend li::before {
+    content: '';
+    width: clamp(7px, .57vw, 11px);
+    aspect-ratio: 1;
+    background: var(--status-color);
+}
+
+.supervision-legend span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.supervision-legend strong { color: var(--status-color); font-weight: 400; }
 .chart { flex: 1; min-width: 0; min-height: 0; width: 100%; }
 .trend-chart { margin-top: clamp(13px, 2.78vh, 30px); }
-.comparison-chart { margin-top: clamp(9px, 2.3vh, 25px); }
 
 .map-column {
     grid-area: map;
@@ -172,18 +225,16 @@
     background: var(--metric-color);
 }
 
-.comparison-totals > div::after,
 .monitoring-metric h2::after {
     content: '';
     position: absolute;
     inset: auto 0 0;
-    height: 8px;
+    height: 12px;
     pointer-events: none;
     background: url('@/assets/images/line.png') center / 100% 100% no-repeat;
     mix-blend-mode: screen;
 }
 
-.monitoring-metric h2::after { height: 12px; }
 .monitoring-metric h2 strong { margin-left: auto; font-size: clamp(18px, 1.67vw, 32px); }
 .metric-details {
     display: grid;
