@@ -387,7 +387,7 @@ export default {
 .sampling-metrics { display: grid; gap: 14px; flex: 0 0 122px; padding: 20px 34px 7px; }
 .sampling-metrics p {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     justify-content: space-between;
     min-width: 0;
     height: 44px;

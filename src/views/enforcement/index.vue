@@ -8,7 +8,7 @@
                 <header class="panel-heading"><h2>巡查任务情况</h2></header>
                 <dl class="totals-box patrol-total">
                     <div>
-                        <dt>执法次数</dt>
+                        <dt style="font-weight: 700;">执法次数</dt>
                         <dd>{{ formatCount(dashboard.patrolTrend.total) }}<small v-if="dashboard.patrolTrend.total != null">次</small></dd>
                     </div>
                 </dl>
@@ -51,7 +51,7 @@
                 <header class="panel-heading"><h2>监督抽查情况</h2></header>
                 <dl class="totals-box supervision-total">
                     <div>
-                        <dt>监督抽查任务</dt>
+                        <dt style="font-weight: 700;">监督抽查任务</dt>
                         <dd>{{ formatCount(dashboard.supervision?.total) }}<small v-if="dashboard.supervision?.total != null">次</small></dd>
                     </div>
                 </dl>
